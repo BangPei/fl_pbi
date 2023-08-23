@@ -1,6 +1,7 @@
 import 'package:fl_pbi/main_layout/parent_layout.dart';
 import 'package:fl_pbi/screen/dashboard_screen.dart';
 import 'package:fl_pbi/screen/login_screen.dart';
+import 'package:fl_pbi/screen/official_letter/permohonan.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan_pdf.dart';
 import 'package:flutter/material.dart';
@@ -75,8 +76,11 @@ class RouteNavigation {
                   path: 'preview',
                   name: "preview",
                   pageBuilder: (context, state) {
-                    return const NoTransitionPage(
-                      child: SuratPermohonanPDF(),
+                    SuratPermohonan? data = state.extra != null
+                        ? state.extra as SuratPermohonan
+                        : SuratPermohonan();
+                    return NoTransitionPage(
+                      child: SuratPermohonanPDF(data: data),
                     );
                   },
                 ),

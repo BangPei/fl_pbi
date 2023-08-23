@@ -14,18 +14,6 @@ class SuratPermohonanPDF extends StatefulWidget {
 }
 
 class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
-  SuratPermohonan _data = SuratPermohonan();
-
-  @override
-  void initState() {
-    _data.name = "Muhammad Bilal Rivai";
-    _data.nik = "36.0312.070389.0001";
-    _data.phone = "081316007237";
-    _data.address =
-        "Jl Cempaka V Blok HN 17 Bumi Indah Tahap 3 Sukamantri Pasarkemis Tangerang Banten Indonesia 15560";
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -231,7 +219,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Paragraph(
-                      text: _data.name ?? "",
+                      text: widget.data?.name ?? "",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 12,
@@ -239,7 +227,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                       margin: const pw.EdgeInsets.only(
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.Paragraph(
-                      text: _data.nik ?? "",
+                      text: widget.data?.nik ?? "",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 12,
@@ -247,7 +235,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                       margin: const pw.EdgeInsets.only(
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.Paragraph(
-                      text: _data.phone ?? "",
+                      text: widget.data?.phone ?? "",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 12,
@@ -255,7 +243,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                       margin: const pw.EdgeInsets.only(
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.Text(
-                    _data.address ?? "",
+                    widget.data?.address ?? "",
                     textAlign: pw.TextAlign.justify,
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
@@ -292,7 +280,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
             margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm)),
         pw.SizedBox(height: 70),
         pw.Paragraph(
-            text: "(${_data.name})",
+            text: "(${widget.data?.name})",
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 12,

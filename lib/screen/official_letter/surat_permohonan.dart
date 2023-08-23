@@ -1,3 +1,4 @@
+import 'package:fl_pbi/screen/official_letter/permohonan.dart';
 import 'package:fl_pbi/widget.dart/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
@@ -157,8 +158,12 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
                               child: BootstrapButton(
                                 size: BootstrapButtonSize.defaults,
                                 type: BootstrapButtonType.primary,
-                                onPressed: () =>
-                                    context.go("/surat-permohonan/preview"),
+                                onPressed: () {
+                                  SuratPermohonan permohonan =
+                                      SuratPermohonan.fromJson(formgroup.value);
+                                  context.go("/surat-permohonan/preview",
+                                      extra: permohonan);
+                                },
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
