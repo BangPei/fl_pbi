@@ -48,9 +48,10 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
   Future<Uint8List> _generatePdf(
       PdfPageFormat format, String title, BuildContext cc) async {
     final pdf = pw.Document(
-      version: PdfVersion.pdf_1_5,
       pageMode: PdfPageMode.outlines,
     );
+    final font1 = await PdfGoogleFonts.tinosRegular();
+    final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
 
     pdf.addPage(pw.MultiPage(
@@ -59,6 +60,10 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
         marginLeft: 35,
         marginRight: 35,
         marginTop: 35,
+      ),
+      theme: pw.ThemeData.withFont(
+        base: font1,
+        bold: font2,
       ),
       orientation: pw.PageOrientation.portrait,
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -76,22 +81,24 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
               ),
             ),
             child: pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Container(
-                  width: 70,
-                  height: 70,
+                  width: 80,
+                  height: 80,
                   child: pw.Image(image),
                 ),
-                pw.SizedBox(width: 13),
+                pw.SizedBox(width: 10),
                 pw.Expanded(
                   child: pw.Column(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
                       pw.Text(
                         'PERNIAGAAN BUMI INDAH',
                         style: pw.TextStyle(
                           color: PdfColors.red,
                           fontWeight: pw.FontWeight.bold,
-                          fontSize: 34,
+                          fontSize: 28,
                         ),
                       ),
                       pw.Text(
@@ -99,7 +106,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                         style: pw.TextStyle(
                           color: PdfColors.blue,
                           fontWeight: pw.FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 12,
                         ),
                       ),
                       pw.Text(
@@ -107,7 +114,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                         style: pw.TextStyle(
                           color: PdfColors.blue,
                           fontWeight: pw.FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -123,11 +130,11 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
             "SURAT PERMOHONAN",
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
         ),
-        pw.SizedBox(height: 30),
+        pw.SizedBox(height: 25),
         pw.Paragraph(
           text: "Kepada Yth,\nPengurus Perniagaan Bumi Indah\nDi Tempat",
         ),
@@ -141,6 +148,7 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
         ),
         pw.SizedBox(height: 5),
         pw.Row(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
             pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -218,44 +226,46 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
               ],
             ),
             pw.SizedBox(width: 10),
-            pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Paragraph(
-                    text: _data.name ?? "",
+            pw.Expanded(
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Paragraph(
+                      text: _data.name ?? "",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      margin: const pw.EdgeInsets.only(
+                          bottom: 3.0 * PdfPageFormat.mm)),
+                  pw.Paragraph(
+                      text: _data.nik ?? "",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      margin: const pw.EdgeInsets.only(
+                          bottom: 3.0 * PdfPageFormat.mm)),
+                  pw.Paragraph(
+                      text: _data.phone ?? "",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      margin: const pw.EdgeInsets.only(
+                          bottom: 3.0 * PdfPageFormat.mm)),
+                  pw.Text(
+                    _data.address ?? "",
+                    textAlign: pw.TextAlign.justify,
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
+                      lineSpacing: 2,
                     ),
-                    margin: const pw.EdgeInsets.only(
-                        bottom: 3.0 * PdfPageFormat.mm)),
-                pw.Paragraph(
-                    text: _data.nik ?? "",
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                    margin: const pw.EdgeInsets.only(
-                        bottom: 3.0 * PdfPageFormat.mm)),
-                pw.Paragraph(
-                    text: _data.phone ?? "",
-                    style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                    margin: const pw.EdgeInsets.only(
-                        bottom: 3.0 * PdfPageFormat.mm)),
-                pw.Text(
-                  _data.address ?? "",
-                  maxLines: 3,
-                  overflow: pw.TextOverflow.span,
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
                   ),
-                ),
-                pw.SizedBox(width: 3 * PdfPageFormat.mm),
-              ],
+                  pw.SizedBox(width: 3 * PdfPageFormat.mm),
+                ],
+              ),
             ),
           ],
         ),
@@ -273,28 +283,21 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
               "Demikian surat permohonan ini saya ajukan dan besar harapan saya Pengurus Perniagaan Bumi Indah dapat mengabulkannya, sebelum dan sesudahnya saya ucapkan terimakasih.",
         ),
         pw.SizedBox(height: 25),
-        pw.Container(
-            width: MediaQuery.of(cc).size.width / 3,
-            child: pw.Column(children: [
-              pw.Paragraph(
-                  text: "Hormat Kami",
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                  margin:
-                      const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm)),
-              pw.SizedBox(height: 60),
-              pw.Paragraph(
-                  text: "(${_data.name})",
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                  margin:
-                      const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm)),
-              pw.SizedBox(height: 50)
-            ]))
+        pw.Paragraph(
+            text: "Hormat Kami",
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 12,
+            ),
+            margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm)),
+        pw.SizedBox(height: 70),
+        pw.Paragraph(
+            text: "(${_data.name})",
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 12,
+            ),
+            margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm))
       ],
     ));
     return pdf.save();
