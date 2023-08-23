@@ -1,9 +1,18 @@
 import 'package:fl_pbi/main_layout/parent_layout.dart';
 import 'package:fl_pbi/screen/dashboard_screen.dart';
 import 'package:fl_pbi/screen/login_screen.dart';
-import 'package:fl_pbi/screen/official_letter/permohonan.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan_pdf.dart';
+import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_pdf.dart';
+import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
+import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
+import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
+import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_pdf.dart';
+import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
+import 'package:fl_pbi/screen/official_letter/surat_permohonan/permohonan.dart';
+import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
+import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_pdf.dart';
+import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
+import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_pdf.dart';
+import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -62,51 +71,105 @@ class RouteNavigation {
         },
         routes: [
           GoRoute(
-              parentNavigatorKey: _officialLeterKey,
-              path: '/surat-permohonan',
-              name: "surat-permohonan",
-              pageBuilder: (context, state) {
-                return const NoTransitionPage(
-                  child: SuratPermohonanScreen(),
-                );
-              },
-              routes: [
-                GoRoute(
-                  parentNavigatorKey: _officialLeterKey,
-                  path: 'preview',
-                  name: "preview",
-                  pageBuilder: (context, state) {
-                    SuratPermohonan? data = state.extra != null
-                        ? state.extra as SuratPermohonan
-                        : SuratPermohonan();
-                    return NoTransitionPage(
-                      child: SuratPermohonanPDF(data: data),
-                    );
-                  },
-                ),
-              ]),
-          // GoRoute(
-          //   parentNavigatorKey: _warehouseNavigatorKey,
-          //   path: '/warehouse/form',
-          //   name: "add-warehouse",
-          //   pageBuilder: (context, state) {
-          //     return const NoTransitionPage(
-          //       child: WarehouseFormScreen(),
-          //     );
-          //   },
-          // ),
-          // GoRoute(
-          //   parentNavigatorKey: _warehouseNavigatorKey,
-          //   path: '/warehouse/form/:id',
-          //   name: "edit-warehouse",
-          //   pageBuilder: (context, state) {
-          //     return NoTransitionPage(
-          //       child: WarehouseFormScreen(
-          //         warehouseId: int.parse(state.pathParameters['id']!),
-          //       ),
-          //     );
-          //   },
-          // ),
+            parentNavigatorKey: _officialLeterKey,
+            path: '/surat-permohonan',
+            name: "surat-permohonan",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: SuratPermohonanScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _officialLeterKey,
+                path: 'preview',
+                name: "preview",
+                pageBuilder: (context, state) {
+                  SuratPermohonan? data = state.extra != null
+                      ? state.extra as SuratPermohonan
+                      : SuratPermohonan();
+                  return NoTransitionPage(
+                    child: SuratPermohonanPDF(data: data),
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _officialLeterKey,
+            path: '/surat-lunas',
+            name: "surat-lunas",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: SuratLunasScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _officialLeterKey,
+                path: 'preview',
+                name: "preview-lunas",
+                pageBuilder: (context, state) {
+                  SuratLunas? data = state.extra != null
+                      ? state.extra as SuratLunas
+                      : SuratLunas();
+                  return NoTransitionPage(
+                    child: SuratLunasPDF(data: data),
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _officialLeterKey,
+            path: '/formulir-pendaftaran',
+            name: "formulir-pendaftaran",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: FormulirPendaftaranScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _officialLeterKey,
+                path: 'preview',
+                name: "preview-pendaftaran",
+                pageBuilder: (context, state) {
+                  Pendaftaran? data = state.extra != null
+                      ? state.extra as Pendaftaran
+                      : Pendaftaran();
+                  return NoTransitionPage(
+                    child: FormulirPendaftaranPDF(data: data),
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _officialLeterKey,
+            path: '/sewa-lahan',
+            name: "sewa-lahan",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: SuratSewaLahanScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _officialLeterKey,
+                path: 'preview',
+                name: "preview-lahan",
+                pageBuilder: (context, state) {
+                  SuratSewaLahan? data = state.extra != null
+                      ? state.extra as SuratSewaLahan
+                      : SuratSewaLahan();
+                  return NoTransitionPage(
+                    child: SuratSewaLahanPDF(data: data),
+                  );
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],

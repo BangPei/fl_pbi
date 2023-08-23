@@ -172,11 +172,11 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                   const LeftListTile(
                     title: "Surat Keterangan Lunas",
-                    routeName: "lunas",
+                    routeName: "surat-lunas",
                   ),
                   const LeftListTile(
                     title: "Formulir Pendaftaran",
-                    routeName: "pendaftaran",
+                    routeName: "formulir-pendaftaran",
                   ),
                   const LeftListTile(
                     title: "Surat Sewa Lahan",

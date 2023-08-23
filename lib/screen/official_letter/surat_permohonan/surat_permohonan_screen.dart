@@ -1,4 +1,5 @@
-import 'package:fl_pbi/screen/official_letter/permohonan.dart';
+import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/screen/official_letter/surat_permohonan/permohonan.dart';
 import 'package:fl_pbi/widget.dart/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
@@ -26,9 +27,11 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
     ),
     'nik': FormControl<String>(
       value: '',
+      validators: [Validators.required],
     ),
     'address': FormControl<String>(
       value: '',
+      validators: [Validators.required],
     ),
   });
   @override
@@ -88,6 +91,7 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
                               ReactiveTextField(
                                 formControlName: 'nik',
                                 onSubmitted: (val) {},
+                                inputFormatters: [Common.ktpFormat],
                                 decoration: const BootstrapInputDecoration(),
                               ),
                             ],
@@ -159,10 +163,13 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
                                 size: BootstrapButtonSize.defaults,
                                 type: BootstrapButtonType.primary,
                                 onPressed: () {
-                                  SuratPermohonan permohonan =
-                                      SuratPermohonan.fromJson(formgroup.value);
-                                  context.go("/surat-permohonan/preview",
-                                      extra: permohonan);
+                                  if (formgroup.valid) {
+                                    SuratPermohonan permohonan =
+                                        SuratPermohonan.fromJson(
+                                            formgroup.value);
+                                    context.go("/surat-permohonan/preview",
+                                        extra: permohonan);
+                                  }
                                 },
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
