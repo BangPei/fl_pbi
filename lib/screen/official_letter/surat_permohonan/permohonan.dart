@@ -17,4 +17,13 @@ class SuratPermohonan {
     phone = json['phone'];
     address = json['address'];
   }
+
+  Map<String, String> toStringJson() {
+    final Map<String, String> data = <String, String>{};
+    data['name'] = name ?? "";
+    data['nik'] = nik ?? "";
+    data['address'] = address ?? "";
+    data['phone'] = phone ?? "";
+    return data;
+  }
 }

@@ -167,8 +167,9 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
                                     SuratPermohonan permohonan =
                                         SuratPermohonan.fromJson(
                                             formgroup.value);
-                                    context.go("/surat-permohonan/preview",
-                                        extra: permohonan);
+                                    context.goNamed("preview-permohonan",
+                                        queryParameters:
+                                            permohonan.toStringJson());
                                   }
                                 },
                                 child: const Row(

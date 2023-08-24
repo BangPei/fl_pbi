@@ -83,11 +83,13 @@ class RouteNavigation {
               GoRoute(
                 parentNavigatorKey: _officialLeterKey,
                 path: 'preview',
-                name: "preview",
+                name: "preview-permohonan",
                 pageBuilder: (context, state) {
-                  SuratPermohonan? data = state.extra != null
-                      ? state.extra as SuratPermohonan
-                      : SuratPermohonan();
+                  SuratPermohonan? data = SuratPermohonan();
+                  data.name = state.uri.queryParameters['name'];
+                  data.address = state.uri.queryParameters['address'];
+                  data.nik = state.uri.queryParameters['nik'];
+                  data.phone = state.uri.queryParameters['phone'];
                   return NoTransitionPage(
                     child: SuratPermohonanPDF(data: data),
                   );
