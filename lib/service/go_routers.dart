@@ -1,6 +1,7 @@
+import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/main_layout/parent_layout.dart';
 import 'package:fl_pbi/screen/dashboard_screen.dart';
-import 'package:fl_pbi/screen/login_screen.dart';
+import 'package:fl_pbi/screen/login/login_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
@@ -28,6 +29,14 @@ final GlobalKey<NavigatorState> _officialLeterKey =
 class RouteNavigation {
   static final GoRouter router = GoRouter(
     navigatorKey: _nav.navKey,
+    redirect: (context, state) async {
+      String? token = await Session.get("token");
+      if (token == null || token == "") {
+        return '/auth';
+      } else {
+        return null;
+      }
+    },
     initialLocation: '/',
     routes: [
       GoRoute(
