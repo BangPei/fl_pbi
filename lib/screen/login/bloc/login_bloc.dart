@@ -1,9 +1,11 @@
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
+import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/screen/login/data/login.dart';
 import 'package:fl_pbi/screen/login/data/login_api.dart';
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -18,10 +20,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onLoginSubmit(OnLoginSubmit event, Emitter<LoginState> emit) async {
     // emit(ProductLoadingDialogState());
     try {
-      // BuildContext context = _nav.navKey.currentContext!;
+      BuildContext context = _nav.navKey.currentContext!;
       Login login = event.login;
       var dataLOgin = await LoginApi.login(login);
-      print(dataLOgin);
+      await Session.set("token", dataLOgin["token"]);
+      await Session.set("fullName", dataLOgin["profile"]["fullName"]);
+      await Session.set("picture", dataLOgin["profile"]?["picture"] ?? "");
+      // ignore: use_build_context_synchronously
+      context.go('/');
     } catch (e) {
       emit(LoginErrorState());
     }

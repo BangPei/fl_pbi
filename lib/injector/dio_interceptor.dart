@@ -1,13 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-
-import 'injector.dart';
-import 'navigation_service.dart';
 
 class DioInterceptors extends InterceptorsWrapper {
   final Dio dio;
   DioInterceptors(this.dio);
-  final NavigationService _nav = locator<NavigationService>();
+  // final NavigationService _nav = locator<NavigationService>();
 
   @override
   Future onError(err, handler) async {

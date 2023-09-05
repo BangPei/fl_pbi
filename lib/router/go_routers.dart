@@ -42,7 +42,7 @@ class RouteNavigation {
         // parentNavigatorKey: _dashboardNavigatorKey,
         path: '/auth',
         pageBuilder: (context, state) {
-          return NoTransitionPage(
+          return const NoTransitionPage(
             child: LoginScreen(),
           );
         },

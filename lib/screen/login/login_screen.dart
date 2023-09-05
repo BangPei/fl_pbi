@@ -127,11 +127,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          Login _login = Login(
+                          Login login = Login(
                             username: _usernameController.text,
                             password: _passwordController.text,
                           );
-                          context.read<LoginBloc>().add(OnLoginSubmit(_login));
+                          context.read<LoginBloc>().add(OnLoginSubmit(login));
                         },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(vertical: 4),
