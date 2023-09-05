@@ -1,3 +1,4 @@
+import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/widget.dart/left_expaxiontile.dart';
 import 'package:fl_pbi/widget.dart/left_listtile.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,6 @@ class HeaderMenu extends StatefulWidget {
 }
 
 class _HeaderMenuState extends State<HeaderMenu> {
-  String assetName = 'images/logo.png';
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -99,7 +99,7 @@ class _HeaderMenuState extends State<HeaderMenu> {
               child: Visibility(
                 visible: widget.size > 100,
                 replacement: CircleAvatar(
-                  backgroundImage: AssetImage(assetName),
+                  backgroundImage: AssetImage(Common.imageLogo),
                   backgroundColor: Colors.white,
                 ),
                 child: Row(
@@ -110,7 +110,7 @@ class _HeaderMenuState extends State<HeaderMenu> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(assetName),
+                          image: AssetImage(Common.imageLogo),
                           scale: 13,
                         ),
                       ),

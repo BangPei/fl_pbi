@@ -9,6 +9,8 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class Common {
   Common._();
+
+  static String imageLogo = 'images/logo.png';
   static MaskTextInputFormatter ktpFormat = MaskTextInputFormatter(
     mask: '##.####.######.####',
     filter: {"#": RegExp(r'[0-9]')},

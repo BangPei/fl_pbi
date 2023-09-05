@@ -1,8 +1,10 @@
 part of 'login_bloc.dart';
 
-sealed class LoginEvent extends Equatable {
-  const LoginEvent();
+abstract class LoginEvent {
+  LoginEvent();
+}
 
-  @override
-  List<Object> get props => [];
+class OnLoginSubmit extends LoginEvent {
+  Login login;
+  OnLoginSubmit(this.login);
 }

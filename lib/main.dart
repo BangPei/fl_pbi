@@ -1,8 +1,11 @@
-import 'package:fl_pbi/service/go_routers.dart';
-import 'package:fl_pbi/service/injector.dart';
+import 'package:fl_pbi/router/go_routers.dart';
+import 'package:fl_pbi/screen/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:jiffy/jiffy.dart';
+
+import 'injector/injector.dart';
 
 void main() async {
   setPathUrlStrategy();
@@ -16,9 +19,14 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: RouteNavigation.router,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginBloc>(create: (__) => LoginBloc()),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: RouteNavigation.router,
+      ),
     );
   }
 }
