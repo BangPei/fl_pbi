@@ -17,10 +17,9 @@ class SuratPermohonanPDF extends StatefulWidget {
 class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Column(
-        children: [
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
           IconButton(
               onPressed: () async {
                 await Printing.layoutPdf(
@@ -28,22 +27,20 @@ class _SuratPermohonanPDFState extends State<SuratPermohonanPDF> {
                         _generatePdf(format, "Data Title", context));
               },
               icon: const Icon(Icons.print)),
-          Expanded(
-            child: PdfPreview(
-              maxPageWidth: 700,
-              build: (format) => _generatePdf(format, "Data Title", context),
-              canDebug: false,
-              canChangeOrientation: false,
-              allowSharing: false,
-              canChangePageFormat: false,
-              useActions: false,
-              pdfFileName:
-                  "Surat Permohonan ${DateTime.now().millisecond.toString()}",
-              // onPrinted: _showPrintedToast,
-              // onShared: _showSharedToast,
-            ),
-          ),
         ],
+      ),
+      body: PdfPreview(
+        maxPageWidth: 700,
+        build: (format) => _generatePdf(format, "Data Title", context),
+        canDebug: false,
+        canChangeOrientation: false,
+        allowSharing: false,
+        canChangePageFormat: false,
+        useActions: false,
+        pdfFileName:
+            "Surat Permohonan ${DateTime.now().millisecond.toString()}",
+        // onPrinted: _showPrintedToast,
+        // onShared: _showSharedToast,
       ),
     );
   }

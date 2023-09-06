@@ -1,8 +1,8 @@
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/session_manager.dart';
-import 'package:fl_pbi/main_layout/parent_layout.dart';
-import 'package:fl_pbi/screen/dashboard_screen.dart';
+import 'package:fl_pbi/main_layout/bottom_navigator.dart';
+import 'package:fl_pbi/screen/home/home_screen.dart';
 import 'package:fl_pbi/screen/login/login_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
@@ -16,6 +16,7 @@ import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
+import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,7 +40,7 @@ class RouteNavigation {
     initialLocation: '/',
     routes: [
       GoRoute(
-        // parentNavigatorKey: _dashboardNavigatorKey,
+        parentNavigatorKey: _nav.navKey,
         path: '/auth',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
@@ -47,14 +48,38 @@ class RouteNavigation {
           );
         },
       ),
+      GoRoute(
+        parentNavigatorKey: _nav.navKey,
+        path: '/surat-permohonan',
+        name: "surat-permohonan",
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SuratPermohonanScreen(),
+          );
+        },
+        routes: [
+          GoRoute(
+            parentNavigatorKey: _nav.navKey,
+            path: 'preview',
+            name: "preview-permohonan",
+            pageBuilder: (context, state) {
+              SuratPermohonan? data = SuratPermohonan();
+              data.name = state.uri.queryParameters['name'];
+              data.address = state.uri.queryParameters['address'];
+              data.nik = state.uri.queryParameters['nik'];
+              data.phone = state.uri.queryParameters['phone'];
+              return NoTransitionPage(
+                child: SuratPermohonanPDF(data: data),
+              );
+            },
+          ),
+        ],
+      ),
       ShellRoute(
         restorationScopeId: "",
         navigatorKey: _dashboardNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
-          return ParentLayout(
-            menu: "dashboard",
-            child: child,
-          );
+          return BottomNavigation(child: child);
         },
         routes: [
           GoRoute(
@@ -62,7 +87,16 @@ class RouteNavigation {
             path: '/',
             pageBuilder: (context, state) {
               return const NoTransitionPage(
-                child: DashboardScreen(),
+                child: HomeScreen(),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/surat-resmi',
+            name: "surat-resmi",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: OfficialLetterScreen(),
               );
             },
           ),
@@ -72,39 +106,13 @@ class RouteNavigation {
         restorationScopeId: "",
         navigatorKey: _officialLeterKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
-          return ParentLayout(
-            menu: "Surat Resmi",
-            child: child,
-          );
+          // return ParentLayout(
+          //   menu: "Surat Resmi",
+          //   child: child,
+          // );
+          return Scaffold(appBar: AppBar(), body: child);
         },
         routes: [
-          GoRoute(
-            parentNavigatorKey: _officialLeterKey,
-            path: '/surat-permohonan',
-            name: "surat-permohonan",
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: SuratPermohonanScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                parentNavigatorKey: _officialLeterKey,
-                path: 'preview',
-                name: "preview-permohonan",
-                pageBuilder: (context, state) {
-                  SuratPermohonan? data = SuratPermohonan();
-                  data.name = state.uri.queryParameters['name'];
-                  data.address = state.uri.queryParameters['address'];
-                  data.nik = state.uri.queryParameters['nik'];
-                  data.phone = state.uri.queryParameters['phone'];
-                  return NoTransitionPage(
-                    child: SuratPermohonanPDF(data: data),
-                  );
-                },
-              ),
-            ],
-          ),
           GoRoute(
             parentNavigatorKey: _officialLeterKey,
             path: '/surat-lunas',

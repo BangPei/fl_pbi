@@ -11,10 +11,13 @@ class Common {
   Common._();
 
   static String imageLogo = 'images/logo.png';
+  static String imageDollar = 'images/OIP.png';
+  static String imageProfile = 'images/profile.png';
+  static String imageHome = 'images/home.png';
   static MaskTextInputFormatter ktpFormat = MaskTextInputFormatter(
     mask: '##.####.######.####',
     filter: {"#": RegExp(r'[0-9]')},
-    type: MaskAutoCompletionType.lazy,
+    type: MaskAutoCompletionType.eager,
   );
 
   static pw.Container headers(pw.ImageProvider image) {
