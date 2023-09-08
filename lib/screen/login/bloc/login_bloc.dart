@@ -23,9 +23,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       BuildContext context = _nav.navKey.currentContext!;
       Login login = event.login;
       var dataLOgin = await LoginApi.login(login);
-      await Session.set("token", dataLOgin["token"]);
-      await Session.set("fullName", dataLOgin["profile"]["fullName"]);
-      await Session.set("picture", dataLOgin["profile"]?["picture"] ?? "");
+      Session.set("token", dataLOgin["token"]);
+      Session.set("fullName", dataLOgin["profile"]["fullName"]);
+      Session.set("picture", dataLOgin["profile"]?["picture"] ?? "");
       // ignore: use_build_context_synchronously
       context.go('/');
     } catch (e) {

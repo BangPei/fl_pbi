@@ -1,10 +1,11 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/currency_formater.dart';
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:fl_pbi/widget.dart/card_template.dart';
+import 'package:fl_pbi/widget.dart/custom_Botton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -127,17 +128,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Pihak Pertama'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'owner_name',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'owner_name',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -149,17 +143,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Pihak Kedua'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'name',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'name',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -171,18 +158,11 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('No. KTP Pihak Kedua'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'nik',
-                                onSubmitted: (val) {},
-                                inputFormatters: [Common.ktpFormat],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'nik',
+                            onSubmitted: (val) {},
+                            inputFormatters: [Common.ktpFormat],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -194,17 +174,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('No.Tlp Pihak Kedua'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'phone',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'phone',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -216,19 +189,12 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Alamat Pihak Kedua'),
-                              ),
-                              ReactiveTextField(
-                                maxLines: 3,
-                                minLines: 3,
-                                formControlName: 'address',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            maxLines: 3,
+                            minLines: 3,
+                            formControlName: 'address',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -240,17 +206,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Area Lahan'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'area_name',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'area_name',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -262,17 +221,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Pemilik Area'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'area_company',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'area_company',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -284,22 +236,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Luas Area'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'wide',
-                                onSubmitted: (val) {},
-                                textAlign: TextAlign.end,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  CurrencyInputFormatter(),
-                                ],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
+                          child: ReactiveTextField(
+                            formControlName: 'wide',
+                            onSubmitted: (val) {},
+                            textAlign: TextAlign.end,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              CurrencyInputFormatter(),
                             ],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -311,22 +256,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Durasi Sewa Lahan'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'periode_rent',
-                                textAlign: TextAlign.end,
-                                onSubmitted: (val) {},
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  CurrencyInputFormatter(),
-                                ],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
+                          child: ReactiveTextField(
+                            formControlName: 'periode_rent',
+                            textAlign: TextAlign.end,
+                            onSubmitted: (val) {},
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              CurrencyInputFormatter(),
                             ],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -338,22 +276,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Durasi Perpanjangan'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'extra_time',
-                                onSubmitted: (val) {},
-                                textAlign: TextAlign.end,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  CurrencyInputFormatter(),
-                                ],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
+                          child: ReactiveTextField(
+                            formControlName: 'extra_time',
+                            onSubmitted: (val) {},
+                            textAlign: TextAlign.end,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              CurrencyInputFormatter(),
                             ],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -365,17 +296,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Periode Sewa Lahan'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'periode_date',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'periode_date',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -394,9 +318,13 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 120,
-                              child: BootstrapButton(
-                                size: BootstrapButtonSize.defaults,
-                                type: BootstrapButtonType.primary,
+                              child: CustomButton(
+                                title: const Text('Print'),
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.print,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                                 onPressed: () {
                                   if (formgroup.valid) {
                                     SuratSewaLahan sewaLahan =
@@ -406,18 +334,6 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                                         extra: sewaLahan);
                                   }
                                 },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.print,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text('Print'),
-                                  ],
-                                ),
                               ),
                             ),
                           ),

@@ -1,8 +1,9 @@
 import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
 import 'package:fl_pbi/widget.dart/card_template.dart';
+import 'package:fl_pbi/widget.dart/custom_Botton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -84,17 +85,10 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Nama'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'name',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'name',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -106,18 +100,11 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('NO. KTP'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'nik',
-                                onSubmitted: (val) {},
-                                inputFormatters: [Common.ktpFormat],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'nik',
+                            onSubmitted: (val) {},
+                            inputFormatters: [Common.ktpFormat],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -129,17 +116,10 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('No.Tlp'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'phone',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'phone',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -151,17 +131,10 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Blok / NO (Ruko/Kios)'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'block',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'block',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -173,17 +146,10 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Nama Pengelola'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'pic',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'pic',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -195,19 +161,12 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Alamat'),
-                              ),
-                              ReactiveTextField(
-                                maxLines: 3,
-                                minLines: 3,
-                                formControlName: 'address',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            maxLines: 3,
+                            minLines: 3,
+                            formControlName: 'address',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -226,9 +185,13 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 120,
-                              child: BootstrapButton(
-                                size: BootstrapButtonSize.defaults,
-                                type: BootstrapButtonType.primary,
+                              child: CustomButton(
+                                title: const Text('Print'),
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.print,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                                 onPressed: () {
                                   if (formgroup.valid) {
                                     Pendaftaran pendaftaran =
@@ -237,18 +200,6 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
                                         extra: pendaftaran);
                                   }
                                 },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.print,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text('Print'),
-                                  ],
-                                ),
                               ),
                             ),
                           ),

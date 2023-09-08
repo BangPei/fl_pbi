@@ -43,7 +43,7 @@ dependencies:
   pdf: ^3.10.4
   printing: ^5.11.0
   reactive_forms: ^16.1.0
-  flutter_bootstrap_widgets: ^1.1.0
+  # flutter_bootstrap_widgets: ^1.1.0
   responsive_grid: ^2.4.2
   mask_text_input_formatter: ^2.5.0
   shared_preferences: ^2.2.1

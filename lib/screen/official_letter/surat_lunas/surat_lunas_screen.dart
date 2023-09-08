@@ -1,8 +1,9 @@
 import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
 import 'package:fl_pbi/widget.dart/card_template.dart';
+import 'package:fl_pbi/widget.dart/custom_Botton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -88,17 +89,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Nama Pembuat Surat'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'name',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'name',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -110,18 +104,11 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('NO. KTP Pembuat Surat'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'nik',
-                                onSubmitted: (val) {},
-                                inputFormatters: [Common.ktpFormat],
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'nik',
+                            onSubmitted: (val) {},
+                            inputFormatters: [Common.ktpFormat],
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -133,17 +120,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Posisi Pembuat Surat'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'position',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'position',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -155,17 +135,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('No.Tlp Pembuat Surat'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'phone',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'phone',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -177,17 +150,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Blok / NO (Ruko/Kios)'),
-                              ),
-                              ReactiveTextField(
-                                formControlName: 'block',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            formControlName: 'block',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -199,64 +165,53 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Tanggal Surat Dibuat'),
-                              ),
-                              ReactiveDatePicker<DateTime>(
-                                formControlName: 'date',
-                                builder: (BuildContext context,
-                                    ReactiveDatePickerDelegate<dynamic> picker,
-                                    Widget? child) {
-                                  Widget suffix = InkWell(
-                                    onTap: () {
-                                      _dateFocusNode.unfocus();
-                                      if (formgroup.control('date').value ==
-                                          null) {
-                                        picker.showPicker();
-                                      } else {
-                                        picker.control.value = null;
-                                        Future.delayed(
-                                            const Duration(milliseconds: 100),
-                                            () {
-                                          _dateFocusNode.canRequestFocus = true;
-                                        });
-                                      }
-                                    },
-                                    child:
-                                        formgroup.control('date').value == null
-                                            ? const Icon(
-                                                FontAwesomeIcons.calendarCheck,
-                                                color: Colors.blue,
-                                              )
-                                            : const Icon(
-                                                FontAwesomeIcons.xmark,
-                                                color: Colors.red,
-                                              ),
-                                  );
-                                  return ReactiveTextField(
-                                    onTap: (_) {
-                                      if (_dateFocusNode.canRequestFocus) {
-                                        _dateFocusNode.unfocus();
-                                        picker.showPicker();
-                                      }
-                                    },
-                                    valueAccessor: DateTimeValueAccessor(
-                                      dateTimeFormat:
-                                          DateFormat('dd MMMM yyyy'),
-                                    ),
-                                    formControlName: 'date',
-                                    focusNode: _dateFocusNode,
-                                    readOnly: true,
-                                    decoration: BootstrapInputDecoration(
-                                        suffixIcon: suffix),
-                                  );
+                          child: ReactiveDatePicker<DateTime>(
+                            formControlName: 'date',
+                            builder: (BuildContext context,
+                                ReactiveDatePickerDelegate<dynamic> picker,
+                                Widget? child) {
+                              Widget suffix = InkWell(
+                                onTap: () {
+                                  _dateFocusNode.unfocus();
+                                  if (formgroup.control('date').value == null) {
+                                    picker.showPicker();
+                                  } else {
+                                    picker.control.value = null;
+                                    Future.delayed(
+                                        const Duration(milliseconds: 100), () {
+                                      _dateFocusNode.canRequestFocus = true;
+                                    });
+                                  }
                                 },
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(3000),
-                              ),
-                            ],
+                                child: formgroup.control('date').value == null
+                                    ? const Icon(
+                                        FontAwesomeIcons.calendarCheck,
+                                        color: Colors.blue,
+                                      )
+                                    : const Icon(
+                                        FontAwesomeIcons.xmark,
+                                        color: Colors.red,
+                                      ),
+                              );
+                              return ReactiveTextField(
+                                onTap: (_) {
+                                  if (_dateFocusNode.canRequestFocus) {
+                                    _dateFocusNode.unfocus();
+                                    picker.showPicker();
+                                  }
+                                },
+                                valueAccessor: DateTimeValueAccessor(
+                                  dateTimeFormat: DateFormat('dd MMMM yyyy'),
+                                ),
+                                formControlName: 'date',
+                                focusNode: _dateFocusNode,
+                                readOnly: true,
+                                decoration:
+                                    TextFormDecoration.box(suffixIcon: suffix),
+                              );
+                            },
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(3000),
                           ),
                         ),
                       ),
@@ -268,19 +223,12 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 2),
-                          child: BootstrapFormGroup(
-                            children: [
-                              const BootstrapLabelText(
-                                child: SelectableText('Alamat Pembuat Surat'),
-                              ),
-                              ReactiveTextField(
-                                maxLines: 3,
-                                minLines: 3,
-                                formControlName: 'address',
-                                onSubmitted: (val) {},
-                                decoration: const BootstrapInputDecoration(),
-                              ),
-                            ],
+                          child: ReactiveTextField(
+                            maxLines: 3,
+                            minLines: 3,
+                            formControlName: 'address',
+                            onSubmitted: (val) {},
+                            decoration: TextFormDecoration.box(),
                           ),
                         ),
                       ),
@@ -299,9 +247,13 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 120,
-                              child: BootstrapButton(
-                                size: BootstrapButtonSize.defaults,
-                                type: BootstrapButtonType.primary,
+                              child: CustomButton(
+                                title: const Text('Print'),
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.print,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                                 onPressed: () {
                                   if (formgroup.valid) {
                                     SuratLunas lunas =
@@ -310,18 +262,6 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                                         extra: lunas);
                                   }
                                 },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.print,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text('Print'),
-                                  ],
-                                ),
                               ),
                             ),
                           ),

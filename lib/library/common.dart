@@ -1,5 +1,5 @@
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bootstrap_widgets/bootstrap_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -83,57 +83,50 @@ class Common {
     required String formControlName,
     required String labelText,
   }) {
-    return BootstrapFormGroup(
-      children: [
-        BootstrapLabelText(
-          child: SelectableText(labelText),
-        ),
-        ReactiveDatePicker<DateTime>(
-          formControlName: formControlName,
-          builder: (BuildContext context,
-              ReactiveDatePickerDelegate<dynamic> picker, Widget? child) {
-            Widget suffix = InkWell(
-              onTap: () {
-                focusNode.unfocus();
-                if (formGroup.control(formControlName).value == null) {
-                  picker.showPicker();
-                } else {
-                  picker.control.value = null;
-                  Future.delayed(const Duration(milliseconds: 100), () {
-                    focusNode.canRequestFocus = true;
-                  });
-                }
-              },
-              child: formGroup.control('date').value == null
-                  ? const Icon(
-                      FontAwesomeIcons.calendarCheck,
-                      color: Colors.blue,
-                    )
-                  : const Icon(
-                      FontAwesomeIcons.xmark,
-                      color: Colors.red,
-                    ),
-            );
-            return ReactiveTextField(
-              onTap: (_) {
-                if (focusNode.canRequestFocus) {
-                  focusNode.unfocus();
-                  picker.showPicker();
-                }
-              },
-              valueAccessor: DateTimeValueAccessor(
-                dateTimeFormat: DateFormat('dd MMMM yyyy'),
-              ),
-              formControlName: 'date',
-              focusNode: focusNode,
-              readOnly: true,
-              decoration: BootstrapInputDecoration(suffixIcon: suffix),
-            );
+    return ReactiveDatePicker<DateTime>(
+      formControlName: formControlName,
+      builder: (BuildContext context,
+          ReactiveDatePickerDelegate<dynamic> picker, Widget? child) {
+        Widget suffix = InkWell(
+          onTap: () {
+            focusNode.unfocus();
+            if (formGroup.control(formControlName).value == null) {
+              picker.showPicker();
+            } else {
+              picker.control.value = null;
+              Future.delayed(const Duration(milliseconds: 100), () {
+                focusNode.canRequestFocus = true;
+              });
+            }
           },
-          firstDate: DateTime(1900),
-          lastDate: DateTime(3000),
-        ),
-      ],
+          child: formGroup.control('date').value == null
+              ? const Icon(
+                  FontAwesomeIcons.calendarCheck,
+                  color: Colors.blue,
+                )
+              : const Icon(
+                  FontAwesomeIcons.xmark,
+                  color: Colors.red,
+                ),
+        );
+        return ReactiveTextField(
+          onTap: (_) {
+            if (focusNode.canRequestFocus) {
+              focusNode.unfocus();
+              picker.showPicker();
+            }
+          },
+          valueAccessor: DateTimeValueAccessor(
+            dateTimeFormat: DateFormat('dd MMMM yyyy'),
+          ),
+          formControlName: 'date',
+          focusNode: focusNode,
+          readOnly: true,
+          decoration: TextFormDecoration.box(suffixIcon: suffix),
+        );
+      },
+      firstDate: DateTime(1900),
+      lastDate: DateTime(3000),
     );
   }
 }
