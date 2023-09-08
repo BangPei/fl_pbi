@@ -33,7 +33,7 @@ class _OfficialLetterScreenState extends State<OfficialLetterScreen> {
             return Padding(
               padding: const EdgeInsets.only(top: 6, left: 6, right: 6),
               child: CardBanner(
-                onTap: () => context.push("/${letter.routeName}"),
+                onTap: () => context.pushNamed("${letter.routeName}"),
                 title: letter.title ?? "",
                 leading: Padding(
                   padding: const EdgeInsets.only(right: 10),

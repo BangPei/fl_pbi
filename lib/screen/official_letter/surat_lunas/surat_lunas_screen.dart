@@ -1,14 +1,13 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
-import 'package:fl_pbi/widget.dart/card_template.dart';
-import 'package:fl_pbi/widget.dart/custom_Botton.dart';
+import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 
 class SuratLunasScreen extends StatefulWidget {
   const SuratLunasScreen({super.key});
@@ -64,217 +63,132 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 13),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: DefaultCardTitle("Surat Keterangan Lunas"),
-            ),
-            const SizedBox(height: 10),
-            ReactiveForm(
-              formGroup: formgroup,
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: ResponsiveGridRow(
-                    children: [
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'name',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'nik',
-                            onSubmitted: (val) {},
-                            inputFormatters: [Common.ktpFormat],
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'position',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'phone',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'block',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveDatePicker<DateTime>(
-                            formControlName: 'date',
-                            builder: (BuildContext context,
-                                ReactiveDatePickerDelegate<dynamic> picker,
-                                Widget? child) {
-                              Widget suffix = InkWell(
-                                onTap: () {
-                                  _dateFocusNode.unfocus();
-                                  if (formgroup.control('date').value == null) {
-                                    picker.showPicker();
-                                  } else {
-                                    picker.control.value = null;
-                                    Future.delayed(
-                                        const Duration(milliseconds: 100), () {
-                                      _dateFocusNode.canRequestFocus = true;
-                                    });
-                                  }
-                                },
-                                child: formgroup.control('date').value == null
-                                    ? const Icon(
-                                        FontAwesomeIcons.calendarCheck,
-                                        color: Colors.blue,
-                                      )
-                                    : const Icon(
-                                        FontAwesomeIcons.xmark,
-                                        color: Colors.red,
-                                      ),
-                              );
-                              return ReactiveTextField(
-                                onTap: (_) {
-                                  if (_dateFocusNode.canRequestFocus) {
-                                    _dateFocusNode.unfocus();
-                                    picker.showPicker();
-                                  }
-                                },
-                                valueAccessor: DateTimeValueAccessor(
-                                  dateTimeFormat: DateFormat('dd MMMM yyyy'),
-                                ),
-                                formControlName: 'date',
-                                focusNode: _dateFocusNode,
-                                readOnly: true,
-                                decoration:
-                                    TextFormDecoration.box(suffixIcon: suffix),
-                              );
-                            },
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(3000),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 12,
-                        xl: 12,
-                        md: 12,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            maxLines: 3,
-                            minLines: 3,
-                            formControlName: 'address',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 12,
-                        xl: 12,
-                        md: 12,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                            right: 16,
-                            top: 4,
-                            bottom: 8,
-                          ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 120,
-                              child: CustomButton(
-                                title: const Text('Print'),
-                                icon: const FaIcon(
-                                  FontAwesomeIcons.print,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  if (formgroup.valid) {
-                                    SuratLunas lunas =
-                                        SuratLunas.fromJson(formgroup.value);
-                                    context.go("/surat-lunas/preview",
-                                        extra: lunas);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
+    return CustomForm(
+      title: 'Surat Keterangan Lunas',
+      formGroup: formgroup,
+      children: [
+        CustomFormField(
+          title: "Nama",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'name',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
         ),
-      ),
+        CustomFormField(
+          title: "NO. KTP",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'nik',
+            onSubmitted: (val) {},
+            keyboardType: TextInputType.number,
+            inputFormatters: [Common.ktpFormat],
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Posisi",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'position',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "NO. Telp",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'phone',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "NO. Blok",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'block',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Tanggal Lunas",
+          reactiveForm: ReactiveDatePicker<DateTime>(
+            formControlName: 'date',
+            builder: (BuildContext context,
+                ReactiveDatePickerDelegate<dynamic> picker, Widget? child) {
+              Widget suffix = InkWell(
+                onTap: () {
+                  _dateFocusNode.unfocus();
+                  if (formgroup.control('date').value == null) {
+                    picker.showPicker();
+                  } else {
+                    picker.control.value = null;
+                    Future.delayed(const Duration(milliseconds: 100), () {
+                      _dateFocusNode.canRequestFocus = true;
+                    });
+                  }
+                },
+                child: formgroup.control('date').value == null
+                    ? const Icon(
+                        FontAwesomeIcons.calendarCheck,
+                        color: Colors.blue,
+                      )
+                    : const Icon(
+                        FontAwesomeIcons.xmark,
+                        color: Colors.red,
+                      ),
+              );
+              return ReactiveTextField(
+                onTap: (_) {
+                  if (_dateFocusNode.canRequestFocus) {
+                    _dateFocusNode.unfocus();
+                    picker.showPicker();
+                  }
+                },
+                valueAccessor: DateTimeValueAccessor(
+                  dateTimeFormat: DateFormat('dd MMMM yyyy'),
+                ),
+                formControlName: 'date',
+                focusNode: _dateFocusNode,
+                readOnly: true,
+                decoration: TextFormDecoration.box(suffixIcon: suffix),
+              );
+            },
+            firstDate: DateTime(1900),
+            lastDate: DateTime(3000),
+          ),
+        ),
+        CustomFormField(
+          title: "Alamat",
+          reactiveForm: ReactiveTextField(
+            maxLines: 3,
+            minLines: 3,
+            formControlName: 'address',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+      ],
+      onPrint: () {
+        if (formgroup.valid) {
+          SuratLunas lunas = SuratLunas.fromJson(formgroup.value);
+          // context.pushNamed("preview-permohonan",
+          //     queryParameters: permohonan.toStringJson());
+          context.pushNamed("preview-pdf", extra: {
+            "data": lunas,
+            "pdf": lunas.pdf(),
+            "title":
+                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+          });
+        }
+      },
+      onDownload: () {
+        context.pushNamed("preview-pdf", extra: {
+          "data": SuratLunas(),
+          "pdf": SuratLunas().pdf(),
+          "title":
+              "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+        });
+      },
     );
   }
 }

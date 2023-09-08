@@ -20,6 +20,11 @@ class Common {
     type: MaskAutoCompletionType.eager,
   );
 
+  static const double inch = 72.0;
+  static const double cm = inch / 2.54;
+  static const PdfPageFormat a4 =
+      PdfPageFormat(21.0 * cm, 29.7 * cm, marginAll: 2.0 * cm);
+
   static pw.Container headers(pw.ImageProvider image) {
     return pw.Container(
         alignment: pw.Alignment.centerRight,

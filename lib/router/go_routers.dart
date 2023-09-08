@@ -7,16 +7,13 @@ import 'package:fl_pbi/screen/login/login_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
-import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
-import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan/permohonan.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
+import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,33 +45,6 @@ class RouteNavigation {
           );
         },
       ),
-      GoRoute(
-        parentNavigatorKey: _nav.navKey,
-        path: '/surat-permohonan',
-        name: "surat-permohonan",
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: SuratPermohonanScreen(),
-          );
-        },
-        routes: [
-          GoRoute(
-            parentNavigatorKey: _nav.navKey,
-            path: 'preview',
-            name: "preview-permohonan",
-            pageBuilder: (context, state) {
-              SuratPermohonan? data = SuratPermohonan();
-              data.name = state.uri.queryParameters['name'];
-              data.address = state.uri.queryParameters['address'];
-              data.nik = state.uri.queryParameters['nik'];
-              data.phone = state.uri.queryParameters['phone'];
-              return NoTransitionPage(
-                child: SuratPermohonanPDF(data: data),
-              );
-            },
-          ),
-        ],
-      ),
       ShellRoute(
         restorationScopeId: "",
         navigatorKey: _dashboardNavigatorKey,
@@ -99,6 +69,43 @@ class RouteNavigation {
                 child: OfficialLetterScreen(),
               );
             },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'preview',
+                name: "preview-pdf",
+                pageBuilder: (context, state) {
+                  var extra = state.extra as Map<String, dynamic>;
+                  return NoTransitionPage(
+                    child: PDFMainLayout(
+                      data: extra["data"],
+                      pdf: extra['pdf'],
+                      fileName: extra["title"],
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'surat-permohonan',
+                name: "surat-permohonan",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: SuratPermohonanScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'surat-lunas',
+                name: "surat-lunas",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: SuratLunasScreen(),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -106,38 +113,9 @@ class RouteNavigation {
         restorationScopeId: "",
         navigatorKey: _officialLeterKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
-          // return ParentLayout(
-          //   menu: "Surat Resmi",
-          //   child: child,
-          // );
           return Scaffold(appBar: AppBar(), body: child);
         },
         routes: [
-          GoRoute(
-            parentNavigatorKey: _officialLeterKey,
-            path: '/surat-lunas',
-            name: "surat-lunas",
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: SuratLunasScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                parentNavigatorKey: _officialLeterKey,
-                path: 'preview',
-                name: "preview-lunas",
-                pageBuilder: (context, state) {
-                  SuratLunas? data = state.extra != null
-                      ? state.extra as SuratLunas
-                      : SuratLunas();
-                  return NoTransitionPage(
-                    child: SuratLunasPDF(data: data),
-                  );
-                },
-              ),
-            ],
-          ),
           GoRoute(
             parentNavigatorKey: _officialLeterKey,
             path: '/formulir-pendaftaran',

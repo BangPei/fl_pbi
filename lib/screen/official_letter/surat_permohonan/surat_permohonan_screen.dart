@@ -80,9 +80,21 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         if (formgroup.valid) {
           SuratPermohonan permohonan =
               SuratPermohonan.fromJson(formgroup.value);
-          context.pushNamed("preview-permohonan",
-              queryParameters: permohonan.toStringJson());
+          // context.pushNamed("preview-permohonan",
+          //     queryParameters: permohonan.toStringJson());
+          context.pushNamed("preview-pdf", extra: {
+            "data": permohonan,
+            "pdf": permohonan.pdf(),
+            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+          });
         }
+      },
+      onDownload: () {
+        context.pushNamed("preview-pdf", extra: {
+          "data": SuratPermohonan(),
+          "pdf": SuratPermohonan().pdf(),
+          "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+        });
       },
     );
   }
