@@ -86,7 +86,6 @@ class Common {
     required FocusNode focusNode,
     required FormGroup formGroup,
     required String formControlName,
-    required String labelText,
   }) {
     return ReactiveDatePicker<DateTime>(
       formControlName: formControlName,

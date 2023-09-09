@@ -4,9 +4,7 @@ import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class SuratLunasScreen extends StatefulWidget {
@@ -111,50 +109,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
         ),
         CustomFormField(
           title: "Tanggal Lunas",
-          reactiveForm: ReactiveDatePicker<DateTime>(
-            formControlName: 'date',
-            builder: (BuildContext context,
-                ReactiveDatePickerDelegate<dynamic> picker, Widget? child) {
-              Widget suffix = InkWell(
-                onTap: () {
-                  _dateFocusNode.unfocus();
-                  if (formgroup.control('date').value == null) {
-                    picker.showPicker();
-                  } else {
-                    picker.control.value = null;
-                    Future.delayed(const Duration(milliseconds: 100), () {
-                      _dateFocusNode.canRequestFocus = true;
-                    });
-                  }
-                },
-                child: formgroup.control('date').value == null
-                    ? const Icon(
-                        FontAwesomeIcons.calendarCheck,
-                        color: Colors.blue,
-                      )
-                    : const Icon(
-                        FontAwesomeIcons.xmark,
-                        color: Colors.red,
-                      ),
-              );
-              return ReactiveTextField(
-                onTap: (_) {
-                  if (_dateFocusNode.canRequestFocus) {
-                    _dateFocusNode.unfocus();
-                    picker.showPicker();
-                  }
-                },
-                valueAccessor: DateTimeValueAccessor(
-                  dateTimeFormat: DateFormat('dd MMMM yyyy'),
-                ),
-                formControlName: 'date',
-                focusNode: _dateFocusNode,
-                readOnly: true,
-                decoration: TextFormDecoration.box(suffixIcon: suffix),
-              );
-            },
-            firstDate: DateTime(1900),
-            lastDate: DateTime(3000),
+          reactiveForm: Common.reactiveDatePicker(
+            focusNode: _dateFocusNode,
+            formGroup: formgroup,
+            formControlName: "date",
           ),
         ),
         CustomFormField(

@@ -9,8 +9,7 @@ import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pend
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
-import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
-import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_pdf.dart';
+
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
@@ -105,6 +104,16 @@ class RouteNavigation {
                   );
                 },
               ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'sewa-lahan',
+                name: "sewa-lahan",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: SuratSewaLahanScreen(),
+                  );
+                },
+              ),
             ],
           ),
         ],
@@ -140,32 +149,7 @@ class RouteNavigation {
                 },
               ),
             ],
-          ),
-          GoRoute(
-            parentNavigatorKey: _officialLeterKey,
-            path: '/sewa-lahan',
-            name: "sewa-lahan",
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: SuratSewaLahanScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                parentNavigatorKey: _officialLeterKey,
-                path: 'preview',
-                name: "preview-lahan",
-                pageBuilder: (context, state) {
-                  SuratSewaLahan? data = state.extra != null
-                      ? state.extra as SuratSewaLahan
-                      : SuratSewaLahan();
-                  return NoTransitionPage(
-                    child: SuratSewaLahanPDF(data: data),
-                  );
-                },
-              ),
-            ],
-          ),
+          )
         ],
       ),
     ],

@@ -19,7 +19,7 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<dynamic> login(login) async {
+  Future<dynamic> login(Login login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -36,7 +36,11 @@ class _RestClient implements RestClient {
           queryParameters: queryParameters,
           data: _data,
         )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
     final value = _result.data;
     return value;
   }
@@ -52,5 +56,22 @@ class _RestClient implements RestClient {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

@@ -32,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // ignore: use_build_context_synchronously
       context.go('/');
     } catch (e) {
-      DioError err = e as DioError;
+      DioException err = e as DioException;
       emit(LoginErrorState(errorMessage: err.message));
     }
   }

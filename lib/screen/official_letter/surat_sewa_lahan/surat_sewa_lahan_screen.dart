@@ -2,14 +2,12 @@ import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/currency_formater.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
-import 'package:fl_pbi/widget.dart/card_template.dart';
-import 'package:fl_pbi/widget.dart/custom_Botton.dart';
+import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 
 class SuratSewaLahanScreen extends StatefulWidget {
   const SuratSewaLahanScreen({super.key});
@@ -85,268 +83,207 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 13),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: DefaultCardTitle("Surat Sewa Lahan"),
-            ),
-            const SizedBox(height: 10),
-            ReactiveForm(
-              formGroup: formgroup,
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: ResponsiveGridRow(
-                    children: [
-                      ResponsiveGridCol(
-                        lg: 6,
-                        xl: 6,
-                        md: 6,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 2,
-                          ),
-                          child: Common.reactiveDatePicker(
-                            labelText: "Tanggal Perjanjian",
-                            focusNode: dateFocusNode,
-                            formGroup: formgroup,
-                            formControlName: "date",
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 6,
-                        xl: 6,
-                        md: 6,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'owner_name',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'name',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'nik',
-                            onSubmitted: (val) {},
-                            inputFormatters: [Common.ktpFormat],
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'phone',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 12,
-                        xl: 12,
-                        md: 12,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            maxLines: 3,
-                            minLines: 3,
-                            formControlName: 'address',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'area_name',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'area_company',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'wide',
-                            onSubmitted: (val) {},
-                            textAlign: TextAlign.end,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              CurrencyInputFormatter(),
-                            ],
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'periode_rent',
-                            textAlign: TextAlign.end,
-                            onSubmitted: (val) {},
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              CurrencyInputFormatter(),
-                            ],
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'extra_time',
-                            onSubmitted: (val) {},
-                            textAlign: TextAlign.end,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              CurrencyInputFormatter(),
-                            ],
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 4,
-                        xl: 4,
-                        md: 4,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 2),
-                          child: ReactiveTextField(
-                            formControlName: 'periode_date',
-                            onSubmitted: (val) {},
-                            decoration: TextFormDecoration.box(),
-                          ),
-                        ),
-                      ),
-                      ResponsiveGridCol(
-                        lg: 12,
-                        xl: 12,
-                        md: 12,
-                        sm: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                            right: 16,
-                            top: 4,
-                            bottom: 8,
-                          ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 120,
-                              child: CustomButton(
-                                title: const Text('Print'),
-                                icon: const FaIcon(
-                                  FontAwesomeIcons.print,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  if (formgroup.valid) {
-                                    SuratSewaLahan sewaLahan =
-                                        SuratSewaLahan.fromJson(
-                                            formgroup.value);
-                                    context.go("/sewa-lahan/preview",
-                                        extra: sewaLahan);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
+    return CustomForm(
+      title: 'Surat Sewa Lahan',
+      formGroup: formgroup,
+      children: [
+        CustomFormField(
+          title: "date",
+          reactiveForm: Common.reactiveDatePicker(
+            focusNode: dateFocusNode,
+            formGroup: formgroup,
+            formControlName: "date",
+          ),
         ),
-      ),
+        CustomFormField(
+          title: "Pihak Pertama",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'owner_name',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Pihak Kedua",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'name',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "No. KTP",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'nik',
+            onSubmitted: (val) {},
+            keyboardType: TextInputType.number,
+            inputFormatters: [Common.ktpFormat],
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "No. Telp",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'phone',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Alamat",
+          reactiveForm: ReactiveTextField(
+            maxLines: 3,
+            minLines: 3,
+            formControlName: 'address',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Area",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'area_name',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Area Perusahaan",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'area_company',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Luas Area",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'wide',
+            onSubmitted: (val) {},
+            textAlign: TextAlign.end,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CurrencyInputFormatter(),
+            ],
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Masa Kontrak",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'periode_rent',
+            textAlign: TextAlign.end,
+            onSubmitted: (val) {},
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CurrencyInputFormatter(),
+            ],
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Perpanjangan Kontrak",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'extra_time',
+            onSubmitted: (val) {},
+            textAlign: TextAlign.end,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CurrencyInputFormatter(),
+            ],
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Berlaku Kontrak",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'periode_date',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+      ],
+      onPrint: () {
+        if (formgroup.valid) {
+          SuratSewaLahan sewaLahan = SuratSewaLahan.fromJson(formgroup.value);
+          context.pushNamed("preview-pdf", extra: {
+            "data": sewaLahan,
+            "pdf": sewaLahan.pdf(),
+            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+          });
+        }
+      },
+      onDownload: () {
+        context.pushNamed("preview-pdf", extra: {
+          "data": SuratSewaLahan(),
+          "pdf": SuratSewaLahan().pdf(),
+          "title": "Surat Sewa Lahan${DateTime.now().millisecond.toString()}"
+        });
+      },
     );
   }
+  // Widget build(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 13),
+  //     child: SingleChildScrollView(
+  //       child: Column(
+  //         children: [
+  //           const Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 8),
+  //             child: DefaultCardTitle("Surat Sewa Lahan"),
+  //           ),
+  //           const SizedBox(height: 10),
+  //           ReactiveForm(
+  //             formGroup: formgroup,
+  //             child: Card(
+  //               child: Padding(
+  //                 padding: const EdgeInsets.only(top: 20.0),
+  //                 child: ResponsiveGridRow(
+  //                   children: [
+  //                     ResponsiveGridCol(
+  //                       lg: 12,
+  //                       xl: 12,
+  //                       md: 12,
+  //                       sm: 12,
+  //                       child: Padding(
+  //                         padding: const EdgeInsets.only(
+  //                           left: 16.0,
+  //                           right: 16,
+  //                           top: 4,
+  //                           bottom: 8,
+  //                         ),
+  //                         child: Center(
+  //                           child: SizedBox(
+  //                             width: 120,
+  //                             child: CustomButton(
+  //                               title: const Text('Print'),
+  //                               icon: const FaIcon(
+  //                                 FontAwesomeIcons.print,
+  //                                 color: Colors.white,
+  //                                 size: 20,
+  //                               ),
+  //                               onPressed: () {
+  //                                 if (formgroup.valid) {
+  //                                   SuratSewaLahan sewaLahan =
+  //                                       SuratSewaLahan.fromJson(
+  //                                           formgroup.value);
+  //                                   context.go("/sewa-lahan/preview",
+  //                                       extra: sewaLahan);
+  //                                 }
+  //                               },
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
