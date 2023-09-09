@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/session_manager.dart';
@@ -18,18 +19,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onLoginSubmit(OnLoginSubmit event, Emitter<LoginState> emit) async {
-    // emit(ProductLoadingDialogState());
+    emit(LoginLoadingState());
     try {
       BuildContext context = _nav.navKey.currentContext!;
       Login login = event.login;
       var dataLOgin = await LoginApi.login(login);
-      Session.set("token", dataLOgin["token"]);
-      Session.set("fullName", dataLOgin["profile"]["fullName"]);
-      Session.set("picture", dataLOgin["profile"]?["picture"] ?? "");
+      await Future.wait([
+        Session.set("token", dataLOgin["token"]),
+        Session.set("fullName", dataLOgin["profile"]["fullName"]),
+        Session.set("picture", dataLOgin["profile"]?["picture"] ?? ""),
+      ]);
       // ignore: use_build_context_synchronously
       context.go('/');
     } catch (e) {
-      emit(LoginErrorState());
+      DioError err = e as DioError;
+      emit(LoginErrorState(errorMessage: err.message));
     }
   }
 }

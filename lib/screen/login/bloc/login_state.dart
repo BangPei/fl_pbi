@@ -7,7 +7,9 @@ sealed class LoginState {
 final class LoginInitial extends LoginState {}
 
 final class LoginErrorState extends LoginState {
-  List<Object?> get props => [];
+  final String? errorMessage;
+  const LoginErrorState({this.errorMessage});
+  List<Object?> get props => [errorMessage];
 }
 
 final class LoginLoadingState extends LoginState {
