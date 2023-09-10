@@ -2,6 +2,7 @@ import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -109,7 +110,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
         ),
         CustomFormField(
           title: "Tanggal Lunas",
-          reactiveForm: Common.reactiveDatePicker(
+          reactiveForm: CustomDatePicker(
             focusNode: _dateFocusNode,
             formGroup: formgroup,
             formControlName: "date",

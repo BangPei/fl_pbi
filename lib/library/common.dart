@@ -1,11 +1,6 @@
-import 'package:fl_pbi/library/text_form_decoration.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:reactive_forms/reactive_forms.dart';
 
 class Common {
   Common._();
@@ -80,57 +75,5 @@ class Common {
             ),
           ],
         ));
-  }
-
-  static Widget reactiveDatePicker({
-    required FocusNode focusNode,
-    required FormGroup formGroup,
-    required String formControlName,
-  }) {
-    return ReactiveDatePicker<DateTime>(
-      formControlName: formControlName,
-      builder: (BuildContext context,
-          ReactiveDatePickerDelegate<dynamic> picker, Widget? child) {
-        Widget suffix = InkWell(
-          onTap: () {
-            focusNode.unfocus();
-            if (formGroup.control(formControlName).value == null) {
-              picker.showPicker();
-            } else {
-              picker.control.value = null;
-              Future.delayed(const Duration(milliseconds: 100), () {
-                focusNode.canRequestFocus = true;
-              });
-            }
-          },
-          child: formGroup.control('date').value == null
-              ? const Icon(
-                  FontAwesomeIcons.calendarCheck,
-                  color: Colors.blue,
-                )
-              : const Icon(
-                  FontAwesomeIcons.xmark,
-                  color: Colors.red,
-                ),
-        );
-        return ReactiveTextField(
-          onTap: (_) {
-            if (focusNode.canRequestFocus) {
-              focusNode.unfocus();
-              picker.showPicker();
-            }
-          },
-          valueAccessor: DateTimeValueAccessor(
-            dateTimeFormat: DateFormat('dd MMMM yyyy'),
-          ),
-          formControlName: 'date',
-          focusNode: focusNode,
-          readOnly: true,
-          decoration: TextFormDecoration.box(suffixIcon: suffix),
-        );
-      },
-      firstDate: DateTime(1900),
-      lastDate: DateTime(3000),
-    );
   }
 }

@@ -3,10 +3,13 @@ import 'package:fl_pbi/library/currency_formater.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class SuratSewaLahanScreen extends StatefulWidget {
@@ -47,8 +50,8 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       value: '',
       validators: [Validators.required],
     ),
-    'wide': FormControl<int>(
-      value: 0,
+    'wide': FormControl<String>(
+      value: "",
       validators: [Validators.required],
     ),
     'extra_time': FormControl<int>(
@@ -88,8 +91,8 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       formGroup: formgroup,
       children: [
         CustomFormField(
-          title: "date",
-          reactiveForm: Common.reactiveDatePicker(
+          title: "Tanggal Perjanjian",
+          reactiveForm: CustomDatePicker(
             focusNode: dateFocusNode,
             formGroup: formgroup,
             formControlName: "date",
@@ -112,7 +115,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "No. KTP",
+          title: "No. KTP Pihak Kedua",
           reactiveForm: ReactiveTextField(
             formControlName: 'nik',
             onSubmitted: (val) {},
@@ -122,7 +125,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "No. Telp",
+          title: "No.Tlp Pihak Kedua",
           reactiveForm: ReactiveTextField(
             formControlName: 'phone',
             onSubmitted: (val) {},
@@ -130,7 +133,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Alamat",
+          title: "Alamat Pihak Kedua",
           reactiveForm: ReactiveTextField(
             maxLines: 3,
             minLines: 3,
@@ -140,7 +143,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Area",
+          title: "Area Lahan",
           reactiveForm: ReactiveTextField(
             formControlName: 'area_name',
             onSubmitted: (val) {},
@@ -148,7 +151,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Area Perusahaan",
+          title: "Pemilik Area",
           reactiveForm: ReactiveTextField(
             formControlName: 'area_company',
             onSubmitted: (val) {},
@@ -156,7 +159,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Luas Area",
+          title: "Luas Area (Meter persegi)",
           reactiveForm: ReactiveTextField(
             formControlName: 'wide',
             onSubmitted: (val) {},
@@ -169,11 +172,21 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Masa Kontrak",
+          title: "Durasi Sewa Lahan (Tahun)",
           reactiveForm: ReactiveTextField(
             formControlName: 'periode_rent',
             textAlign: TextAlign.end,
-            onSubmitted: (val) {},
+            onSubmitted: (val) {
+              DateTime? commitDate = formgroup.control('date').value;
+              if (commitDate != null) {
+                int year = formgroup.control('periode_rent').value;
+                var newDate = Jiffy.parseFromDateTime(commitDate)
+                    .add(years: year)
+                    .dateTime;
+                formgroup.control('periode_date').value = newDate;
+                setState(() {});
+              }
+            },
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               CurrencyInputFormatter(),
@@ -182,7 +195,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Perpanjangan Kontrak",
+          title: "Durasi Perpanjangan (Tahun)",
           reactiveForm: ReactiveTextField(
             formControlName: 'extra_time',
             onSubmitted: (val) {},
@@ -195,11 +208,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
         CustomFormField(
-          title: "Berlaku Kontrak",
+          title: "Periode Sewa Lahan",
           reactiveForm: ReactiveTextField(
             formControlName: 'periode_date',
+            readOnly: true,
             onSubmitted: (val) {},
             decoration: TextFormDecoration.box(),
+            valueAccessor: DateTimeValueAccessor(
+              dateTimeFormat: DateFormat('dd MMMM yyyy'),
+            ),
           ),
         ),
       ],
@@ -222,68 +239,4 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       },
     );
   }
-  // Widget build(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 13),
-  //     child: SingleChildScrollView(
-  //       child: Column(
-  //         children: [
-  //           const Padding(
-  //             padding: EdgeInsets.symmetric(horizontal: 8),
-  //             child: DefaultCardTitle("Surat Sewa Lahan"),
-  //           ),
-  //           const SizedBox(height: 10),
-  //           ReactiveForm(
-  //             formGroup: formgroup,
-  //             child: Card(
-  //               child: Padding(
-  //                 padding: const EdgeInsets.only(top: 20.0),
-  //                 child: ResponsiveGridRow(
-  //                   children: [
-  //                     ResponsiveGridCol(
-  //                       lg: 12,
-  //                       xl: 12,
-  //                       md: 12,
-  //                       sm: 12,
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(
-  //                           left: 16.0,
-  //                           right: 16,
-  //                           top: 4,
-  //                           bottom: 8,
-  //                         ),
-  //                         child: Center(
-  //                           child: SizedBox(
-  //                             width: 120,
-  //                             child: CustomButton(
-  //                               title: const Text('Print'),
-  //                               icon: const FaIcon(
-  //                                 FontAwesomeIcons.print,
-  //                                 color: Colors.white,
-  //                                 size: 20,
-  //                               ),
-  //                               onPressed: () {
-  //                                 if (formgroup.valid) {
-  //                                   SuratSewaLahan sewaLahan =
-  //                                       SuratSewaLahan.fromJson(
-  //                                           formgroup.value);
-  //                                   context.go("/sewa-lahan/preview",
-  //                                       extra: sewaLahan);
-  //                                 }
-  //                               },
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

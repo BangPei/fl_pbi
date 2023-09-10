@@ -2,6 +2,7 @@ import 'package:fl_pbi/widget.dart/custom_Botton.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
@@ -32,6 +33,10 @@ class _CustomFormState extends State<CustomForm> {
         preferredSize: const Size.fromHeight(70),
         child: CustomAppbar(
           title: widget.title,
+          leading: IconButton(
+            onPressed: () => context.pop(),
+            icon: const Icon(Icons.arrow_back),
+          ),
           actions: IconButton(
             icon: const Icon(Icons.download),
             onPressed: widget.onDownload,
