@@ -13,6 +13,8 @@ import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
+import 'package:fl_pbi/screen/profile/screen/profile_form_screen.dart';
+import 'package:fl_pbi/screen/profile/screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,6 +61,27 @@ class RouteNavigation {
                 child: HomeScreen(),
               );
             },
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/profile',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: ProfileScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form',
+                name: "profile-form",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: ProfileForm(),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/surat-resmi',

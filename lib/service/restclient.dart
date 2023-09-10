@@ -11,6 +11,9 @@ abstract class RestClient {
   @POST("auth")
   Future<dynamic> login(@Body() Login login);
 
+  @DELETE("users/logout")
+  Future<dynamic> logout();
+
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 

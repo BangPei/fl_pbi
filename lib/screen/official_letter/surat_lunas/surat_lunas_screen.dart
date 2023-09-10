@@ -63,11 +63,33 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      title: 'Surat Keterangan Lunas',
+      title: 'Form Surat Keterangan Lunas',
       formGroup: formgroup,
+      onSubmit: () {
+        if (formgroup.valid) {
+          SuratLunas lunas = SuratLunas.fromJson(formgroup.value);
+          context.pushNamed("preview-pdf", extra: {
+            "data": lunas,
+            "pdf": lunas.pdf(),
+            "title":
+                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+          });
+        }
+      },
+      action: IconButton(
+        icon: const Icon(Icons.download),
+        onPressed: () {
+          context.pushNamed("preview-pdf", extra: {
+            "data": SuratLunas(),
+            "pdf": SuratLunas().pdf(),
+            "title":
+                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+          });
+        },
+      ),
       children: [
         CustomFormField(
-          title: "Nama",
+          title: "Nama Pengelola",
           reactiveForm: ReactiveTextField(
             formControlName: 'name',
             onSubmitted: (val) {},
@@ -75,7 +97,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
           ),
         ),
         CustomFormField(
-          title: "NO. KTP",
+          title: "No. KTP Pengelola",
           reactiveForm: ReactiveTextField(
             formControlName: 'nik',
             onSubmitted: (val) {},
@@ -85,7 +107,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
           ),
         ),
         CustomFormField(
-          title: "Posisi",
+          title: "Posisi / Jabatan Pengelola",
           reactiveForm: ReactiveTextField(
             formControlName: 'position',
             onSubmitted: (val) {},
@@ -93,7 +115,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
           ),
         ),
         CustomFormField(
-          title: "NO. Telp",
+          title: "No. Telp Pengelola",
           reactiveForm: ReactiveTextField(
             formControlName: 'phone',
             onSubmitted: (val) {},
@@ -101,7 +123,17 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
           ),
         ),
         CustomFormField(
-          title: "NO. Blok",
+          title: "Alamat Pengelola",
+          reactiveForm: ReactiveTextField(
+            maxLines: 3,
+            minLines: 3,
+            formControlName: 'address',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "No. Blok",
           reactiveForm: ReactiveTextField(
             formControlName: 'block',
             onSubmitted: (val) {},
@@ -114,40 +146,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
             focusNode: _dateFocusNode,
             formGroup: formgroup,
             formControlName: "date",
-          ),
-        ),
-        CustomFormField(
-          title: "Alamat",
-          reactiveForm: ReactiveTextField(
-            maxLines: 3,
-            minLines: 3,
-            formControlName: 'address',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
+            onCloseDatepicker: (val) {},
           ),
         ),
       ],
-      onPrint: () {
-        if (formgroup.valid) {
-          SuratLunas lunas = SuratLunas.fromJson(formgroup.value);
-          // context.pushNamed("preview-permohonan",
-          //     queryParameters: permohonan.toStringJson());
-          context.pushNamed("preview-pdf", extra: {
-            "data": lunas,
-            "pdf": lunas.pdf(),
-            "title":
-                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
-          });
-        }
-      },
-      onDownload: () {
-        context.pushNamed("preview-pdf", extra: {
-          "data": SuratLunas(),
-          "pdf": SuratLunas().pdf(),
-          "title":
-              "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
-        });
-      },
     );
   }
 }

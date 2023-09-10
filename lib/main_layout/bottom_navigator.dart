@@ -55,7 +55,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
           ),
           BottomNavigationBarItem(
-            label: "Profile",
+            label: "Akun",
             icon: Image.asset(
               Common.imageProfile,
               width: 30.0,

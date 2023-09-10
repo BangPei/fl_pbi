@@ -36,8 +36,29 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      title: 'Surat Permohonan',
+      title: 'Form Surat Permohonan',
       formGroup: formgroup,
+      onSubmit: () {
+        if (formgroup.valid) {
+          SuratPermohonan permohonan =
+              SuratPermohonan.fromJson(formgroup.value);
+          context.pushNamed("preview-pdf", extra: {
+            "data": permohonan,
+            "pdf": permohonan.pdf(),
+            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+          });
+        }
+      },
+      action: IconButton(
+        icon: const Icon(Icons.download),
+        onPressed: () {
+          context.pushNamed("preview-pdf", extra: {
+            "data": SuratPermohonan(),
+            "pdf": SuratPermohonan().pdf(),
+            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+          });
+        },
+      ),
       children: [
         CustomFormField(
           title: "Nama",
@@ -76,26 +97,6 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
           ),
         ),
       ],
-      onPrint: () {
-        if (formgroup.valid) {
-          SuratPermohonan permohonan =
-              SuratPermohonan.fromJson(formgroup.value);
-          // context.pushNamed("preview-permohonan",
-          //     queryParameters: permohonan.toStringJson());
-          context.pushNamed("preview-pdf", extra: {
-            "data": permohonan,
-            "pdf": permohonan.pdf(),
-            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-          });
-        }
-      },
-      onDownload: () {
-        context.pushNamed("preview-pdf", extra: {
-          "data": SuratPermohonan(),
-          "pdf": SuratPermohonan().pdf(),
-          "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-        });
-      },
     );
   }
 }

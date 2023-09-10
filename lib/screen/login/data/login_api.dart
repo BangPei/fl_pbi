@@ -7,4 +7,10 @@ class LoginApi {
     var data = client.login(login);
     return data;
   }
+
+  static Future<dynamic> logout() async {
+    final client = await Api.restClient();
+    var data = client.logout();
+    return data;
+  }
 }

@@ -9,16 +9,18 @@ import 'package:responsive_grid/responsive_grid.dart';
 class CustomForm extends StatefulWidget {
   final FormGroup formGroup;
   final String title;
+  final String? buttonTitle;
   final List<ResponsiveGridCol> children;
-  final VoidCallback? onPrint;
-  final VoidCallback? onDownload;
+  final VoidCallback? onSubmit;
+  final Widget? action;
   const CustomForm({
     super.key,
     required this.formGroup,
     required this.title,
-    this.onPrint,
+    this.onSubmit,
     required this.children,
-    this.onDownload,
+    this.buttonTitle,
+    this.action,
   });
 
   @override
@@ -37,10 +39,7 @@ class _CustomFormState extends State<CustomForm> {
             onPressed: () => context.pop(),
             icon: const Icon(Icons.arrow_back),
           ),
-          actions: IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: widget.onDownload,
-          ),
+          actions: widget.action,
         ),
       ),
       body: SingleChildScrollView(
@@ -56,15 +55,15 @@ class _CustomFormState extends State<CustomForm> {
                   ),
                   Center(
                     child: SizedBox(
-                      width: 120,
+                      width: 150,
                       child: CustomButton(
-                        title: const Text('Print'),
+                        title: Text(widget.buttonTitle ?? 'Print'),
                         icon: const FaIcon(
-                          FontAwesomeIcons.print,
+                          FontAwesomeIcons.solidFloppyDisk,
                           color: Colors.white,
                           size: 20,
                         ),
-                        onPressed: widget.onPrint,
+                        onPressed: widget.onSubmit,
                       ),
                     ),
                   )

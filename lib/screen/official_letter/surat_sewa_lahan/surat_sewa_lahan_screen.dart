@@ -38,15 +38,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       value: '',
       validators: [Validators.required],
     ),
-    'owner_name': FormControl<String>(
+    'ownerName': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
-    'area_name': FormControl<String>(
+    'areaName': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
-    'area_company': FormControl<String>(
+    'areaCompany': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
@@ -54,11 +54,11 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       value: "",
       validators: [Validators.required],
     ),
-    'extra_time': FormControl<int>(
+    'extraTime': FormControl<int>(
       value: 0,
       validators: [Validators.required],
     ),
-    'periode_rent': FormControl<int>(
+    'periodeRent': FormControl<int>(
       value: 0,
       validators: [Validators.required],
     ),
@@ -66,7 +66,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
       value: null,
       validators: [Validators.required],
     ),
-    'periode_date': FormControl<DateTime>(
+    'periodeDate': FormControl<DateTime>(
       value: null,
       validators: [Validators.required],
     ),
@@ -87,8 +87,28 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      title: 'Surat Sewa Lahan',
+      title: 'Form Surat Sewa Lahan',
       formGroup: formgroup,
+      onSubmit: () {
+        if (formgroup.valid) {
+          SuratSewaLahan sewaLahan = SuratSewaLahan.fromJson(formgroup.value);
+          context.pushNamed("preview-pdf", extra: {
+            "data": sewaLahan,
+            "pdf": sewaLahan.pdf(),
+            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+          });
+        }
+      },
+      action: IconButton(
+        icon: const Icon(Icons.download),
+        onPressed: () {
+          context.pushNamed("preview-pdf", extra: {
+            "data": SuratSewaLahan(),
+            "pdf": SuratSewaLahan().pdf(),
+            "title": "Surat Sewa Lahan${DateTime.now().millisecond.toString()}"
+          });
+        },
+      ),
       children: [
         CustomFormField(
           title: "Tanggal Perjanjian",
@@ -96,12 +116,13 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
             focusNode: dateFocusNode,
             formGroup: formgroup,
             formControlName: "date",
+            onCloseDatepicker: (val) => periodeDate(),
           ),
         ),
         CustomFormField(
           title: "Pihak Pertama",
           reactiveForm: ReactiveTextField(
-            formControlName: 'owner_name',
+            formControlName: 'ownerName',
             onSubmitted: (val) {},
             decoration: TextFormDecoration.box(),
           ),
@@ -145,7 +166,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Area Lahan",
           reactiveForm: ReactiveTextField(
-            formControlName: 'area_name',
+            formControlName: 'areaName',
             onSubmitted: (val) {},
             decoration: TextFormDecoration.box(),
           ),
@@ -153,7 +174,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Pemilik Area",
           reactiveForm: ReactiveTextField(
-            formControlName: 'area_company',
+            formControlName: 'areaCompany',
             onSubmitted: (val) {},
             decoration: TextFormDecoration.box(),
           ),
@@ -174,19 +195,10 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Durasi Sewa Lahan (Tahun)",
           reactiveForm: ReactiveTextField(
-            formControlName: 'periode_rent',
+            formControlName: 'periodeRent',
             textAlign: TextAlign.end,
-            onSubmitted: (val) {
-              DateTime? commitDate = formgroup.control('date').value;
-              if (commitDate != null) {
-                int year = formgroup.control('periode_rent').value;
-                var newDate = Jiffy.parseFromDateTime(commitDate)
-                    .add(years: year)
-                    .dateTime;
-                formgroup.control('periode_date').value = newDate;
-                setState(() {});
-              }
-            },
+            // onSubmitted: (val) => periodeDate(),
+            onChanged: (val) => periodeDate(),
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               CurrencyInputFormatter(),
@@ -197,7 +209,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Durasi Perpanjangan (Tahun)",
           reactiveForm: ReactiveTextField(
-            formControlName: 'extra_time',
+            formControlName: 'extraTime',
             onSubmitted: (val) {},
             textAlign: TextAlign.end,
             inputFormatters: [
@@ -210,7 +222,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Periode Sewa Lahan",
           reactiveForm: ReactiveTextField(
-            formControlName: 'periode_date',
+            formControlName: 'periodeDate',
             readOnly: true,
             onSubmitted: (val) {},
             decoration: TextFormDecoration.box(),
@@ -220,23 +232,17 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           ),
         ),
       ],
-      onPrint: () {
-        if (formgroup.valid) {
-          SuratSewaLahan sewaLahan = SuratSewaLahan.fromJson(formgroup.value);
-          context.pushNamed("preview-pdf", extra: {
-            "data": sewaLahan,
-            "pdf": sewaLahan.pdf(),
-            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-          });
-        }
-      },
-      onDownload: () {
-        context.pushNamed("preview-pdf", extra: {
-          "data": SuratSewaLahan(),
-          "pdf": SuratSewaLahan().pdf(),
-          "title": "Surat Sewa Lahan${DateTime.now().millisecond.toString()}"
-        });
-      },
     );
+  }
+
+  void periodeDate() {
+    DateTime? commitDate = formgroup.control('date').value;
+    int year = formgroup.control('periodeRent').value ?? 0;
+    if (commitDate != null && year > 0) {
+      var newDate =
+          Jiffy.parseFromDateTime(commitDate).add(years: year).dateTime;
+      formgroup.control('periodeDate').value = newDate;
+      setState(() {});
+    }
   }
 }

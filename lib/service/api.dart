@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fl_pbi/injector/dio_interceptor.dart';
+import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/service/restclient.dart';
 
 class Api {
@@ -10,7 +11,7 @@ class Api {
     final dio = Dio();
     dio.interceptors.clear();
     dio.interceptors.add(DioInterceptors(dio));
-    // dio.options.headers["Authorization"] = await Session.get("authorization");
+    dio.options.headers["Authorization"] = await Session.get("token");
     dio.options.headers["Content-Type"] = "application/json";
     dio.options.headers["Accept"] = "*/*";
     return RestClient(dio, baseUrl: baseUrl);

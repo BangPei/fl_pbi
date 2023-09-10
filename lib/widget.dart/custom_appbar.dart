@@ -7,10 +7,12 @@ class CustomAppbar extends StatefulWidget {
     required this.title,
     this.actions,
     this.leading,
+    this.backgroundColor,
   });
   final String title;
   final Widget? actions;
   final Widget? leading;
+  final Color? backgroundColor;
   @override
   State<CustomAppbar> createState() => _CustomAppbarState();
 }
@@ -21,10 +23,8 @@ class _CustomAppbarState extends State<CustomAppbar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppTheme.white.withOpacity(topBarOpacity),
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(32.0),
-        ),
+        color:
+            widget.backgroundColor ?? AppTheme.white.withOpacity(topBarOpacity),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppTheme.grey.withOpacity(0.4 * topBarOpacity),
@@ -57,7 +57,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
                         fontFamily: AppTheme.fontName,
                         fontWeight: FontWeight.w700,
                         fontSize: 15 + 6 - 6 * topBarOpacity,
-                        // letterSpacing: 1.2,
                         color: AppTheme.dismissibleBackground,
                       ),
                     ),

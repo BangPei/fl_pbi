@@ -11,6 +11,7 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
+  final Function(DateTime)? onCloseDatepicker;
   const CustomDatePicker(
       {super.key,
       required this.formControlName,
@@ -18,7 +19,8 @@ class CustomDatePicker extends StatefulWidget {
       required this.formGroup,
       this.initialDate,
       this.firstDate,
-      this.lastDate});
+      this.lastDate,
+      this.onCloseDatepicker});
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -77,6 +79,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         );
         if (picked != null) {
           widget.formGroup.control(widget.formControlName).value = picked;
+          widget.onCloseDatepicker!(picked);
+          setState(() {});
         }
       },
     );

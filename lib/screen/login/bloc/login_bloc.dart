@@ -26,6 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       var dataLOgin = await LoginApi.login(login);
       await Future.wait([
         Session.set("token", dataLOgin["token"]),
+        Session.set("username", dataLOgin["username"]),
         Session.set("fullName", dataLOgin["profile"]["fullName"]),
         Session.set("picture", dataLOgin["profile"]?["picture"] ?? ""),
       ]);
