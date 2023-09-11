@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Container(
                 color: color,
-                height: MediaQuery.of(context).size.height / 100 * 20,
+                // height: MediaQuery.of(context).size.height / 100 * 20,
                 child: Align(
                   child: Column(
                     children: [
@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           accountName ?? "Account Name",
                           style: const TextStyle(
@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 2),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         child: InkWell(
                           onTap: () {
                             context.goNamed("profile-form");
