@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/session_manager.dart';
@@ -14,15 +15,29 @@ part 'login_state.dart';
 final NavigationService _nav = locator<NavigationService>();
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial()) {
+  LoginBloc() : super(const LoginState()) {
     on<OnLoginSubmit>(_onLoginSubmit);
+    on<OnChangePassword>(_onChangePassword);
+    on<OnChangeUsername>(_onChangeUsername);
+  }
+
+  void _onChangePassword(OnChangePassword event, Emitter<LoginState> emit) {
+    final password = event.password;
+    emit(state.copyWith(password: password));
+  }
+
+  void _onChangeUsername(OnChangeUsername event, Emitter<LoginState> emit) {
+    final username = event.username;
+    emit(state.copyWith(username: username));
   }
 
   void _onLoginSubmit(OnLoginSubmit event, Emitter<LoginState> emit) async {
-    emit(LoginLoadingState());
+    emit(state.copyWith(isLoading: true));
     try {
       BuildContext context = _nav.navKey.currentContext!;
-      Login login = event.login;
+
+      Login? login = Login(password: state.password, username: state.username);
+
       var dataLOgin = await LoginApi.login(login);
       await Future.wait([
         Session.set("token", dataLOgin["token"]),
@@ -32,9 +47,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ]);
       // ignore: use_build_context_synchronously
       context.go('/');
+      emit(state.copyWith(isLoading: false, isError: false));
     } catch (e) {
       DioException err = e as DioException;
-      emit(LoginErrorState(errorMessage: err.message));
+      emit(state.copyWith(
+        isLoading: false,
+        isError: true,
+        errorMessage: err.response?.data?["message"] ?? err.message,
+      ));
     }
   }
 }

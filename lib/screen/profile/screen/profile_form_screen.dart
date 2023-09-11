@@ -1,4 +1,6 @@
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -33,10 +35,6 @@ class _ProfileFormState extends State<ProfileForm> {
       value: '',
       validators: [Validators.required],
     ),
-    'idCardType': FormControl<String>(
-      value: "",
-      validators: [Validators.required],
-    ),
   });
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,50 @@ class _ProfileFormState extends State<ProfileForm> {
       title: "Edit Profile",
       buttonTitle: "Simpan",
       onSubmit: () {},
-      children: [],
+      children: [
+        CustomFormField(
+          title: "Nama Depan",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'firstName',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Nama Belakang",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'lastName',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Alamat Email",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'email',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "No. Tlp",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'phone',
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+        CustomFormField(
+          title: "Alamat Tinggal Saat Ini",
+          reactiveForm: ReactiveTextField(
+            formControlName: 'currentAddress',
+            maxLines: 3,
+            minLines: 3,
+            onSubmitted: (val) {},
+            decoration: TextFormDecoration.box(),
+          ),
+        ),
+      ],
     );
   }
 }

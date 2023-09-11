@@ -37,10 +37,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 color: color,
-                // height: MediaQuery.of(context).size.height / 100 * 20,
                 child: Align(
                   child: Column(
                     children: [
@@ -90,11 +90,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.only(left: 13, top: 10),
+                child: Text(
+                  "Pengaturan Akun",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 114, 113, 113)),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.lock_open_outlined),
+                      title: Text("Ganti Password"),
+                      trailing: Icon(Icons.arrow_right),
+                    ),
+                  ),
+                ),
+              ),
               GestureDetector(
                 onTap: () async {
                   try {
                     await LoginApi.logout();
                     await Session.clear();
+                    // ignore: use_build_context_synchronously
+                    context.go('/auth');
                   } catch (e) {
                     print(e);
                   }

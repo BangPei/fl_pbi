@@ -1,36 +1,37 @@
 part of 'login_bloc.dart';
 
-sealed class LoginState {
-  const LoginState();
-}
+final class LoginState extends Equatable {
+  const LoginState({
+    this.username,
+    this.password,
+    this.errorMessage,
+    this.isLoading = false,
+    this.isError = false,
+  });
 
-final class LoginInitial extends LoginState {}
-
-final class LoginErrorState extends LoginState {
+  final String? username;
+  final String? password;
   final String? errorMessage;
-  const LoginErrorState({this.errorMessage});
-  List<Object?> get props => [errorMessage];
-}
+  final bool isLoading;
+  final bool isError;
 
-final class LoginLoadingState extends LoginState {
-  List<Object?> get props => [];
-}
-
-class LoginSubmitState extends LoginState {
-  final String username;
-  final String password;
-  final String firstName;
-  const LoginSubmitState(
-      {required this.username,
-      required this.password,
-      required this.firstName});
-  LoginSubmitState copyWith({username, password, firstname}) {
-    return LoginSubmitState(
-      firstName: firstName,
-      password: password,
+  LoginState copyWith({
+    String? username,
+    String? password,
+    bool? isLoading,
+    String? errorMessage,
+    bool? isError,
+  }) {
+    return LoginState(
       username: username ?? this.username,
+      password: password ?? this.password,
+      errorMessage: errorMessage ?? this.errorMessage,
+      isLoading: isLoading ?? this.isLoading,
+      isError: isError ?? this.isError,
     );
   }
 
-  List<Object?> get props => [username, password, firstName];
+  @override
+  List<Object?> get props =>
+      [isLoading, username, password, isError, errorMessage];
 }
