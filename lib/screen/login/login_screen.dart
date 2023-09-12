@@ -185,7 +185,12 @@ class _LoginFormState extends State<LoginForm> {
                       child: BlocBuilder<LoginBloc, LoginState>(
                           builder: (context, state) {
                         return state.isLoading
-                            ? const CircularProgressIndicator()
+                            ? const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(),
+                                ],
+                              )
                             : TextButton(
                                 onPressed: () {
                                   bool isValid =

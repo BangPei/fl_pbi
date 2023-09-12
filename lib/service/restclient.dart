@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fl_pbi/screen/login/data/login.dart';
+import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:retrofit/http.dart';
 
 part 'restclient.g.dart';
@@ -13,6 +14,9 @@ abstract class RestClient {
 
   @DELETE("users/logout")
   Future<dynamic> logout();
+
+  @GET("profile/current")
+  Future<Profile> getCurrentProfile();
 
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);

@@ -1,5 +1,6 @@
 import 'package:fl_pbi/router/go_routers.dart';
 import 'package:fl_pbi/screen/login/bloc/login_bloc.dart';
+import 'package:fl_pbi/screen/profile/bloc/profile_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>(create: (__) => LoginBloc()),
+        BlocProvider<ProfileFormBloc>(create: (__) => ProfileFormBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

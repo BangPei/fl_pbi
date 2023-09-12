@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -75,5 +77,42 @@ class Common {
             ),
           ],
         ));
+  }
+
+  static modalInfo(BuildContext context,
+      {String? message, required String title, Icon? icon}) {
+    showDialog(
+      context: context,
+      builder: (__) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const Divider(height: 2, thickness: 3),
+                icon ??
+                    const FaIcon(
+                      FontAwesomeIcons.circleXmark,
+                      color: Colors.red,
+                      size: 50,
+                    ),
+                Text(
+                  message ?? "Message",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          title: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
   }
 }

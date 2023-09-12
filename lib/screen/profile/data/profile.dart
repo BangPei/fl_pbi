@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/user.dart';
+import 'package:fl_pbi/screen/profile/data/identity_card.dart';
 
 class Profile {
   int? id;
@@ -13,6 +14,7 @@ class Profile {
   String? idCardType;
   String? picture;
   User? user;
+  List<IdentityCard>? identities;
 
   Profile({
     this.id,
@@ -27,6 +29,7 @@ class Profile {
     this.idCardType,
     this.picture,
     this.user,
+    this.identities,
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
@@ -42,6 +45,12 @@ class Profile {
     idCardType = json['idCardType'];
     picture = json['picture'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    if (json['identities'] != null) {
+      identities = <IdentityCard>[];
+      json['identities'].forEach((v) {
+        identities!.add(IdentityCard.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +68,9 @@ class Profile {
     data['picture'] = picture;
     if (user != null) {
       data['user'] = user!.toJson();
+    }
+    if (identities != null) {
+      data['identities'] = identities!.map((v) => v.toJson()).toList();
     }
     return data;
   }

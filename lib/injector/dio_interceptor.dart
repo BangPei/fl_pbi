@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:fl_pbi/injector/injector.dart';
+import 'package:fl_pbi/injector/navigation_service.dart';
+import 'package:fl_pbi/library/common.dart';
+import 'package:flutter/material.dart';
 
 class DioInterceptors extends InterceptorsWrapper {
   final Dio dio;
   DioInterceptors(this.dio);
-  // final NavigationService _nav = locator<NavigationService>();
+  final NavigationService _nav = locator<NavigationService>();
 
   @override
   Future onError(err, handler) async {
@@ -34,16 +38,16 @@ class DioInterceptors extends InterceptorsWrapper {
         // );
       }
     } else {
-      // Common.modalInfo(
-      //   _nav.navKey.currentContext!,
-      //   title: "Error",
-      //   message: err.response?.data['message'] ?? "Gagal Mengakses Server",
-      //   icon: const Icon(
-      //     Icons.cancel_outlined,
-      //     color: Colors.red,
-      //     size: 30,
-      //   ),
-      // );
+      Common.modalInfo(
+        _nav.navKey.currentContext!,
+        title: "Error",
+        message: err.response?.data['message'] ?? "Gagal Mengakses Server",
+        icon: const Icon(
+          Icons.cancel_outlined,
+          color: Colors.red,
+          size: 30,
+        ),
+      );
     }
     super.onError(err, handler);
   }
