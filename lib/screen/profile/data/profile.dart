@@ -11,7 +11,6 @@ class Profile {
   String? currentAddress;
   String? createdAt;
   String? updatedAt;
-  String? idCardType;
   String? picture;
   User? user;
   List<IdentityCard>? identities;
@@ -26,7 +25,6 @@ class Profile {
     this.currentAddress,
     this.createdAt,
     this.updatedAt,
-    this.idCardType,
     this.picture,
     this.user,
     this.identities,
@@ -42,7 +40,6 @@ class Profile {
     currentAddress = json['currentAddress'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    idCardType = json['idCardType'];
     picture = json['picture'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     if (json['identities'] != null) {
@@ -58,13 +55,14 @@ class Profile {
     data['id'] = id;
     data['firstName'] = firstName;
     data['lastName'] = lastName;
-    data['fullName'] = fullName;
+    data['fullName'] = (lastName == null || lastName == "")
+        ? firstName
+        : '$firstName $lastName';
     data['email'] = email;
     data['phone'] = phone;
     data['currentAddress'] = currentAddress;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    data['idCardType'] = idCardType;
     data['picture'] = picture;
     if (user != null) {
       data['user'] = user!.toJson();

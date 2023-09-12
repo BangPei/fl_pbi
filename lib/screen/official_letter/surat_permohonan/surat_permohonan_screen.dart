@@ -15,7 +15,7 @@ class SuratPermohonanScreen extends StatefulWidget {
 }
 
 class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
-  final formgroup = FormGroup({
+  FormGroup formgroup = FormGroup({
     'name': FormControl<String>(
       value: '',
       validators: [Validators.required],
@@ -47,6 +47,8 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
             "pdf": permohonan.pdf(),
             "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
           });
+        } else {
+          formgroup.markAllAsTouched();
         }
       },
       action: IconButton(

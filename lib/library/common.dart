@@ -80,7 +80,7 @@ class Common {
   }
 
   static modalInfo(BuildContext context,
-      {String? message, required String title, Icon? icon}) {
+      {String? message, required String title, Icon? icon, MODE? mode}) {
     showDialog(
       context: context,
       builder: (__) {
@@ -90,16 +90,18 @@ class Common {
               children: <Widget>[
                 const Divider(height: 2, thickness: 3),
                 icon ??
-                    const FaIcon(
-                      FontAwesomeIcons.circleXmark,
-                      color: Colors.red,
+                    FaIcon(
+                      mode == MODE.success
+                          ? FontAwesomeIcons.circleCheck
+                          : FontAwesomeIcons.circleXmark,
+                      color: mode == MODE.success ? Colors.green : Colors.red,
                       size: 50,
                     ),
                 Text(
                   message ?? "Message",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.red,
+                  style: TextStyle(
+                    color: mode == MODE.success ? Colors.green : Colors.red,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
@@ -116,3 +118,5 @@ class Common {
     );
   }
 }
+
+enum MODE { success, error }

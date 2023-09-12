@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/common.dart';
-import 'package:flutter/material.dart';
+import 'package:fl_pbi/library/session_manager.dart';
+import 'package:go_router/go_router.dart';
 
 class DioInterceptors extends InterceptorsWrapper {
   final Dio dio;
@@ -17,36 +18,23 @@ class DioInterceptors extends InterceptorsWrapper {
     print(data);
     if (responseCode != null) {
       if (responseCode == 403) {
-        // AppRouter.router.navigateTo(
-        //   _nav.navKey.currentContext!,
-        //   AppRoutes.loginRoute.route,
-        //   replace: true,
-        //   clearStack: true,
-        // );
-        // ignore: avoid_print
-        print('403');
+        Session.clear().then((value) {
+          (_nav.navKey.currentContext!).go("/auth");
+        });
       } else {
-        // Common.modalInfo(
-        //   _nav.navKey.currentContext!,
-        //   title: "Error",
-        //   message: err.response?.data['message'] ?? "Gagal Mengakses Server",
-        //   icon: const Icon(
-        //     Icons.cancel_outlined,
-        //     color: Colors.red,
-        //     size: 30,
-        //   ),
-        // );
+        Common.modalInfo(
+          _nav.navKey.currentContext!,
+          title: "Error",
+          mode: MODE.error,
+          message: err.response?.data['message'] ?? "Gagal Mengakses Server",
+        );
       }
     } else {
       Common.modalInfo(
         _nav.navKey.currentContext!,
         title: "Error",
+        mode: MODE.error,
         message: err.response?.data['message'] ?? "Gagal Mengakses Server",
-        icon: const Icon(
-          Icons.cancel_outlined,
-          color: Colors.red,
-          size: 30,
-        ),
       );
     }
     super.onError(err, handler);

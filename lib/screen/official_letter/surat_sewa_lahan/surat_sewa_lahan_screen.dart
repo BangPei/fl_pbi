@@ -97,6 +97,8 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
             "pdf": sewaLahan.pdf(),
             "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
           });
+        } else {
+          formgroup.markAllAsTouched();
         }
       },
       action: IconButton(

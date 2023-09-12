@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/lunas.dart';
+import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
@@ -50,6 +54,10 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
 
   @override
   void initState() {
+    Session.get("profile").then((value) {
+      Profile? profile = Profile.fromJson(jsonDecode(value ?? ""));
+      print(profile);
+    });
     _dateFocusNode = FocusNode();
     super.initState();
   }
@@ -74,6 +82,8 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
             "title":
                 "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
           });
+        } else {
+          formgroup.markAllAsTouched();
         }
       },
       action: IconButton(

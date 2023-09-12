@@ -18,6 +18,9 @@ abstract class RestClient {
   @GET("profile/current")
   Future<Profile> getCurrentProfile();
 
+  @PUT("profile/{id}")
+  Future<Profile> putProfile(@Path() int id, @Body() Profile profile);
+
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 

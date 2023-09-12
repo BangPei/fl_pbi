@@ -73,7 +73,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: InkWell(
                           onTap: () {
-                            context.goNamed("profile-form");
+                            context.pushNamed("profile-form").then((val) {
+                              Session.get("fullName").then((value) =>
+                                  setState(() => accountName = value));
+                            });
                           },
                           child: const Text(
                             "Edit Profile",

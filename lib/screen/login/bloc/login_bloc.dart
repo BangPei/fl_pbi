@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/injector/injector.dart';
@@ -42,6 +44,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await Future.wait([
         Session.set("token", dataLOgin["token"]),
         Session.set("username", dataLOgin["username"]),
+        Session.set("profile", jsonEncode(dataLOgin["profile"])),
         Session.set("fullName", dataLOgin["profile"]["fullName"]),
         Session.set("picture", dataLOgin["profile"]?["picture"] ?? ""),
       ]);

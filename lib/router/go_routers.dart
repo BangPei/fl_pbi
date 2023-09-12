@@ -4,9 +4,7 @@ import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/main_layout/bottom_navigator.dart';
 import 'package:fl_pbi/screen/home/home_screen.dart';
 import 'package:fl_pbi/screen/login/login_screen.dart';
-import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_pdf.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
-import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/pendaftaran.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
 
@@ -21,8 +19,6 @@ import 'package:go_router/go_router.dart';
 final NavigationService _nav = locator<NavigationService>();
 final GlobalKey<NavigatorState> _dashboardNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'dashboard');
-final GlobalKey<NavigatorState> _officialLeterKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 class RouteNavigation {
   static final GoRouter router = GoRouter(
@@ -137,42 +133,18 @@ class RouteNavigation {
                   );
                 },
               ),
-            ],
-          ),
-        ],
-      ),
-      ShellRoute(
-        restorationScopeId: "",
-        navigatorKey: _officialLeterKey,
-        builder: (BuildContext context, GoRouterState state, Widget child) {
-          return Scaffold(appBar: AppBar(), body: child);
-        },
-        routes: [
-          GoRoute(
-            parentNavigatorKey: _officialLeterKey,
-            path: '/formulir-pendaftaran',
-            name: "formulir-pendaftaran",
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: FormulirPendaftaranScreen(),
-              );
-            },
-            routes: [
               GoRoute(
-                parentNavigatorKey: _officialLeterKey,
-                path: 'preview',
-                name: "preview-pendaftaran",
+                parentNavigatorKey: _nav.navKey,
+                path: 'formulir-pendaftaran',
+                name: "formulir-pendaftaran",
                 pageBuilder: (context, state) {
-                  Pendaftaran? data = state.extra != null
-                      ? state.extra as Pendaftaran
-                      : Pendaftaran();
-                  return NoTransitionPage(
-                    child: FormulirPendaftaranPDF(data: data),
+                  return const NoTransitionPage(
+                    child: FormulirPendaftaranScreen(),
                   );
                 },
               ),
             ],
-          )
+          ),
         ],
       ),
     ],

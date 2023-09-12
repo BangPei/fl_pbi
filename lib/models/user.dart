@@ -26,8 +26,11 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
+    data['id'] = id;
     data['username'] = username;
     data['password'] = password;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     data['token'] = token;
     return data;
   }
