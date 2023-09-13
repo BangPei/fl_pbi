@@ -32,11 +32,15 @@ final class ProfileFormState extends Equatable {
   }
 
   final FormGroup formgroup = FormGroup({
-    'firstName': FormControl<String>(
+    'fullName': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
-    'lastName': FormControl<String>(),
+    'gendre': FormControl<String>(),
+    'birthPlace': FormControl<String>(),
+    'birthDate': FormControl<DateTime>(),
+    'religion': FormControl<String>(),
+    'bloodGroup': FormControl<String>(),
     'email': FormControl<String>(),
     'phone': FormControl<String>(
       value: '',
@@ -46,13 +50,16 @@ final class ProfileFormState extends Equatable {
       value: '',
       validators: [Validators.required],
     ),
+    'identity': FormGroup({
+      'idNumber': FormControl<String>(
+        value: '',
+        validators: [Validators.required],
+      ),
+      'address': FormControl<String>(),
+    }),
   });
   FormGroup mappingValue() {
-    formgroup.control('firstName').value = profile?.firstName ?? "";
-    formgroup.control('lastName').value = profile?.lastName ?? "";
-    formgroup.control('email').value = profile?.email ?? "";
-    formgroup.control('phone').value = profile?.phone ?? "";
-    formgroup.control('currentAddress').value = profile?.currentAddress ?? "";
+    formgroup.value = profile?.toJson();
     return formgroup;
   }
 

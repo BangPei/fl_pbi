@@ -15,44 +15,6 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   ProfileFormBloc() : super(ProfileFormState()) {
     on<GetCurrentUserEvent>(_onGetCurrentUser);
     on<OnSubmitProfile>(_onSubmitProfile);
-    on<OnFirstNameChanged>(_onFirstNameChanged);
-    on<OnLastNameChanged>(_onLastNameChanged);
-    on<OnEmailChanged>(_onEmailChanged);
-    on<OnPhoneChanged>(_onPhoneChanged);
-    on<OnCurrAddressChanged>(_onCurrAddressChanged);
-  }
-
-  void _onFirstNameChanged(
-      OnFirstNameChanged event, Emitter<ProfileFormState> emit) {
-    Profile profile = state.profile ?? Profile();
-    profile.firstName = event.val;
-    emit(state.copyWith(profile: profile));
-  }
-
-  void _onLastNameChanged(
-      OnLastNameChanged event, Emitter<ProfileFormState> emit) {
-    Profile profile = state.profile ?? Profile();
-    profile.lastName = event.val;
-    emit(state.copyWith(profile: profile));
-  }
-
-  void _onEmailChanged(OnEmailChanged event, Emitter<ProfileFormState> emit) {
-    Profile profile = state.profile ?? Profile();
-    profile.email = event.val;
-    emit(state.copyWith(profile: profile));
-  }
-
-  void _onPhoneChanged(OnPhoneChanged event, Emitter<ProfileFormState> emit) {
-    Profile profile = state.profile ?? Profile();
-    profile.phone = event.val;
-    emit(state.copyWith(profile: profile));
-  }
-
-  void _onCurrAddressChanged(
-      OnCurrAddressChanged event, Emitter<ProfileFormState> emit) {
-    Profile profile = state.profile ?? Profile();
-    profile.currentAddress = event.val;
-    emit(state.copyWith(profile: profile));
   }
 
   void _onGetCurrentUser(
@@ -63,21 +25,33 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       emit(state.copyWith(isLoading: false, profile: profile));
       state.mappingValue();
     } catch (e) {
-      DioException err = e as DioException;
-      emit(state.copyWith(
-        isLoading: false,
-        isError: true,
-        errorMessage: err.response?.data?["message"] ?? err.message,
-      ));
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+      state.mappingValue();
     }
   }
 
   void _onSubmitProfile(
       OnSubmitProfile event, Emitter<ProfileFormState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    // emit(state.copyWith(isLoading: true));
     try {
-      Profile? profile =
-          await ProfileAPI.put(state.profile!.id!, state.profile!);
+      Profile newProfile = Profile.fromJson(state.formgroup.value);
+      newProfile.id = state.profile?.id;
+      newProfile.identity?.id = state.profile?.identity?.id;
+      newProfile.user = state.profile?.user;
+      Profile? profile = await ProfileAPI.put(newProfile.id!, newProfile);
       await Session.set("fullName", profile.fullName ?? "");
       await Session.set("profile", jsonEncode(profile));
       emit(state.copyWith(
@@ -86,12 +60,21 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         isSuccess: true,
       ));
     } catch (e) {
-      DioException err = e as DioException;
-      emit(state.copyWith(
-        isLoading: false,
-        isError: true,
-        errorMessage: err.response?.data?["message"] ?? err.message,
-      ));
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+      state.mappingValue();
     }
   }
 }

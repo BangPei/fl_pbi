@@ -1,10 +1,9 @@
 import 'package:fl_pbi/models/user.dart';
 import 'package:fl_pbi/screen/profile/data/identity_card.dart';
+import 'package:jiffy/jiffy.dart';
 
 class Profile {
   int? id;
-  String? firstName;
-  String? lastName;
   String? fullName;
   String? email;
   String? phone;
@@ -13,12 +12,15 @@ class Profile {
   String? updatedAt;
   String? picture;
   User? user;
-  List<IdentityCard>? identities;
+  String? birthDate;
+  String? birthPlace;
+  String? bloodGroup;
+  String? gendre;
+  String? religion;
+  IdentityCard? identity;
 
   Profile({
     this.id,
-    this.firstName,
-    this.lastName,
     this.fullName,
     this.email,
     this.phone,
@@ -27,13 +29,16 @@ class Profile {
     this.updatedAt,
     this.picture,
     this.user,
-    this.identities,
+    this.identity,
+    this.birthDate,
+    this.birthPlace,
+    this.bloodGroup,
+    this.gendre,
+    this.religion,
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
     fullName = json['fullName'];
     email = json['email'];
     phone = json['phone'];
@@ -41,34 +46,46 @@ class Profile {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     picture = json['picture'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    if (json['identities'] != null) {
-      identities = <IdentityCard>[];
-      json['identities'].forEach((v) {
-        identities!.add(IdentityCard.fromJson(v));
-      });
+    if (json['birthDate'].runtimeType == DateTime) {
+      birthDate = Jiffy.parseFromDateTime(json['birthDate'])
+          .format(pattern: "yyyy-MM-dd");
+    } else {
+      birthDate = json['birthDate'];
     }
+    birthPlace = json['birthPlace'];
+    bloodGroup = json['bloodGroup'];
+    gendre = json['gendre'];
+    religion = json['religion'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    identity = json['identity'] != null
+        ? IdentityCard.fromJson(json['identity'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    data['fullName'] = (lastName == null || lastName == "")
-        ? firstName
-        : '$firstName $lastName';
+    data['fullName'] = fullName;
     data['email'] = email;
     data['phone'] = phone;
     data['currentAddress'] = currentAddress;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['picture'] = picture;
+    if (birthDate.runtimeType == String) {
+      data['birthDate'] = DateTime.parse(birthDate ?? "");
+    } else {
+      data['birthDate'] = birthDate;
+    }
+    data['birthPlace'] = birthPlace;
+    data['bloodGroup'] = bloodGroup;
+    data['gendre'] = gendre;
+    data['religion'] = religion;
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    if (identities != null) {
-      data['identities'] = identities!.map((v) => v.toJson()).toList();
+    if (identity != null) {
+      data['identity'] = identity!.toJson();
     }
     return data;
   }

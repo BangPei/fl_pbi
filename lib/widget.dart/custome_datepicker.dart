@@ -81,7 +81,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         );
         if (picked != null) {
           widget.formGroup.control(widget.formControlName).value = picked;
-          widget.onCloseDatepicker!(picked);
+          widget.onCloseDatepicker ?? (picked);
           setState(() {});
         }
       },
