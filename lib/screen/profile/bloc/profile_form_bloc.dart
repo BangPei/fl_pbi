@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/library/session_manager.dart';
@@ -77,7 +79,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       Profile? profile =
           await ProfileAPI.put(state.profile!.id!, state.profile!);
       await Session.set("fullName", profile.fullName ?? "");
-      await Session.set("profile", profile.toString());
+      await Session.set("profile", jsonEncode(profile));
       emit(state.copyWith(
         isLoading: false,
         profile: profile,

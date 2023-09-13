@@ -8,6 +8,7 @@ import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
+import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -21,7 +22,9 @@ class SuratLunasScreen extends StatefulWidget {
 
 class _SuratLunasScreenState extends State<SuratLunasScreen> {
   late FocusNode _dateFocusNode;
-  final formgroup = FormGroup({
+  Profile? profile;
+  bool isLoading = false;
+  final FormGroup formgroup = FormGroup({
     'name': FormControl<String>(
       value: '',
       validators: [Validators.required],
@@ -51,12 +54,16 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
       validators: [Validators.required],
     ),
   });
-
   @override
   void initState() {
+    isLoading = true;
     Session.get("profile").then((value) {
-      Profile? profile = Profile.fromJson(jsonDecode(value ?? ""));
-      print(profile);
+      profile = Profile.fromJson(jsonDecode(value ?? "{}"));
+      formgroup.control('name').value = profile?.fullName ?? "";
+      formgroup.control('phone').value = profile?.phone ?? "";
+      formgroup.control('address').value = profile?.currentAddress ?? "";
+      isLoading = false;
+      setState(() {});
     });
     _dateFocusNode = FocusNode();
     super.initState();
@@ -70,96 +77,98 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomForm(
-      title: 'Form Surat Keterangan Lunas',
-      formGroup: formgroup,
-      onSubmit: () {
-        if (formgroup.valid) {
-          SuratLunas lunas = SuratLunas.fromJson(formgroup.value);
-          context.pushNamed("preview-pdf", extra: {
-            "data": lunas,
-            "pdf": lunas.pdf(),
-            "title":
-                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
-          });
-        } else {
-          formgroup.markAllAsTouched();
-        }
-      },
-      action: IconButton(
-        icon: const Icon(Icons.download),
-        onPressed: () {
-          context.pushNamed("preview-pdf", extra: {
-            "data": SuratLunas(),
-            "pdf": SuratLunas().pdf(),
-            "title":
-                "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
-          });
-        },
-      ),
-      children: [
-        CustomFormField(
-          title: "Nama Pengelola",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'name',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "No. KTP Pengelola",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'nik',
-            onSubmitted: (val) {},
-            keyboardType: TextInputType.number,
-            inputFormatters: [Common.ktpFormat],
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "Posisi / Jabatan Pengelola",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'position',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "No. Telp Pengelola",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'phone',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "Alamat Pengelola",
-          reactiveForm: ReactiveTextField(
-            maxLines: 3,
-            minLines: 3,
-            formControlName: 'address',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "No. Blok",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'block',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
-        CustomFormField(
-          title: "Tanggal Lunas",
-          reactiveForm: CustomDatePicker(
-            focusNode: _dateFocusNode,
+    return isLoading
+        ? const Scaffold(body: Center(child: LoadingScreen()))
+        : CustomForm(
+            title: 'Form Surat Keterangan Lunas',
             formGroup: formgroup,
-            formControlName: "date",
-            onCloseDatepicker: (val) {},
-          ),
-        ),
-      ],
-    );
+            onSubmit: () {
+              if (formgroup.valid) {
+                SuratLunas lunas = SuratLunas.fromJson(formgroup.value);
+                context.pushNamed("preview-pdf", extra: {
+                  "data": lunas,
+                  "pdf": lunas.pdf(),
+                  "title":
+                      "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+                });
+              } else {
+                formgroup.markAllAsTouched();
+              }
+            },
+            action: IconButton(
+              icon: const Icon(Icons.download),
+              onPressed: () {
+                context.pushNamed("preview-pdf", extra: {
+                  "data": SuratLunas(),
+                  "pdf": SuratLunas().pdf(),
+                  "title":
+                      "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
+                });
+              },
+            ),
+            children: [
+              CustomFormField(
+                title: "Nama Pengelola",
+                reactiveForm: ReactiveTextField(
+                  formControlName: 'name',
+                  onChanged: (val) {},
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "No. KTP Pengelola",
+                reactiveForm: ReactiveTextField(
+                  formControlName: 'nik',
+                  onSubmitted: (val) {},
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [Common.ktpFormat],
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "Posisi / Jabatan Pengelola",
+                reactiveForm: ReactiveTextField(
+                  formControlName: 'position',
+                  onSubmitted: (val) {},
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "No. Telp Pengelola",
+                reactiveForm: ReactiveTextField(
+                  formControlName: 'phone',
+                  onSubmitted: (val) {},
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "Alamat Pengelola",
+                reactiveForm: ReactiveTextField(
+                  maxLines: 3,
+                  minLines: 3,
+                  formControlName: 'address',
+                  onSubmitted: (val) {},
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "No. Blok",
+                reactiveForm: ReactiveTextField(
+                  formControlName: 'block',
+                  onSubmitted: (val) {},
+                  decoration: TextFormDecoration.box(),
+                ),
+              ),
+              CustomFormField(
+                title: "Tanggal Lunas",
+                reactiveForm: CustomDatePicker(
+                  focusNode: _dateFocusNode,
+                  formGroup: formgroup,
+                  formControlName: "date",
+                  onCloseDatepicker: (val) {},
+                ),
+              ),
+            ],
+          );
   }
 }

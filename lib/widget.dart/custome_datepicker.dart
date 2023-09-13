@@ -12,15 +12,16 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
   final Function(DateTime)? onCloseDatepicker;
-  const CustomDatePicker(
-      {super.key,
-      required this.formControlName,
-      required this.focusNode,
-      required this.formGroup,
-      this.initialDate,
-      this.firstDate,
-      this.lastDate,
-      this.onCloseDatepicker});
+  const CustomDatePicker({
+    super.key,
+    required this.formControlName,
+    required this.focusNode,
+    required this.formGroup,
+    this.initialDate,
+    this.firstDate,
+    this.lastDate,
+    this.onCloseDatepicker,
+  });
 
   @override
   State<CustomDatePicker> createState() => _CustomDatePickerState();
@@ -31,6 +32,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   Widget build(BuildContext context) {
     return ReactiveTextField(
       formControlName: widget.formControlName,
+      readOnly: true,
       decoration: TextFormDecoration.box(
         suffixIcon: InkWell(
           onTap: () async {

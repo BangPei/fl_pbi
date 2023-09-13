@@ -227,7 +227,7 @@ class Pendaftaran {
                         bottom: 3.0 * PdfPageFormat.mm)),
                 pw.SizedBox(height: 70),
                 pw.Paragraph(
-                    text: "(${pic})".toUpperCase(),
+                    text: "($pic)".toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
@@ -250,7 +250,7 @@ class Pendaftaran {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 70),
                   pw.Paragraph(
-                      text: "(${name})".toUpperCase(),
+                      text: "($name)".toUpperCase(),
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 12,
