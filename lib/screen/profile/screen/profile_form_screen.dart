@@ -2,12 +2,10 @@ import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/profile/bloc/profile_form_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
@@ -50,30 +48,25 @@ class _ProfileFormState extends State<ProfileForm> {
         return state.isLoading
             ? const Scaffold(body: Center(child: LoadingScreen()))
             : CustomForm(
-                formGroup: state.formgroup,
                 title: "Edit Profile",
                 buttonTitle: "Simpan",
                 onSubmit: () {
-                  if (state.formgroup.valid) {
-                    context
-                        .read<ProfileFormBloc>()
-                        .add(const OnSubmitProfile());
-                  } else {
-                    state.formgroup.markAllAsTouched();
-                  }
+                  context.read<ProfileFormBloc>().add(const OnSubmitProfile());
                 },
                 children: [
                   CustomFormField(
                     title: "Nama Lengkap Sesuai KTP",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'fullName',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.fullName,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
                   CustomFormField(
                     title: "No KTP",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'identity.idNumber',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.identity?.idNumber,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [Common.ktpFormat],
@@ -81,68 +74,74 @@ class _ProfileFormState extends State<ProfileForm> {
                   ),
                   CustomFormField(
                     title: "Tempat Lahir",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'birthPlace',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.birthPlace,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
-                  CustomFormField(
-                    title: "Tanggal Lahir",
-                    reactiveForm: CustomDatePicker(
-                      focusNode: _dateFocusNode,
-                      formGroup: state.formgroup,
-                      formControlName: "birthDate",
-                    ),
-                  ),
+                  // CustomFormField(
+                  //   title: "Tanggal Lahir",
+                  //   reactiveForm: CustomDatePicker(
+                  //     focusNode: _dateFocusNode,
+                  //     formGroup: state.formgroup,
+                  //     formControlName: "birthDate",
+                  //   ),
+                  // ),
                   CustomFormField(
                     title: "Jenis Kelamin",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'gendre',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.gendre,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
                   CustomFormField(
                     title: "Gol. Darah",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'bloodGroup',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.bloodGroup,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
-                  CustomFormField(
-                    title: "Agama",
-                    reactiveForm: ReactiveDropdownField<String>(
-                      hint: const Text('Pilih Agama'),
-                      formControlName: 'religion',
-                      decoration: TextFormDecoration.box(),
-                      items: const [
-                        DropdownMenuItem(value: "islam", child: Text("Islam")),
-                        DropdownMenuItem(
-                            value: "katholik", child: Text("Katholik")),
-                        DropdownMenuItem(
-                            value: "protestan", child: Text("Protestan")),
-                        DropdownMenuItem(value: "hindu", child: Text("Hindu")),
-                        DropdownMenuItem(value: "budha", child: Text("Budha")),
-                      ],
-                    ),
-                  ),
+                  // CustomFormField(
+                  //   title: "Agama",
+                  //   reactiveForm: ReactiveDropdownField<String>(
+                  //     hint: const Text('Pilih Agama'),
+                  //     formControlName: 'religion',
+                  //     decoration: TextFormDecoration.box(),
+                  //     items: const [
+                  //       DropdownMenuItem(value: "islam", child: Text("Islam")),
+                  //       DropdownMenuItem(
+                  //           value: "katholik", child: Text("Katholik")),
+                  //       DropdownMenuItem(
+                  //           value: "protestan", child: Text("Protestan")),
+                  //       DropdownMenuItem(value: "hindu", child: Text("Hindu")),
+                  //       DropdownMenuItem(value: "budha", child: Text("Budha")),
+                  //     ],
+                  //   ),
+                  // ),
                   CustomFormField(
                     title: "Alamat Email",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'email',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.email,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
                   CustomFormField(
                     title: "No. Tlp",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'phone',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.phone,
+                      onChanged: (val) {},
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
                   CustomFormField(
                     title: "Alamat Tinggal Saat Ini",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'currentAddress',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.currentAddress,
+                      onChanged: (val) {},
                       maxLines: 3,
                       minLines: 3,
                       decoration: TextFormDecoration.box(),
@@ -150,8 +149,9 @@ class _ProfileFormState extends State<ProfileForm> {
                   ),
                   CustomFormField(
                     title: "Alamat Tinggal Sesuai KTP",
-                    reactiveForm: ReactiveTextField(
-                      formControlName: 'identity.address',
+                    textForm: TextFormField(
+                      initialValue: state.profile?.identity?.address,
+                      onChanged: (val) {},
                       maxLines: 3,
                       minLines: 3,
                       decoration: TextFormDecoration.box(),

@@ -3,11 +3,11 @@ import 'package:responsive_grid/responsive_grid.dart';
 
 class CustomFormField extends ResponsiveGridCol {
   final String title;
-  final Widget reactiveForm;
+  final Widget textForm;
   CustomFormField({
     super.key,
     required this.title,
-    required this.reactiveForm,
+    required this.textForm,
     super.child = const SizedBox.shrink(),
   });
 
@@ -34,7 +34,7 @@ class CustomFormField extends ResponsiveGridCol {
               ),
             ),
             const SizedBox(height: 3),
-            reactiveForm,
+            textForm,
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:fl_pbi/models/user.dart';
 import 'package:fl_pbi/screen/profile/data/identity_card.dart';
-import 'package:jiffy/jiffy.dart';
 
 class Profile {
   int? id;
@@ -46,12 +45,16 @@ class Profile {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     picture = json['picture'];
-    if (json['birthDate'].runtimeType == DateTime) {
-      birthDate = Jiffy.parseFromDateTime(json['birthDate'])
-          .format(pattern: "yyyy-MM-dd");
-    } else {
-      birthDate = json['birthDate'];
-    }
+    // if (json['birthDate'] != null || json['birthDate'] != "") {
+    //   if (json['birthDate'].runtimeType == DateTime) {
+    //     birthDate = Jiffy.parseFromDateTime(json['birthDate'])
+    //         .format(pattern: "yyyy-MM-dd");
+    //   } else {
+    //     birthDate = json['birthDate'];
+    //   }
+    // } else {
+    // }
+    birthDate = json['birthDate'];
     birthPlace = json['birthPlace'];
     bloodGroup = json['bloodGroup'];
     gendre = json['gendre'];
@@ -72,11 +75,16 @@ class Profile {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['picture'] = picture;
-    if (birthDate.runtimeType == String) {
-      data['birthDate'] = DateTime.parse(birthDate ?? "");
-    } else {
-      data['birthDate'] = birthDate;
-    }
+    // if (birthDate != null || birthDate != "") {
+    //   if (birthDate.runtimeType == String) {
+    //     var date = DateTime.parse(birthDate ?? "");
+    //     data['birthDate'] = date;
+    //   } else {
+    //     data['birthDate'] = birthDate;
+    //   }
+    // } else {
+    // }
+    data['birthDate'] = birthDate;
     data['birthPlace'] = birthPlace;
     data['bloodGroup'] = bloodGroup;
     data['gendre'] = gendre;

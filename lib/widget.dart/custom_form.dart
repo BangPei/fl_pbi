@@ -3,11 +3,9 @@ import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
 class CustomForm extends StatefulWidget {
-  final FormGroup formGroup;
   final String title;
   final String? buttonTitle;
   final List<ResponsiveGridCol> children;
@@ -15,7 +13,6 @@ class CustomForm extends StatefulWidget {
   final Widget? action;
   const CustomForm({
     super.key,
-    required this.formGroup,
     required this.title,
     this.onSubmit,
     required this.children,
@@ -28,6 +25,7 @@ class CustomForm extends StatefulWidget {
 }
 
 class _CustomFormState extends State<CustomForm> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +41,8 @@ class _CustomFormState extends State<CustomForm> {
         ),
       ),
       body: SingleChildScrollView(
-        child: ReactiveForm(
-          formGroup: widget.formGroup,
+        child: Form(
+          key: formKey,
           child: Card(
             child: Padding(
               padding: const EdgeInsets.only(top: 20.0),
@@ -74,5 +72,39 @@ class _CustomFormState extends State<CustomForm> {
         ),
       ),
     );
+  }
+}
+
+class ValidForm {
+  static String? dropDownEmpty(String? value) {
+    if (value == null) {
+      return "Tidak Boleh Kosong";
+    }
+    return null;
+  }
+
+  static String? emptyValue(String? value) {
+    if (value!.isEmpty) {
+      return "Tidak Boleh Kosong";
+    }
+    return null;
+  }
+
+  static String? matchValue(String? value, String? data, String title) {
+    if (value != data) {
+      return "$title Tidak Sesuai";
+    }
+    return null;
+  }
+
+  static String? greaterThan(String? value, String? data, String title) {
+    double val = double.parse((value =
+            (value == "" || value == null) ? "0" : value)
+        .replaceAll(",", ""));
+    double _data = double.parse(data ?? "0");
+    if (val <= _data) {
+      return "harus lebih besar dari $title";
+    }
+    return null;
   }
 }
