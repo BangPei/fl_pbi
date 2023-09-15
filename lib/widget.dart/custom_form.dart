@@ -101,8 +101,8 @@ class ValidForm {
     double val = double.parse((value =
             (value == "" || value == null) ? "0" : value)
         .replaceAll(",", ""));
-    double _data = double.parse(data ?? "0");
-    if (val <= _data) {
+    double vals = double.parse(data ?? "0");
+    if (val <= vals) {
       return "harus lebih besar dari $title";
     }
     return null;

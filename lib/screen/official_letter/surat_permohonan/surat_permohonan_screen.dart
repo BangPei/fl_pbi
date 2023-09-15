@@ -5,7 +5,6 @@ import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/cuttom_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 class SuratPermohonanScreen extends StatefulWidget {
   const SuratPermohonanScreen({super.key});
@@ -15,41 +14,18 @@ class SuratPermohonanScreen extends StatefulWidget {
 }
 
 class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
-  FormGroup formgroup = FormGroup({
-    'name': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
-    'phone': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
-    'nik': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
-    'address': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
-  });
   @override
   Widget build(BuildContext context) {
     return CustomForm(
       title: 'Form Surat Permohonan',
-      formGroup: formgroup,
       onSubmit: () {
-        if (formgroup.valid) {
-          SuratPermohonan permohonan =
-              SuratPermohonan.fromJson(formgroup.value);
-          context.pushNamed("preview-pdf", extra: {
-            "data": permohonan,
-            "pdf": permohonan.pdf(),
-            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-          });
-        } else {
-          formgroup.markAllAsTouched();
-        }
+        // SuratPermohonan permohonan =
+        //     SuratPermohonan.fromJson(formgroup.value);
+        // context.pushNamed("preview-pdf", extra: {
+        //   "data": permohonan,
+        //   "pdf": permohonan.pdf(),
+        //   "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+        // });
       },
       action: IconButton(
         icon: const Icon(Icons.download),
@@ -64,17 +40,15 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
       children: [
         CustomFormField(
           title: "Nama",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'name',
-            onSubmitted: (val) {},
+          textForm: TextFormField(
+            // initialValue: state.profile?.gendre,
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "NO. KTP",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'nik',
-            onSubmitted: (val) {},
+          textForm: TextFormField(
+            // initialValue: state.profile?.gendre,
             keyboardType: TextInputType.number,
             inputFormatters: [Common.ktpFormat],
             decoration: TextFormDecoration.box(),
@@ -82,20 +56,18 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         ),
         CustomFormField(
           title: "NO. Telp",
-          reactiveForm: ReactiveTextField(
-            formControlName: 'phone',
-            onSubmitted: (val) {},
+          textForm: TextFormField(
+            // initialValue: state.profile?.gendre,
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Alamat",
-          reactiveForm: ReactiveTextField(
+          textForm: TextFormField(
+            // initialValue: state.profile?.gendre,
+            decoration: TextFormDecoration.box(),
             maxLines: 3,
             minLines: 3,
-            formControlName: 'address',
-            onSubmitted: (val) {},
-            decoration: TextFormDecoration.box(),
           ),
         ),
       ],

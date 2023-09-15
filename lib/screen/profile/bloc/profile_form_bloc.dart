@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:fl_pbi/screen/profile/data/profile_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +9,7 @@ part 'profile_form_event.dart';
 part 'profile_form_state.dart';
 
 class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
-  ProfileFormBloc() : super(ProfileFormState()) {
+  ProfileFormBloc() : super(const ProfileFormState()) {
     on<GetCurrentUserEvent>(_onGetCurrentUser);
     on<OnSubmitProfile>(_onSubmitProfile);
   }
