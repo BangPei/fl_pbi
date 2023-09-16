@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:fl_pbi/screen/profile/data/profile_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -129,9 +132,11 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     try {
       Profile profile =
           await ProfileAPI.put(state.profile!.id!, state.profile ?? Profile());
+      await Session.set("profile", jsonEncode(profile));
       emit(state.copyWith(
         isLoading: false,
         profile: profile,
+        isSuccess: true,
       ));
     } catch (e) {
       if (e.runtimeType == DioException) {

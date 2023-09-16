@@ -15,13 +15,13 @@ class SuratLunas {
   String? block;
 
   SuratLunas({
-    this.address = "......................................",
-    this.nik = "......................................",
-    this.phone = "......................................",
-    this.name = "......................................",
-    this.position = "......................................",
-    this.block = ".....................",
-    this.date = "......................................",
+    this.address,
+    this.nik,
+    this.phone,
+    this.name,
+    this.position,
+    this.block,
+    this.date,
   });
 
   SuratLunas.fromJson(Map<String, dynamic> json) {
@@ -226,7 +226,7 @@ class SuratLunas {
           text: pw.TextSpan(
               style: const pw.TextStyle(lineSpacing: 2.0 * PdfPageFormat.mm),
               text:
-                  "\t\t\t\t\t\t\t\t\t\tDengan ini kami informasikan bahwa pembayaran Ruko Blok ${block ?? ''} yang beralamat di Bumi Indah telah",
+                  "\t\t\t\t\t\t\t\t\t\tDengan ini kami informasikan bahwa pembayaran Ruko Blok ${block ?? '.......................'} yang beralamat di Bumi Indah telah",
               children: [
                 pw.TextSpan(
                   text: ' LUNAS',
@@ -256,7 +256,8 @@ class SuratLunas {
             margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm)),
         pw.SizedBox(height: 70),
         pw.Paragraph(
-            text: "($name)".toUpperCase(),
+            text: "(${name ?? '.........................................'})"
+                .toUpperCase(),
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 12,

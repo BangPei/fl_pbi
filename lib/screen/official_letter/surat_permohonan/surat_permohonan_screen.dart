@@ -1,10 +1,10 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan/permohonan.dart';
+import 'package:fl_pbi/screen/official_letter/surat_permohonan/bloc/permohonan_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SuratPermohonanScreen extends StatefulWidget {
   const SuratPermohonanScreen({super.key});
@@ -19,36 +19,32 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
     return CustomForm(
       title: 'Form Surat Permohonan',
       onSubmit: () {
-        // SuratPermohonan permohonan =
-        //     SuratPermohonan.fromJson(formgroup.value);
-        // context.pushNamed("preview-pdf", extra: {
-        //   "data": permohonan,
-        //   "pdf": permohonan.pdf(),
-        //   "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-        // });
+        context.read<PermohonanBloc>().add(const OnSubmit());
       },
       action: IconButton(
         icon: const Icon(Icons.download),
         onPressed: () {
-          context.pushNamed("preview-pdf", extra: {
-            "data": SuratPermohonan(),
-            "pdf": SuratPermohonan().pdf(),
-            "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
-          });
+          context.read<PermohonanBloc>().add(const OnSubmitTemplate());
         },
       ),
       children: [
         CustomFormField(
           title: "Nama",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<PermohonanBloc>().add(OnChangedName(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "NO. KTP",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<PermohonanBloc>().add(OnChangedNik(val));
+            },
             keyboardType: TextInputType.number,
             inputFormatters: [Common.ktpFormat],
             decoration: TextFormDecoration.box(),
@@ -57,14 +53,20 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         CustomFormField(
           title: "NO. Telp",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<PermohonanBloc>().add(OnChangedPhone(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Alamat",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<PermohonanBloc>().add(OnChangedAddress(val));
+            },
             decoration: TextFormDecoration.box(),
             maxLines: 3,
             minLines: 3,
