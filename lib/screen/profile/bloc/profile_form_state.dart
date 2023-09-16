@@ -10,7 +10,7 @@ final class ProfileFormState extends Equatable {
   const ProfileFormState({
     this.profile,
     this.errorMessage,
-    this.isLoading = false,
+    this.isLoading = true,
     this.isError = false,
     this.isSuccess = false,
   });

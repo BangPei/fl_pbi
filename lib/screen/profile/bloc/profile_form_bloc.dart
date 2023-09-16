@@ -12,6 +12,91 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   ProfileFormBloc() : super(const ProfileFormState()) {
     on<GetCurrentUserEvent>(_onGetCurrentUser);
     on<OnSubmitProfile>(_onSubmitProfile);
+    on<OnChangedFullname>(_onChangedFullname);
+    on<OnChangedNik>(_onChangedNik);
+    on<OnChangedBirthPlace>(_onChangedBirthPlace);
+    on<OnChangedBirthDate>(_onChangedBirthDate);
+    on<OnChangedGender>(_onChangedGender);
+    on<OnChangedBloodGroup>(_onChangedBloodGroup);
+    on<OnChangedReligion>(_onChangedReligion);
+    on<OnChangedEmail>(_onChangedEmail);
+    on<OnChangedPhone>(_onChangedPhone);
+    on<OnChangedCurrAddress>(_onChangedCurrAddress);
+    on<OnChangedAddress>(_onChangedAddress);
+  }
+
+  void _onChangedAddress(
+      OnChangedAddress event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.identity?.address = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedCurrAddress(
+      OnChangedCurrAddress event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.currentAddress = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedPhone(OnChangedPhone event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.phone = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedEmail(OnChangedEmail event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.email = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedReligion(
+      OnChangedReligion event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.religion = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedBloodGroup(
+      OnChangedBloodGroup event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.bloodGroup = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedGender(OnChangedGender event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.gendre = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedBirthDate(
+      OnChangedBirthDate event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.birthDate =
+        Jiffy.parseFromDateTime(event.val).format(pattern: "yyyy-MM-dd");
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedBirthPlace(
+      OnChangedBirthPlace event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.birthPlace = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedFullname(
+      OnChangedFullname event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.fullName = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedNik(OnChangedNik event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.identity?.idNumber = event.val;
+    emit(state.copyWith(profile: profile));
   }
 
   void _onGetCurrentUser(
@@ -19,8 +104,6 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
     try {
       Profile? profile = await ProfileAPI.getCurrentProfile();
-      profile.birthDate =
-          Jiffy.parse(profile.birthDate ?? "").format(pattern: "dd MMMM yyyy");
       emit(state.copyWith(isLoading: false, profile: profile));
     } catch (e) {
       if (e.runtimeType == DioException) {
@@ -44,43 +127,31 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       OnSubmitProfile event, Emitter<ProfileFormState> emit) async {
     emit(state.copyWith(isLoading: true));
     try {
-      // Profile newProfile = Profile.fromJson(state.formgroup.value);
-      // newProfile.id = state.profile?.id;
-      // newProfile.identity?.id = state.profile?.identity?.id;
-      // newProfile.user = state.profile?.user;
-      // newProfile.birthDate =
-      //     Jiffy.parse(newProfile.birthDate ?? "", pattern: "dd MMMM yyyy")
-      //         .format(pattern: "yyyy-MM-dd");
-      // emit(state.copyWith(profile: newProfile));
-      // Profile? profile =
-      //     await ProfileAPI.put(newProfile.id!, state.profile ?? newProfile);
-      // emit(state.copyWith(isSuccess: true));
-      // await Session.set("fullName", profile.fullName ?? "");
-      // await Session.set("profile", jsonEncode(profile));
-      // profile.birthDate =
-      //     Jiffy.parse(profile.birthDate ?? "").format(pattern: "dd MMMM yyyy");
-      // emit(
-      //     state.copyWith(isLoading: false, profile: profile, isSuccess: false));
+      Profile profile =
+          await ProfileAPI.put(state.profile!.id!, state.profile ?? Profile());
+      emit(state.copyWith(
+        isLoading: false,
+        profile: profile,
+      ));
     } catch (e) {
-      // if (e.runtimeType == DioException) {
-      //   DioException err = e as DioException;
-      //   emit(state.copyWith(
-      //     isLoading: false,
-      //     profile: state.profile,
-      //     isError: true,
-      //     isSuccess: false,
-      //     errorMessage: err.response?.data?["message"] ?? err.message,
-      //   ));
-      // } else {
-      //   emit(state.copyWith(
-      //     isLoading: false,
-      //     profile: state.profile,
-      //     isError: true,
-      //     isSuccess: false,
-      //     errorMessage: e.toString(),
-      //   ));
-      // }
-      // state.mappingValue();
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          profile: state.profile,
+          isError: true,
+          isSuccess: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          profile: state.profile,
+          isError: true,
+          isSuccess: false,
+          errorMessage: e.toString(),
+        ));
+      }
     }
   }
 }

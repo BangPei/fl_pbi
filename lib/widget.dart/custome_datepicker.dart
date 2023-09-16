@@ -4,22 +4,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jiffy/jiffy.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  final String formControlName;
+  final TextEditingController controller;
   final FocusNode focusNode;
   final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
   final String? dateFormat;
-  final Function(String)? onCloseDatepicker;
+  final FormFieldValidator<String>? validator;
+  final Function(DateTime) onCloseDatepicker;
   const CustomDatePicker({
     super.key,
-    required this.formControlName,
     required this.focusNode,
     this.initialDate,
     this.firstDate,
     this.lastDate,
-    this.onCloseDatepicker,
+    required this.onCloseDatepicker,
     this.dateFormat,
+    required this.controller,
+    this.validator,
   });
 
   @override
@@ -27,46 +29,63 @@ class CustomDatePicker extends StatefulWidget {
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
+  DateTime? dateTime;
+  @override
+  void initState() {
+    if (widget.controller.text.isNotEmpty) {
+      dateTime =
+          Jiffy.parse(widget.controller.text, pattern: "dd MMMM yyyy").dateTime;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: true,
+      validator: widget.validator,
+      controller: widget.controller,
       decoration: TextFormDecoration.box(
         suffixIcon: InkWell(
           onTap: () async {
             widget.focusNode.unfocus();
-            // if (widget.formGroup.control(widget.formControlName).value ==
-            //     null) {
-            //   final DateTime? picked = await showDate(
-            //     context,
-            //     initialDate: widget.initialDate,
-            //     firstDate: widget.firstDate,
-            //     lastDate: widget.lastDate,
-            //   );
-            //   if (picked != null) {
-            //     String dateString = Jiffy.parseFromDateTime(picked)
-            //         .format(pattern: widget.dateFormat ?? "dd MMMM yyyy");
-            //     setState(() {
-            //       widget.formGroup.control(widget.formControlName).value =
-            //           dateString;
-            //     });
-            //   }
-            // } else {
-            //   setState(() {
-            //     widget.formGroup.control(widget.formControlName).value = null;
-            //     widget.focusNode.canRequestFocus = true;
-            //   });
-            // }
+            if (dateTime == null) {
+              final DateTime? picked = await showDate(
+                context,
+                initialDate: widget.initialDate,
+                firstDate: widget.firstDate,
+                lastDate: widget.lastDate,
+              );
+              if (picked != null) {
+                setState(() {
+                  dateTime = picked;
+                  widget.onCloseDatepicker(picked);
+                });
+              }
+            } else {
+              setState(() {
+                dateTime = null;
+                widget.focusNode.canRequestFocus = true;
+              });
+            }
+            widget.controller.text = dateTime == null
+                ? ""
+                : Jiffy.parseFromDateTime(dateTime!).format(
+                    pattern: "dd MMMM yyyy",
+                  );
+            setState(() {});
           },
-          child: const Icon(
-            FontAwesomeIcons.xmark,
-            color: Colors.red,
-          ),
+          child: dateTime == null
+              ? const Icon(
+                  FontAwesomeIcons.calendar,
+                  color: Colors.blueAccent,
+                )
+              : const Icon(
+                  FontAwesomeIcons.xmark,
+                  color: Colors.red,
+                ),
         ),
       ),
-      // valueAccessor: DateTimeValueAccessor(
-      //   dateTimeFormat: DateFormat('dd MMMM yyyy'),
-      // ),
       onTap: () async {
         final DateTime? picked = await showDate(
           context,
@@ -75,10 +94,13 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           lastDate: widget.lastDate,
         );
         if (picked != null) {
-          String dateString = Jiffy.parseFromDateTime(picked)
-              .format(pattern: widget.dateFormat ?? "dd MMMM yyyy");
-          // widget.formGroup.control(widget.formControlName).value = dateString;
-          widget.onCloseDatepicker ?? (dateString);
+          dateTime = picked;
+          widget.controller.text = dateTime == null
+              ? ""
+              : Jiffy.parseFromDateTime(dateTime!).format(
+                  pattern: "dd MMMM yyyy",
+                );
+          widget.onCloseDatepicker(picked);
           setState(() {});
         }
       },
@@ -89,7 +111,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
     return await showDatePicker(
       context: context,
-      initialDate: initialDate ?? DateTime.now(),
+      initialDate: initialDate ?? dateTime ?? DateTime.now(),
       firstDate: firstDate ?? DateTime(1900),
       lastDate: lastDate ?? DateTime(3000),
     );
