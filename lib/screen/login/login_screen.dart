@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: LoginForm());
+    return const Scaffold(body: SingleChildScrollView(child: LoginForm()));
   }
 }
 
@@ -38,6 +38,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(height: 100),
           Container(
             height: 120,
             width: 120,
@@ -61,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                 )
               ],
             ),
-            height: 400,
+            height: 350,
             width: 350,
             child: Form(
               key: _formKey,

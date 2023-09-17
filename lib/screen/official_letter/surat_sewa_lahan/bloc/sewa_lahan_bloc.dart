@@ -1,13 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:fl_pbi/injector/injector.dart';
+import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
 
 part 'sewa_lahan_event.dart';
 part 'sewa_lahan_state.dart';
 
+NavigationService _nav = locator<NavigationService>();
+
 class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
   SewaLahanBloc() : super(const SewaLahanState()) {
+    on<OnSubmit>(_onSubmit);
+    on<OnSubmitTemplate>(_onSubmitTemplate);
     on<OnChangedPihakPertama>(_onChangedPihakPertama);
     on<OnChangedPihakKedua>(_onChangedPihakKedua);
     on<OnChangedNik>(_onChangedNik);
@@ -20,7 +28,7 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
     on<OnChangedDurasiPerpanjangan>(_onChangedDurasiPerpanjangan);
     on<OnChangedTanggalPerjanjian>(_onChangedTanggalPerjanjian);
   }
-
+  BuildContext context = _nav.navKey.currentContext!;
   void _onChangedTanggalPerjanjian(
       OnChangedTanggalPerjanjian event, Emitter<SewaLahanState> emit) {
     SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
@@ -51,7 +59,7 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
       OnChangedDurasiSewa event, Emitter<SewaLahanState> emit) {
     SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
     sewaLahan.periodeRent = event.val;
-    if (sewaLahan.date != null) {
+    if ((sewaLahan.date != null)) {
       var newDate = Jiffy.parse(sewaLahan.date!)
           .add(years: event.val)
           .format(pattern: 'yyyy-MM-dd');
@@ -113,5 +121,23 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
     SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
     sewaLahan.ownerName = event.val;
     emit(state.copyWith(sewaLahan: sewaLahan));
+  }
+
+  void _onSubmit(OnSubmit event, Emitter<SewaLahanState> emit) async {
+    SuratSewaLahan? sewaLahan = state.sewaLahan;
+    context.pushNamed("preview-pdf", extra: {
+      "data": sewaLahan,
+      "pdf": sewaLahan!.pdf(),
+      "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+    });
+  }
+
+  void _onSubmitTemplate(
+      OnSubmitTemplate event, Emitter<SewaLahanState> emit) async {
+    context.pushNamed("preview-pdf", extra: {
+      "data": SuratSewaLahan(),
+      "pdf": SuratSewaLahan().pdf(),
+      "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
+    });
   }
 }
