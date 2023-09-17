@@ -2,6 +2,7 @@ import 'package:fl_pbi/router/go_routers.dart';
 import 'package:fl_pbi/screen/login/bloc/login_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/bloc/surat_lunas_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/bloc/permohonan_bloc.dart';
+import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/bloc/sewa_lahan_bloc.dart';
 import 'package:fl_pbi/screen/profile/bloc/profile_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProfileFormBloc>(create: (__) => ProfileFormBloc()),
         BlocProvider<PermohonanBloc>(create: (__) => PermohonanBloc()),
         BlocProvider<SuratLunasBloc>(create: (__) => SuratLunasBloc()),
+        BlocProvider<SewaLahanBloc>(create: (__) => SewaLahanBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

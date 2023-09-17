@@ -15,7 +15,7 @@ class SuratSewaLahan {
   String? date;
   String? areaName;
   String? areaCompany;
-  int? wide;
+  double? wide;
   int? extraTime;
   int? periodeRent;
   String? periodeDate;
@@ -41,16 +41,11 @@ class SuratSewaLahan {
     phone = json['phone'];
     address = json['address'];
     ownerName = json['ownerName'];
-    date = json['date'] == null
-        ? json['date']
-        : Jiffy.parseFromDateTime(json['date']).format(pattern: "dd MMMM yyyy");
+    date = json['date'];
     areaName = json['areaName'];
     areaCompany = json['areaCompany'];
-    periodeDate = json['periodeDate'] == null
-        ? json['periodeDate']
-        : Jiffy.parseFromDateTime(json['periodeDate'])
-            .format(pattern: "dd MMMM yyyy");
-    wide = int.parse((json['wide'] as String).replaceAll(",", ""));
+    periodeDate = json['periodeDate'];
+    wide = json['wide'];
     extraTime = json['extraTime'];
     periodeRent = json['periodeRent'];
   }

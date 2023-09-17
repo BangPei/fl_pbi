@@ -77,8 +77,12 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   void _onChangedBirthDate(
       OnChangedBirthDate event, Emitter<ProfileFormState> emit) {
     Profile? profile = state.profile;
-    profile?.birthDate =
-        Jiffy.parseFromDateTime(event.val).format(pattern: "yyyy-MM-dd");
+    if (event.val == null) {
+      profile?.birthDate = null;
+    } else {
+      profile?.birthDate =
+          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
+    }
     emit(state.copyWith(profile: profile));
   }
 

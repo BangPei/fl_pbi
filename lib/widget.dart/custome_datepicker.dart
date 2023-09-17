@@ -11,7 +11,7 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime? lastDate;
   final String? dateFormat;
   final FormFieldValidator<String>? validator;
-  final Function(DateTime) onCloseDatepicker;
+  final Function(DateTime?) onCloseDatepicker;
   const CustomDatePicker({
     super.key,
     required this.focusNode,
@@ -59,7 +59,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               if (picked != null) {
                 setState(() {
                   dateTime = picked;
-                  widget.onCloseDatepicker(picked);
                 });
               }
             } else {
@@ -68,6 +67,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                 widget.focusNode.canRequestFocus = true;
               });
             }
+            widget.onCloseDatepicker(dateTime);
             widget.controller.text = dateTime == null
                 ? ""
                 : Jiffy.parseFromDateTime(dateTime!).format(

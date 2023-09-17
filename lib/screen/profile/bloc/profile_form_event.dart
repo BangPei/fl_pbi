@@ -38,8 +38,8 @@ class OnChangedBirthPlace extends ProfileFormEvent {
 }
 
 class OnChangedBirthDate extends ProfileFormEvent {
-  final DateTime val;
-  const OnChangedBirthDate(this.val);
+  final DateTime? val;
+  const OnChangedBirthDate({this.val});
   @override
   List<Object?> get props => [];
 }

@@ -70,8 +70,12 @@ class SuratLunasBloc extends Bloc<SuratLunasEvent, SuratLunasState> {
 
   void _onDateChanged(OnDateChanged event, Emitter<SuratLunasState> emit) {
     SuratLunas? lunas = state.lunas;
-    lunas?.date =
-        Jiffy.parseFromDateTime(event.val).format(pattern: "yyyy-MM-dd");
+    if (event.val != null) {
+      lunas?.date =
+          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
+    } else {
+      lunas?.date = null;
+    }
     emit(state.copyWith(lunas: lunas));
   }
 
@@ -79,12 +83,8 @@ class SuratLunasBloc extends Bloc<SuratLunasEvent, SuratLunasState> {
     emit(state.copyWith(isLoading: true));
     try {
       String? strProfile = await Session.get('profile');
-      Profile profile = Profile.fromJson(jsonDecode(strProfile ?? "{}"));
-      SuratLunas? lunas = state.lunas;
-      lunas?.address = profile.identity?.address;
-      lunas?.nik = profile.identity?.idNumber;
-      lunas?.name = profile.fullName;
-      lunas?.phone = profile.phone;
+      Profile profile = await getProfileSession(strProfile ?? "{}");
+      SuratLunas? lunas = await getLunas(profile);
       emit(state.copyWith(lunas: lunas, isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false));
@@ -119,5 +119,19 @@ class SuratLunasBloc extends Bloc<SuratLunasEvent, SuratLunasState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false));
     }
+  }
+
+  Future<Profile> getProfileSession(String strProfile) async {
+    Profile profile = Profile.fromJson(jsonDecode(strProfile));
+    return profile;
+  }
+
+  Future<SuratLunas?> getLunas(Profile profile) async {
+    SuratLunas? lunas = state.lunas;
+    lunas?.address = profile.currentAddress;
+    lunas?.nik = profile.identity?.idNumber;
+    lunas?.name = profile.fullName;
+    lunas?.phone = profile.phone;
+    return lunas;
   }
 }

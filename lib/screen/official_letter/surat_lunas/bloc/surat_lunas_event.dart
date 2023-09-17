@@ -33,8 +33,8 @@ class OnAddressChanged extends SuratLunasEvent {
 }
 
 class OnDateChanged extends SuratLunasEvent {
-  final DateTime val;
-  const OnDateChanged(this.val);
+  final DateTime? val;
+  const OnDateChanged({this.val});
 }
 
 class OnBlockChanged extends SuratLunasEvent {

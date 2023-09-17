@@ -1,12 +1,16 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/currency_formater.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/bloc/sewa_lahan_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
+import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jiffy/jiffy.dart';
 
 class SuratSewaLahanScreen extends StatefulWidget {
   const SuratSewaLahanScreen({super.key});
@@ -17,6 +21,8 @@ class SuratSewaLahanScreen extends StatefulWidget {
 
 class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
   late FocusNode dateFocusNode;
+  TextEditingController dateController = TextEditingController();
+  TextEditingController periodeDateController = TextEditingController();
   @override
   void initState() {
     dateFocusNode = FocusNode();
@@ -52,36 +58,50 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         },
       ),
       children: [
-        // CustomFormField(
-        //   title: "Tanggal Perjanjian",
-        //   reactiveForm: CustomDatePicker(
-        //     focusNode: dateFocusNode,
-        //     formGroup: formgroup,
-        //     formControlName: "date",
-        //     onCloseDatepicker: (val) => periodeDate(),
-        //   ),
-        // ),
+        CustomFormField(
+          title: "Tanggal Perjanjian",
+          textForm: CustomDatePicker(
+            key: UniqueKey(),
+            focusNode: dateFocusNode,
+            validator: ValidForm.emptyValue,
+            onCloseDatepicker: (val) {
+              context
+                  .read<SewaLahanBloc>()
+                  .add(OnChangedTanggalPerjanjian(val: val));
+            },
+            controller: dateController,
+          ),
+        ),
         CustomFormField(
           title: "Pihak Pertama",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedPihakPertama(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Pihak Kedua",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedPihakKedua(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "No. KTP Pihak Kedua",
           textForm: TextFormField(
-            // initialValue: state.profile?.identity?.idNumber,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedNik(val));
+            },
             decoration: TextFormDecoration.box(),
             keyboardType: TextInputType.number,
             inputFormatters: [Common.ktpFormat],
@@ -90,42 +110,60 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "No.Tlp Pihak Kedua",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedPhone(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Alamat Pihak Kedua",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedAddress(val));
+            },
             maxLines: 3,
             minLines: 3,
-            onChanged: (val) {},
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Area Lahan",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedAreaLahan(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Pemilik Area",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              context.read<SewaLahanBloc>().add(OnChangedPemilikArea(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
         CustomFormField(
           title: "Luas Area (Meter persegi)",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              if (val.isNotEmpty) {
+                double luas = double.parse(val.replaceAll(",", ""));
+                context.read<SewaLahanBloc>().add(OnChangedLuasArea(luas));
+              }
+            },
             decoration: TextFormDecoration.box(),
             textAlign: TextAlign.end,
             inputFormatters: [
@@ -137,10 +175,15 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Durasi Sewa Lahan (Tahun)",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              if (val.isNotEmpty) {
+                int luas = int.parse(val.replaceAll(",", ""));
+                context.read<SewaLahanBloc>().add(OnChangedDurasiSewa(luas));
+              }
+            },
             textAlign: TextAlign.end,
-            // onSubmitted: (val) => periodeDate(),
-            onChanged: (val) => periodeDate(),
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               CurrencyInputFormatter(),
@@ -151,8 +194,16 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Durasi Perpanjangan (Tahun)",
           textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            onChanged: (val) {},
+            key: UniqueKey(),
+            validator: ValidForm.emptyValue,
+            onChanged: (val) {
+              if (val.isNotEmpty) {
+                int luas = int.parse(val.replaceAll(",", ""));
+                context
+                    .read<SewaLahanBloc>()
+                    .add(OnChangedDurasiPerpanjangan(luas));
+              }
+            },
             textAlign: TextAlign.end,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -163,24 +214,29 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         ),
         CustomFormField(
           title: "Periode Sewa Lahan",
-          textForm: TextFormField(
-            // initialValue: state.profile?.gendre,
-            readOnly: true,
-            decoration: TextFormDecoration.box(),
+          textForm: BlocBuilder<SewaLahanBloc, SewaLahanState>(
+            buildWhen: (prev, curr) {
+              return prev.sewaLahan?.periodeDate != curr.sewaLahan?.periodeDate;
+            },
+            builder: (context, state) {
+              if (state.sewaLahan?.periodeDate != null) {
+                periodeDateController.text =
+                    Jiffy.parse(state.sewaLahan!.periodeDate!)
+                        .format(pattern: "dd MMMM yyyy");
+              } else {
+                periodeDateController.text.isEmpty;
+              }
+              return TextFormField(
+                key: UniqueKey(),
+                // initialValue: state.sewaLahan?.periodeDate,
+                controller: periodeDateController,
+                readOnly: true,
+                decoration: TextFormDecoration.box(),
+              );
+            },
           ),
         ),
       ],
     );
-  }
-
-  void periodeDate() {
-    // DateTime? commitDate = formgroup.control('date').value;
-    // int year = formgroup.control('periodeRent').value ?? 0;
-    // if (commitDate != null && year > 0) {
-    //   var newDate =
-    //       Jiffy.parseFromDateTime(commitDate).add(years: year).dateTime;
-    //   formgroup.control('periodeDate').value = newDate;
-    //   setState(() {});
-    // }
   }
 }

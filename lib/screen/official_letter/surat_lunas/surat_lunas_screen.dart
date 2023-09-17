@@ -131,7 +131,9 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                       validator: ValidForm.emptyValue,
                       focusNode: _dateFocusNode,
                       onCloseDatepicker: (val) {
-                        context.read<SuratLunasBloc>().add(OnDateChanged(val));
+                        context
+                            .read<SuratLunasBloc>()
+                            .add(OnDateChanged(val: val));
                       },
                       controller: dateController,
                     ),

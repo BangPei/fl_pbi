@@ -52,12 +52,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       context.go('/');
       emit(state.copyWith(isLoading: false, isError: false));
     } catch (e) {
-      DioException err = e as DioException;
-      emit(state.copyWith(
-        isLoading: false,
-        isError: true,
-        errorMessage: err.response?.data?["message"] ?? err.message,
-      ));
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
     }
   }
 }
