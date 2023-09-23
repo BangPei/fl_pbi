@@ -5,6 +5,7 @@ import 'package:fl_pbi/main_layout/bottom_navigator.dart';
 import 'package:fl_pbi/screen/home/home_screen.dart';
 import 'package:fl_pbi/screen/login/login_screen.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
+import 'package:fl_pbi/screen/official_letter/perjanjian_hak_guna/hak_guna_pakai_screen.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
 
@@ -140,6 +141,26 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
                     child: FormulirPendaftaranScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'perjanjian-hak-guna',
+                name: "perjanjian-hak-guna",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: PerjanjianHakGunaPakai(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'tanda-hak-guna',
+                name: "tanda-hak-guna",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: Scaffold(),
                   );
                 },
               ),

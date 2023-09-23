@@ -1,31 +1,28 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
-import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/bloc/formulir_pendaftaran_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FormulirPendaftaranScreen extends StatefulWidget {
-  const FormulirPendaftaranScreen({super.key});
+class PerjanjianHakGunaPakai extends StatefulWidget {
+  const PerjanjianHakGunaPakai({super.key});
 
   @override
-  State<FormulirPendaftaranScreen> createState() =>
-      _FormulirPendaftaranScreenState();
+  State<PerjanjianHakGunaPakai> createState() => _PerjanjianHakGunaPakaiState();
 }
 
-class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
+class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      title: 'Form Surat Pendaftaran',
+      title: 'Form Perjanjian Hak Guna Pakai',
       onSubmit: () {
-        context.read<FormulirPendaftaranBloc>().add(const OnSubmit());
+        // context.read<FormulirPendaftaranBloc>().add(const OnSubmit());
       },
       action: IconButton(
         icon: const Icon(Icons.download),
         onPressed: () {
-          context.read<FormulirPendaftaranBloc>().add(const OnSubmitTemplate());
+          // context.read<FormulirPendaftaranBloc>().add(const OnSubmitTemplate());
         },
       ),
       children: [
@@ -35,7 +32,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
             decoration: TextFormDecoration.box(),
             validator: ValidForm.emptyValue,
             onChanged: (vals) {
-              context.read<FormulirPendaftaranBloc>().add(OnNameChanged(vals));
+              // context.read<FormulirPendaftaranBloc>().add(OnNameChanged(vals));
             },
           ),
         ),
@@ -47,7 +44,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
             inputFormatters: [Common.ktpFormat],
             decoration: TextFormDecoration.box(),
             onChanged: (vals) {
-              context.read<FormulirPendaftaranBloc>().add(OnNikChanged(vals));
+              // context.read<FormulirPendaftaranBloc>().add(OnNikChanged(vals));
             },
           ),
         ),
@@ -56,7 +53,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
             onChanged: (vals) {
-              context.read<FormulirPendaftaranBloc>().add(OnPhoneChanged(vals));
+              // context.read<FormulirPendaftaranBloc>().add(OnPhoneChanged(vals));
             },
             decoration: TextFormDecoration.box(),
           ),
@@ -66,7 +63,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
             onChanged: (vals) {
-              context.read<FormulirPendaftaranBloc>().add(OnBlockChanged(vals));
+              // context.read<FormulirPendaftaranBloc>().add(OnBlockChanged(vals));
             },
             decoration: TextFormDecoration.box(),
           ),
@@ -76,9 +73,9 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
             onChanged: (vals) {
-              context
-                  .read<FormulirPendaftaranBloc>()
-                  .add(OnAddressChanged(vals));
+              // context
+              //     .read<FormulirPendaftaranBloc>()
+              //     .add(OnAddressChanged(vals));
             },
             minLines: 3,
             maxLines: 3,
@@ -90,7 +87,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
             onChanged: (vals) {
-              context.read<FormulirPendaftaranBloc>().add(OnPicChanged(vals));
+              // context.read<FormulirPendaftaranBloc>().add(OnPicChanged(vals));
             },
             decoration: TextFormDecoration.box(),
           ),

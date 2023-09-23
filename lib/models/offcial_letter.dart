@@ -15,11 +15,11 @@ class OfficialLetter {
       ),
       OfficialLetter(
         title: "Perjanjian Hak Guna Pakai",
-        routeName: "guna-pakai",
+        routeName: "perjanjian-hak-guna",
       ),
       OfficialLetter(
         title: "Surat Tanda Daftar Hak Guna",
-        routeName: "guna-pakai",
+        routeName: "tanda-hak-guna",
       ),
     ];
   }
