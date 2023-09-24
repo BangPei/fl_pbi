@@ -10,6 +10,7 @@ import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dar
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
 
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
+import 'package:fl_pbi/screen/official_letter/tanda_hak_guna/tanda_hak_guna_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
 import 'package:fl_pbi/screen/profile/screen/profile_form_screen.dart';
@@ -160,7 +161,7 @@ class RouteNavigation {
                 name: "tanda-hak-guna",
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
-                    child: Scaffold(),
+                    child: TandaHakGunaScreen(),
                   );
                 },
               ),

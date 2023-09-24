@@ -124,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // ignore: use_build_context_synchronously
                     context.go('/auth');
                   } catch (e) {
-                    print(e);
+                    // print(e);
                   }
                 },
                 child: Padding(

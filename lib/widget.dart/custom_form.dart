@@ -10,6 +10,7 @@ class CustomForm extends StatefulWidget {
   final List<Widget> children;
   final Function onSubmit;
   final Widget? action;
+  final bool? showCard;
   const CustomForm({
     super.key,
     required this.title,
@@ -17,6 +18,7 @@ class CustomForm extends StatefulWidget {
     required this.children,
     this.buttonTitle,
     this.action,
+    this.showCard = true,
   });
 
   @override
@@ -42,39 +44,66 @@ class _CustomFormState extends State<CustomForm> {
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Column(
-                children: [
-                  ListView(
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
+          child: (widget.showCard ?? true)
+              ? Card(
+                  child: BodyForm(
+                    buttonTitle: widget.buttonTitle,
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        widget.onSubmit();
+                      }
+                    },
                     children: widget.children,
                   ),
-                  Center(
-                    child: SizedBox(
-                      width: 150,
-                      child: CustomButton(
-                        title: Text(widget.buttonTitle ?? 'Print'),
-                        icon: const FaIcon(
-                          FontAwesomeIcons.solidFloppyDisk,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            widget.onSubmit();
-                          }
-                        },
-                      ),
-                    ),
-                  )
-                ],
+                )
+              : BodyForm(
+                  buttonTitle: widget.buttonTitle,
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      widget.onSubmit();
+                    }
+                  },
+                  children: widget.children,
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class BodyForm extends StatelessWidget {
+  final List<Widget> children;
+  final String? buttonTitle;
+  final VoidCallback? onPressed;
+  const BodyForm(
+      {super.key, required this.children, this.buttonTitle, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: Column(
+        children: [
+          ListView(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            children: children,
+          ),
+          Center(
+            child: SizedBox(
+              width: 150,
+              child: CustomButton(
+                title: Text(buttonTitle ?? 'Print'),
+                icon: const FaIcon(
+                  FontAwesomeIcons.solidFloppyDisk,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                onPressed: onPressed,
               ),
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

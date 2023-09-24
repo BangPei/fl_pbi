@@ -6,14 +6,14 @@ import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/form_title.dart';
 import 'package:flutter/material.dart';
 
-class PerjanjianHakGunaPakai extends StatefulWidget {
-  const PerjanjianHakGunaPakai({super.key});
+class TandaHakGunaScreen extends StatefulWidget {
+  const TandaHakGunaScreen({super.key});
 
   @override
-  State<PerjanjianHakGunaPakai> createState() => _PerjanjianHakGunaPakaiState();
+  State<TandaHakGunaScreen> createState() => _TandaHakGunaScreenState();
 }
 
-class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
+class _TandaHakGunaScreenState extends State<TandaHakGunaScreen> {
   TextEditingController createdDateController = TextEditingController();
   FocusNode createdDateNode = FocusNode();
   TextEditingController dateBirthController = TextEditingController();
@@ -23,7 +23,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      title: 'Form Perjanjian Hak Guna',
+      title: 'Form Tanda Hak Guna Pakai',
       showCard: false,
       onSubmit: () {},
       action: IconButton(
@@ -45,7 +45,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                   ),
                 ),
                 CustomFormField(
-                  title: "Ditandatangani di",
+                  title: "Tempat Dibuat",
                   textForm: TextFormField(
                     decoration: TextFormDecoration.box(),
                     validator: ValidForm.emptyValue,
@@ -65,7 +65,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
             ),
           ),
         ),
-        const FormTitle(title: 'PIHAK PERTAMA'),
+        const FormTitle(title: 'Data Pengelola'),
         Card(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 5),
@@ -128,7 +128,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
             ),
           ),
         ),
-        const FormTitle(title: 'PIHAK KEDUA'),
+        const FormTitle(title: 'Data Pembeli / Penyewa'),
         Card(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 5),
@@ -149,22 +149,6 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [Common.ktpFormat],
                     decoration: TextFormDecoration.box(),
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
-                  title: "No. Tlp",
-                  textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
-                  title: "Pekerjaaan",
-                  textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
                     onChanged: (vals) {},
                   ),
                 ),
@@ -221,30 +205,6 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                   ),
                 ),
                 CustomFormField(
-                  title: "Luas Kios",
-                  textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
-                  title: "Jangka Waktu Hak Guna",
-                  textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
-                  title: "Tanda Daftar Hak Guna Perunit",
-                  textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
                   title: "Masa Berlaku",
                   textForm: CustomDatePicker(
                     validator: ValidForm.emptyValue,
@@ -254,18 +214,10 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                   ),
                 ),
                 CustomFormField(
-                  title: "Sewa Bulanan Selama Hak Guna",
+                  title: "Nomor Perjanjian Hak Guna Pakai",
                   textForm: TextFormField(
-                    decoration: TextFormDecoration.box(),
                     validator: ValidForm.emptyValue,
-                    onChanged: (vals) {},
-                  ),
-                ),
-                CustomFormField(
-                  title: "Tagihan Iuran Pemakaian Listrik",
-                  textForm: TextFormField(
                     decoration: TextFormDecoration.box(),
-                    validator: ValidForm.emptyValue,
                     onChanged: (vals) {},
                   ),
                 ),
