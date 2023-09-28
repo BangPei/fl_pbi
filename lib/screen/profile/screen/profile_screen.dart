@@ -104,7 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed("change-password");
+                },
                 child: const Padding(
                   padding: EdgeInsets.only(top: 5.0),
                   child: Card(

@@ -13,6 +13,9 @@ abstract class RestClient {
   @POST("login")
   Future<HttpResponse> login(@Body() Login login);
 
+  @POST("password/change")
+  Future<dynamic> changePassword(@Body() Map<String, dynamic> pass);
+
   @DELETE("logout")
   Future<dynamic> logout();
 

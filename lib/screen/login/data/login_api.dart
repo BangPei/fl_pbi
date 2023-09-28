@@ -14,4 +14,10 @@ class LoginApi {
     var data = client.logout();
     return data;
   }
+
+  static Future<dynamic> changePassword(Map<String, dynamic> pass) async {
+    final client = await Api.restClient();
+    var data = client.changePassword(pass);
+    return data;
+  }
 }

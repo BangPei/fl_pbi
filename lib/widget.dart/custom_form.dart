@@ -125,8 +125,12 @@ class ValidForm {
   }
 
   static String? matchValue(String? value, String? data, String title) {
-    if (value != data) {
-      return "$title Tidak Sesuai";
+    if (value!.isEmpty) {
+      return "Tidak Boleh Kosong";
+    } else {
+      if (value != data) {
+        return "$title Tidak Sesuai";
+      }
     }
     return null;
   }

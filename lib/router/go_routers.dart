@@ -13,6 +13,7 @@ import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_
 import 'package:fl_pbi/screen/official_letter/tanda_hak_guna/tanda_hak_guna_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
 import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
+import 'package:fl_pbi/screen/profile/screen/change_password_form.dart';
 import 'package:fl_pbi/screen/profile/screen/profile_form_screen.dart';
 import 'package:fl_pbi/screen/profile/screen/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,16 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
                     child: ProfileForm(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'password',
+                name: "change-password",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: ChangePasswordForm(),
                   );
                 },
               ),
