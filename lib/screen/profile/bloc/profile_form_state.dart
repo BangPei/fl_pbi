@@ -23,7 +23,7 @@ final class ProfileFormState extends Equatable {
     bool? isSuccess,
   }) {
     return ProfileFormState(
-      profile: profile ?? this.profile,
+      profile: profile ?? this.profile ?? Profile(),
       errorMessage: errorMessage ?? this.errorMessage,
       isLoading: isLoading ?? this.isLoading,
       isError: isError ?? this.isError,

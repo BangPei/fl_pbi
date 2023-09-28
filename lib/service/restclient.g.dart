@@ -19,30 +19,32 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<dynamic> login(Login login) async {
+  Future<HttpResponse<dynamic>> login(Login login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(login.toJson());
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'auth',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = _result.data;
-    return value;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   @override
@@ -58,7 +60,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          'users/logout',
+          'logout',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -85,7 +87,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'profile/current',
+              'profile',
               queryParameters: queryParameters,
               data: _data,
             )

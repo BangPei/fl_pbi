@@ -45,15 +45,6 @@ class Profile {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     picture = json['picture'];
-    // if (json['birthDate'] != null || json['birthDate'] != "") {
-    //   if (json['birthDate'].runtimeType == DateTime) {
-    //     birthDate = Jiffy.parseFromDateTime(json['birthDate'])
-    //         .format(pattern: "yyyy-MM-dd");
-    //   } else {
-    //     birthDate = json['birthDate'];
-    //   }
-    // } else {
-    // }
     birthDate = json['birthDate'];
     birthPlace = json['birthPlace'];
     bloodGroup = json['bloodGroup'];
@@ -75,15 +66,6 @@ class Profile {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['picture'] = picture;
-    // if (birthDate != null || birthDate != "") {
-    //   if (birthDate.runtimeType == String) {
-    //     var date = DateTime.parse(birthDate ?? "");
-    //     data['birthDate'] = date;
-    //   } else {
-    //     data['birthDate'] = birthDate;
-    //   }
-    // } else {
-    // }
     data['birthDate'] = birthDate;
     data['birthPlace'] = birthPlace;
     data['bloodGroup'] = bloodGroup;

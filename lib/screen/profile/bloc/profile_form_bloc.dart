@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/library/session_manager.dart';
+import 'package:fl_pbi/screen/profile/data/identity_card.dart';
 import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:fl_pbi/screen/profile/data/profile_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,9 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   void _onChangedAddress(
       OnChangedAddress event, Emitter<ProfileFormState> emit) {
     Profile? profile = state.profile;
-    profile?.identity?.address = event.val;
+    IdentityCard identity = profile?.identity ?? IdentityCard();
+    identity.address = event.val;
+    profile?.identity = identity;
     emit(state.copyWith(profile: profile));
   }
 
@@ -102,7 +105,9 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
 
   void _onChangedNik(OnChangedNik event, Emitter<ProfileFormState> emit) {
     Profile? profile = state.profile;
-    profile?.identity?.idNumber = event.val;
+    IdentityCard identity = profile?.identity ?? IdentityCard();
+    identity.idNumber = event.val;
+    profile?.identity = identity;
     emit(state.copyWith(profile: profile));
   }
 

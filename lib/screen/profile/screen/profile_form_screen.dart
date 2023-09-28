@@ -184,7 +184,7 @@ class _ProfileFormState extends State<ProfileForm> {
                           title: "Agama",
                           textForm: DropdownButtonFormField<String>(
                             hint: const Text('Pilih Agama'),
-                            value: state.profile?.religion,
+                            value: state.profile?.religion?.toLowerCase(),
                             validator: ValidForm.emptyValue,
                             decoration: TextFormDecoration.box(),
                             onChanged: (val) {

@@ -10,6 +10,7 @@ import 'package:fl_pbi/screen/login/data/login_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:retrofit/dio.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -40,13 +41,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       Login? login = Login(password: state.password, username: state.username);
 
-      var dataLOgin = await LoginApi.login(login);
+      HttpResponse resp = await LoginApi.login(login);
+      var data = resp.data;
+      var header = resp.response.headers;
+      var token = header['authorization'];
       await Future.wait([
-        Session.set("token", dataLOgin["token"]),
-        Session.set("username", dataLOgin["username"]),
-        Session.set("profile", jsonEncode(dataLOgin["profile"])),
-        Session.set("fullName", dataLOgin["profile"]["fullName"]),
-        Session.set("picture", dataLOgin["profile"]?["picture"] ?? ""),
+        Session.set("token", token?[0] ?? ""),
+        Session.set("username", data['user']["username"]),
+        Session.set("profile", jsonEncode(data)),
+        Session.set("fullName", data["fullName"]),
+        Session.set("picture", data["picture"] ?? ""),
       ]);
       // ignore: use_build_context_synchronously
       context.go('/');

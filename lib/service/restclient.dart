@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fl_pbi/screen/login/data/login.dart';
 import 'package:fl_pbi/screen/profile/data/profile.dart';
+import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 
 part 'restclient.g.dart';
@@ -9,13 +10,13 @@ part 'restclient.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @POST("auth")
-  Future<dynamic> login(@Body() Login login);
+  @POST("login")
+  Future<HttpResponse> login(@Body() Login login);
 
-  @DELETE("users/logout")
+  @DELETE("logout")
   Future<dynamic> logout();
 
-  @GET("profile/current")
+  @GET("profile")
   Future<Profile> getCurrentProfile();
 
   @PUT("profile/{id}")
