@@ -129,7 +129,7 @@ class _ProfileFormState extends State<ProfileForm> {
                   Wrap(
                     children: [
                       SizedBox(
-                        width: size.width * 49 / 100,
+                        width: size.width * 44 / 100,
                         child: CustomFormField(
                           title: "Jenis Kelamin",
                           textForm: DropdownButtonFormField<String>(
@@ -152,7 +152,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                       ),
                       SizedBox(
-                        width: size.width * 48 / 100,
+                        width: size.width * 53 / 100,
                         child: CustomFormField(
                           title: "Gol. Darah",
                           textForm: DropdownButtonFormField<String>(

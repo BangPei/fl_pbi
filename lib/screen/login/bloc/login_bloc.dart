@@ -53,7 +53,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         Session.set("picture", data["picture"] ?? ""),
       ]);
       // ignore: use_build_context_synchronously
-      context.go('/');
+      context.go('/surat-resmi');
       emit(state.copyWith(isLoading: false, isError: false));
     } catch (e) {
       if (e.runtimeType == DioException) {

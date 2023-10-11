@@ -283,6 +283,7 @@ class PerjanjianHakGunaBloc
       String? strProfile = await Session.get('profile');
       Profile profile = await getProfileSession(strProfile ?? "{}");
       HakGuna? hakGuna = await getHakGuna(profile);
+      // Future.delayed(const Duration(seconds: 3));
       emit(state.copyWith(hakGuna: hakGuna, isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false));
@@ -306,24 +307,26 @@ class PerjanjianHakGunaBloc
 
   void _onSubmitTemplate(
       OnSubmitTemplate event, Emitter<PerjanjianHakGunaState> emit) async {
-    // try {
-    //   _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
-    //     "data": HakGuna(),
-    //     "pdf": HakGuna().pdf(),
-    //     "title":
-    //         "SuratPerjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
-    //   });
-    // } catch (e) {
-    //   emit(state.copyWith(isLoading: false));
-    // }
+    try {
+      _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
+        "data": HakGuna(),
+        "pdf": HakGuna().perjanjianPdf(),
+        "title":
+            "SuratPerjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
+      });
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+    }
   }
 
   Future<Profile> getProfileSession(String strProfile) async {
+    // Future.delayed(const Duration(seconds: 1));
     Profile profile = Profile.fromJson(jsonDecode(strProfile));
     return profile;
   }
 
   Future<HakGuna?> getHakGuna(Profile profile) async {
+    // Future.delayed(const Duration(seconds: 2));
     HakGuna hakGuna = HakGuna();
     Pic pic = hakGuna.pic ?? Pic();
     pic.name = profile.fullName;
