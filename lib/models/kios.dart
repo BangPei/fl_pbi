@@ -3,7 +3,7 @@ class Kios {
   String? block;
   String? blockNo;
   int? totalKios;
-  int? kiosWide;
+  double? kiosWide;
   int? periodeRent;
   String? startDate;
   String? endDate;

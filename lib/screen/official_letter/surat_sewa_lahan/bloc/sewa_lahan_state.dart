@@ -5,9 +5,7 @@ class SewaLahanState extends Equatable {
   const SewaLahanState({this.sewaLahan});
 
   SewaLahanState copyWith({SuratSewaLahan? sewaLahan}) {
-    return SewaLahanState(
-      sewaLahan: sewaLahan ?? this.sewaLahan,
-    );
+    return SewaLahanState(sewaLahan: sewaLahan ?? this.sewaLahan);
   }
 
   @override
