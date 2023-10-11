@@ -1,6 +1,7 @@
 import 'package:fl_pbi/router/go_routers.dart';
 import 'package:fl_pbi/screen/login/bloc/login_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/bloc/formulir_pendaftaran_bloc.dart';
+import 'package:fl_pbi/screen/official_letter/perjanjian_hak_guna/bloc/perjanjian_hak_guna_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_lunas/bloc/surat_lunas_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_permohonan/bloc/permohonan_bloc.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/bloc/sewa_lahan_bloc.dart';
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<PermohonanBloc>(create: (__) => PermohonanBloc()),
         BlocProvider<SuratLunasBloc>(create: (__) => SuratLunasBloc()),
         BlocProvider<SewaLahanBloc>(create: (__) => SewaLahanBloc()),
+        BlocProvider<PerjanjianHakGunaBloc>(
+            create: (__) => PerjanjianHakGunaBloc()),
         BlocProvider<FormulirPendaftaranBloc>(
             create: (__) => FormulirPendaftaranBloc()),
       ],

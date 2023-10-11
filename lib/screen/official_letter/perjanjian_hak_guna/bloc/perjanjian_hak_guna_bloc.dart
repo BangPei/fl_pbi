@@ -278,16 +278,17 @@ class PerjanjianHakGunaBloc
   }
 
   void _onInit(OnInit event, Emitter<PerjanjianHakGunaState> emit) async {
-    // emit(state.copyWith(isLoading: true));
-    // try {
-    //   String? strProfile = await Session.get('profile');
-    //   Profile profile = await getProfileSession(strProfile ?? "{}");
-    //   HakGuna hakGuna = HakGuna();
-    //   emit(state.copyWith(hakGuna: hakGuna, isLoading: false));
-    // } catch (e) {
-    //   emit(state.copyWith(isLoading: false));
-    // }
+    emit(state.copyWith(isLoading: true));
+    try {
+      String? strProfile = await Session.get('profile');
+      Profile profile = await getProfileSession(strProfile ?? "{}");
+      HakGuna? hakGuna = await getHakGuna(profile);
+      emit(state.copyWith(hakGuna: hakGuna, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+    }
   }
+
   void _onSubmit(OnSubmit event, Emitter<PerjanjianHakGunaState> emit) async {
     // try {
     //   HakGuna? hakGuna = state.hakGuna;
@@ -320,5 +321,17 @@ class PerjanjianHakGunaBloc
   Future<Profile> getProfileSession(String strProfile) async {
     Profile profile = Profile.fromJson(jsonDecode(strProfile));
     return profile;
+  }
+
+  Future<HakGuna?> getHakGuna(Profile profile) async {
+    HakGuna hakGuna = HakGuna();
+    Pic pic = hakGuna.pic ?? Pic();
+    pic.name = profile.fullName;
+    pic.address = profile.currentAddress;
+    pic.dateBirth = profile.birthDate;
+    pic.nik = profile.identity?.idNumber;
+    pic.phone = profile.phone;
+    hakGuna.pic = pic;
+    return hakGuna;
   }
 }
