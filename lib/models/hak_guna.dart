@@ -79,16 +79,20 @@ class HakGuna {
 
   pw.Widget rowIdentity(String title, String data, {double? titleWidh}) {
     return pw.Padding(
-      padding: const pw.EdgeInsets.only(bottom: 2.0 * PdfPageFormat.mm),
+      padding: const pw.EdgeInsets.only(bottom: PdfPageFormat.mm),
+      // padding: const pw.EdgeInsets.only(bottom: 2.0 * PdfPageFormat.mm),
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.start,
         children: [
-          pw.SizedBox(width: titleWidh ?? 100, child: pw.Text(title)),
+          pw.SizedBox(
+              width: titleWidh ?? 100,
+              child: pw.Text(title, style: const pw.TextStyle(fontSize: 11))),
           pw.SizedBox(width: 20, child: pw.Text(":")),
           pw.Expanded(
             child: pw.Text(
               data,
               textAlign: pw.TextAlign.justify,
+              style: const pw.TextStyle(fontSize: 11),
             ),
           ),
         ],
@@ -104,6 +108,7 @@ class HakGuna {
     final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
     final oCcy = NumberFormat("#,###", "en_US");
+    double lineSpacing = 1.2 * PdfPageFormat.mm;
     String day = (createdAt == null)
         ? '............'
         : Jiffy.parse(createdAt!, pattern: "dd MMMM yyyy")
@@ -135,10 +140,9 @@ class HakGuna {
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       header: (pw.Context context) => Common.headers(image),
       build: (context) => [
-        pw.SizedBox(height: 10),
         pw.Center(
           child: pw.Container(
-            width: 385,
+            width: 358,
             alignment: pw.Alignment.centerRight,
             decoration: const pw.BoxDecoration(
               border: pw.Border(
@@ -153,7 +157,7 @@ class HakGuna {
                 "SURAT PERJANJIAN KONTRAK HAK GUNA PAKAI KIOS",
                 style: pw.TextStyle(
                   fontWeight: pw.FontWeight.bold,
-                  fontSize: 14,
+                  fontSize: 13,
                 ),
               ),
             ),
@@ -163,13 +167,13 @@ class HakGuna {
         pw.Center(
           child: pw.Text(
             "Nomor : ${no ?? '.....................................'}",
-            style: const pw.TextStyle(fontSize: 14),
+            style: const pw.TextStyle(fontSize: 12),
           ),
         ),
-        pw.SizedBox(height: 25),
-        pw.Paragraph(text: ""),
+        pw.SizedBox(height: 20),
         pw.Paragraph(
           text: "Yang bertandatangan dibawah ini :",
+          style: const pw.TextStyle(fontSize: 11),
         ),
         rowIdentity("Nama", ""),
         rowIdentity("No. KTP", ""),
@@ -177,13 +181,11 @@ class HakGuna {
         rowIdentity("No. Telp", ""),
         rowIdentity("Pekerjaan", ""),
         rowIdentity("Alamat", ""),
-        pw.SizedBox(height: 15),
+        pw.SizedBox(height: 10),
         pw.RichText(
           textAlign: pw.TextAlign.justify,
           text: pw.TextSpan(
-            style: const pw.TextStyle(
-              lineSpacing: 1.5 * PdfPageFormat.mm,
-            ),
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
             text: 'Yang selanjutnya disebut ',
             children: [
               pw.TextSpan(
@@ -193,19 +195,17 @@ class HakGuna {
             ],
           ),
         ),
-        pw.SizedBox(height: 15),
+        pw.SizedBox(height: 10),
         rowIdentity("Nama", ""),
         rowIdentity("No. KTP", ""),
         rowIdentity("No. Telp", ""),
         rowIdentity("Pekerjaan", ""),
         rowIdentity("Alamat", ""),
-        pw.SizedBox(height: 15),
+        pw.SizedBox(height: 10),
         pw.RichText(
           textAlign: pw.TextAlign.justify,
           text: pw.TextSpan(
-            style: const pw.TextStyle(
-              lineSpacing: 1.5 * PdfPageFormat.mm,
-            ),
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
             text: 'Yang selanjutnya disebut ',
             children: [
               pw.TextSpan(
@@ -215,13 +215,11 @@ class HakGuna {
             ],
           ),
         ),
-        pw.SizedBox(height: 15),
+        pw.SizedBox(height: 20),
         pw.RichText(
           textAlign: pw.TextAlign.justify,
           text: pw.TextSpan(
-            style: const pw.TextStyle(
-              lineSpacing: 1.5 * PdfPageFormat.mm,
-            ),
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
             text:
                 '\t\t\t\t\t\t\t\t\t\t\t\tPada hari ini $day Tanggal $dateNum Bulan $month Tahun $year ',
             children: [
@@ -246,9 +244,7 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               children: [
                 pw.TextSpan(
                   text: 'PIHAK PERTAMA ',
@@ -279,31 +275,92 @@ class HakGuna {
         ),
         pw.Padding(
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
-          child: rowIdentity("b.\t\t\t\t\tTanda Daftar Hak Guna Pakai Perunit",
-              kios?.location ?? '............................................',
-              titleWidh: 230),
+          child: rowIdentity(
+            "b.\t\t\t\t\tBlok / Nomor",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
         ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "c.\t\t\t\t\tJumlah Unit Kios",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "d.\t\t\t\t\tLuas Ukuran Kios",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "e.\t\t\t\t\tJangka Waktu Hak Guna",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "f.\t\t\t\t\tMulai Waktu Hak Guna",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "g.\t\t\t\t\tTanda Daftar Hak Guna Pakai Perunit",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "h.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "i.\t\t\t\t\tSewa Bulanan Selama Hak Guna",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "j.\t\t\t\t\tTagihan Iuran Pemakaian Listrik",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.SizedBox(height: 10),
         lineWithNumber(
           textNum: "2. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      'bersedia menyewa lahan yang dimaksud dalam perjanjian ini, yang hanya akan digunakan untuk tempat usaha ',
-                ),
-                pw.TextSpan(
-                  text: "kuliner.",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                      "menyatakan sanggup menerima dan menyetujui ketentuan dan syarat-syarat dalam perjanjian hak guna pakai Kios di “Perniagaan Bumi Indah” sebagaimana tersebut dalam poin 1 (satu) diatas.",
                 ),
               ],
             ),
@@ -311,26 +368,59 @@ class HakGuna {
         ),
         lineWithNumber(
           textNum: "3. ",
-          child: pw.Text(""),
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA  ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "menjamin keberlangsungan kegiatan usaha dalam hal penggunaan dan pemakaian kios oleh PIHAK KEDUA sampai dengan batas waktu berakhirnya masa perjanjian hak guna pakai kios ini.",
+                ),
+              ],
+            ),
+          ),
         ),
         lineWithNumber(
           textNum: "4. ",
-          child: pw.Text(""),
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK KEDUA  ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "sanggup dan bersedia untuk tidak melakukan aktifitas dan kegiatan usaha yang bertentangan dengan hukum dan norma-norma sosial yang berkembang di masyarakat sekitar seperti kegiatan : Berjudi atau Perjudian, Minuman keras yang memabukan, penyalahgunaan Narkotika, tindakan Asusila, serta kegiatan atau usaha lain yang akan mengganggu keamanan, ketertiban dan kenyamanan ruko “Perniagaan Bumi Indah”.",
+                ),
+              ],
+            ),
+          ),
         ),
         lineWithNumber(
           textNum: "5. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text:
-                  'Membangun bangunan semi permanen atau permanen harus ijin ',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Pertama.",
+                  text: "PIHAK KEDUA  ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "sanggup dan bersedia menjaga keamanan, ketertiban, kebersihan dan kenyamanan dialam kios dan sekitarnya.",
                 ),
               ],
             ),
@@ -341,18 +431,16 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text: '',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: 'Dalam masa jangka waktu berlakunya Surat Perjanjian ini, ',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "bertanggung jawab menjaga dan memelihara kebersihan lingkungan di sekitar tempat usaha tersebut.",
+                      "berhak atau diperbolehkan untuk mengalihkan hak guna pakai kios atau mengontrakkan kembali kepada PIHAK KETIGA dengan terlebih dahulu memberitahukan dan mendapat surat persetujuan tertulis dari PIHAK PERTAMA.",
                 ),
               ],
             ),
@@ -363,18 +451,16 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "wajib ijin koordinasi dengan lingkungan terdekat (Rt/Rw) dan Security Komplek.",
+                      "tidak diperbolehkan merubah struktur dan instalasi dari unit kios tersebut tanpa ijin dan persetujuan dari PIHAK PERTAMA.",
                 ),
               ],
             ),
@@ -385,18 +471,24 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK KEDUA  ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "dilarang keras memanfaatkan lahan sewa tersebut untuk kegiatan usaha atau kegiatan lainnya yang melanggar kesusilaan yang melanggar peraturan perundangan yang berlaku.",
+                      "bertanggung jawab atas kerusakan kios sebagai akibat dari pemakaian dan atau kelalaian pemakaian, kecuali akibat dari kejadian yang bersifat ",
+                ),
+                pw.TextSpan(
+                  text: "Force Majeure ",
+                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "seperti bencana alam gempa bumi, tanah longsor, angin topan dan kebakaran, serta kejadian akibat huru-hara dan kerusuhan sosial lainnya.",
                 ),
               ],
             ),
@@ -407,34 +499,16 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Pertama ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
-                  text:
-                      "berhak memutus perjanjian sewa lahan ini secara sepihak jika dikemudian hari ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Kedua ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text:
-                      "melakukan pelanggaran sebagaimana tercantum dalam poin 8 tersebut diatas, dan untuk selanjutnya ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Pertama ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "akan melaporkan kepada pihak berwajib.",
-                ),
+                    text:
+                        "sanggup dan bersediamematuhu peraturan tata tertib dan peraturan teknis operasional di lingkungan kios “PERNIAGAAN BUMI INDAH”."),
               ],
             ),
           ),
@@ -444,44 +518,16 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text:
-                  'Jika dikemudian hari karena alasan rencana pembangunan dari ',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Pertama ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "atau karena alasan lainnya yang mengharuskan ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Pertama ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "mengakhiri/memutus secara sepihak perjanjian ini, maka kedua belah pihak sepakat akan menyelesaikannya secara musyawarah mufakat tanpa adanya paksaan/tuntutan dari ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Kedua ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "Kepada ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Pertama ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "untuk mengganti kerugian yang ditimbulkan kepada ",
-                ),
-                pw.TextSpan(
-                  text: "Pihak Kedua.",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                      "sanggup dan bersedia mentaati peraturan-peraturan pemerintah baik pemerintah tingkat pusat, daerah dan wilayah khususnya yang menyangkut Iuran Retribusi resmi dan ketentuan lainnya.",
                 ),
               ],
             ),
@@ -492,18 +538,29 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text: '',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text:
+                  'Setelah berakhirmasa jangka waktu Hak Guna Pakai sesuai surat perjanjian ini, ',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "akan membersihkan material, sampah, limbah atau sisa bangunannya apabila lahan akan dipakai atau masa kontrak sudah habis.",
+                      "wajib segera mengosongkan unit kios dan menyerahkannya kembali kepada ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "dengan terlebih dahulu menyelesaikan seluruh kewajibannya kepada ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA.",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
               ],
             ),
@@ -514,26 +571,35 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text: '',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: 'Jika ',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Pertama ",
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "akan memberitahukan sekurang - kurangnya dalam waktu 1 (satu) bulan sebelum ",
+                      "bermaksud untuk melanjutkan Hak Guna Pakai kios setelah masa kontraknya akan berakhir, maka ",
                 ),
                 pw.TextSpan(
-                  text: "Pihak Pertama ",
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "harus menyampaikannya secara tertulis kepada ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "mengakhiri perjanjian ini secara sepihak sebagaimana dimaksud pada poin 10 tersebut diatas.",
+                      "selambat-lambatnya 30 (tiga puluh) hari sebelum masa kontraknya berakhir untuk mendapatkan persetujuan dari ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA.",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
               ],
             ),
@@ -544,28 +610,197 @@ class HakGuna {
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
-              style: const pw.TextStyle(
-                lineSpacing: 1.5 * PdfPageFormat.mm,
-              ),
-              text: 'Penyerahan lahan yang digunakan tersebut kepada ',
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
               children: [
                 pw.TextSpan(
-                  text: "Pihak Kedua ",
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "akan memberikan prioritas dan perhatian kepada ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
                   text:
-                      "telah terjadi pada saat perjanjian ini ditandatangani dalam keadaan baik oleh kedua belah pihak.",
+                      "yang akan memperpanjang masa kontrak hak guna pakai kiosnya dengan syarat mengajukan permohonan perpanjangan kontrak selambat-lambatnya 30 hari sebelum masa kontrak pertama berakhir.",
                 ),
               ],
             ),
           ),
         ),
-        pw.Spacer(),
-        pw.Text(
-          "Pihak Pertama",
-          style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+        lineWithNumber(
+          textNum: "14. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: 'Jika dikemudian hari ',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "melakukan pelanggaran perjanjian ini maka ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "bersedia menerima sanksi dari ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "selaku penanggung jawab dan pengelola Perniagaan, baik sanksi administratif sampai dengan penutupan tempat kegiatan usaha.",
+                ),
+              ],
+            ),
+          ),
         ),
+        lineWithNumber(
+          textNum: "15. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "dan ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "sepakat bahwa hal-hal yang belum diatur dalam perjanjian ini yaitu peraturan tata tertib dan teknis operasional kegiatan di “PERNIAGAAN BUMI INDAH”, maka akan dibuat peraturan dan teknis operasional secara terpisah dari perjanjian ini oleh ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "selaku penanggung jawab pengelolaan kios “PERNIAGAAN BUMI INDAH” dengan memperhatikan masukan dari ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK KEDUA.",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "16. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "dan ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "bersepakat untuk menempuh jalan musyawarah dan mufakat untuk menyelesaikan hal-hal atau perselisihan yang mungkin timbulberkaitan dengan isi Surat Perjanjian ini.",
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "17. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text:
+                  'Setelah disepakati kontrak ini oleh kedua belah pihak, maka ',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "wajib segera menempati kios yang sudah ditentukan.",
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "18. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: 'Apabila ',
+              children: [
+                pw.TextSpan(
+                  text: "PIHAK KEDUA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "tidak segera menempati kios maka ",
+                ),
+                pw.TextSpan(
+                  text: "PIHAK PERTAMA ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "berhak mengklaim dan memotong nilai harga kios.",
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "19. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text:
+                  'Surat Perjanjian ini dibuat dalam rangkap dua untuk masing-masing pihak.',
+            ),
+          ),
+        ),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text:
+                '\t\t\t\t\t\t\t\t\t\t\t\tDemikian surat perjanjian ini dibuat dengan sebenarnya oleh masing-masing pihak dengan penuh rasa tanggung jawab dan tanpa adanya paksaan dari pihak manapun.',
+          ),
+        ),
+        pw.Spacer(),
+        rowIdentity("Ditandatangani di", ""),
+        rowIdentity("Tanggal", ""),
+        pw.SizedBox(height: 15),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
@@ -575,7 +810,7 @@ class HakGuna {
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
                   pw.Paragraph(
-                      text: "",
+                      text: "Pihak Pertama",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 12,
