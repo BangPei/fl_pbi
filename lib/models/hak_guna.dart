@@ -175,12 +175,16 @@ class HakGuna {
           text: "Yang bertandatangan dibawah ini :",
           style: const pw.TextStyle(fontSize: 11),
         ),
-        rowIdentity("Nama", ""),
-        rowIdentity("No. KTP", ""),
-        rowIdentity("Tanggal Lahir", ""),
-        rowIdentity("No. Telp", ""),
-        rowIdentity("Pekerjaan", ""),
-        rowIdentity("Alamat", ""),
+        rowIdentity("Nama", pic?.name ?? ""),
+        rowIdentity("No. KTP", pic?.nik ?? ""),
+        rowIdentity(
+            "Tanggal Lahir",
+            pic?.dateBirth != null
+                ? Jiffy.parse(pic!.dateBirth!).format(pattern: "dd MMMM yyyy")
+                : ""),
+        rowIdentity("No. Telp", pic?.phone ?? ""),
+        rowIdentity("Pekerjaan", pic?.job ?? ""),
+        rowIdentity("Alamat", pic?.address ?? ""),
         pw.SizedBox(height: 10),
         pw.RichText(
           textAlign: pw.TextAlign.justify,
@@ -196,11 +200,11 @@ class HakGuna {
           ),
         ),
         pw.SizedBox(height: 10),
-        rowIdentity("Nama", ""),
-        rowIdentity("No. KTP", ""),
-        rowIdentity("No. Telp", ""),
-        rowIdentity("Pekerjaan", ""),
-        rowIdentity("Alamat", ""),
+        rowIdentity("Nama", customer?.name ?? ""),
+        rowIdentity("No. KTP", customer?.nik ?? ""),
+        rowIdentity("No. Telp", customer?.phone ?? ""),
+        rowIdentity("Pekerjaan", customer?.job ?? ""),
+        rowIdentity("Alamat", customer?.address ?? ""),
         pw.SizedBox(height: 10),
         pw.RichText(
           textAlign: pw.TextAlign.justify,
@@ -224,10 +228,10 @@ class HakGuna {
                 '\t\t\t\t\t\t\t\t\t\t\t\tPada hari ini $day Tanggal $dateNum Bulan $month Tahun $year ',
             children: [
               pw.TextSpan(
-                text: 'PIHAK PERTAMA',
+                text: 'PIHAK PERTAMA ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
-              const pw.TextSpan(text: 'dan'),
+              const pw.TextSpan(text: 'dan '),
               pw.TextSpan(
                 text: 'PIHAK KEDUA ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
@@ -277,7 +281,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "b.\t\t\t\t\tBlok / Nomor",
-            kios?.location ?? '............................................',
+            '${kios?.block} ${kios?.blockNo}',
             titleWidh: 230,
           ),
         ),
@@ -285,7 +289,8 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "c.\t\t\t\t\tJumlah Unit Kios",
-            kios?.location ?? '............................................',
+            kios?.totalKios.toString() ??
+                '............................................',
             titleWidh: 230,
           ),
         ),
@@ -293,7 +298,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "d.\t\t\t\t\tLuas Ukuran Kios",
-            kios?.location ?? '............................................',
+            oCcy.format(kios?.kiosWide ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -301,7 +306,8 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "e.\t\t\t\t\tJangka Waktu Hak Guna",
-            kios?.location ?? '............................................',
+            kios?.periodeRent.toString() ??
+                '............................................',
             titleWidh: 230,
           ),
         ),
@@ -309,7 +315,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "f.\t\t\t\t\tMulai Waktu Hak Guna",
-            kios?.location ?? '............................................',
+            kios?.startDate != null
+                ? Jiffy.parse(kios!.startDate!).format(pattern: "dd MMMM yyyy")
+                : "",
             titleWidh: 230,
           ),
         ),
@@ -317,7 +325,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "g.\t\t\t\t\tTanda Daftar Hak Guna Pakai Perunit",
-            kios?.location ?? '............................................',
+            kios?.signHakGuna ?? '............................................',
             titleWidh: 230,
           ),
         ),
@@ -325,7 +333,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "h.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
-            kios?.location ?? '............................................',
+            kios?.endDate != null
+                ? Jiffy.parse(kios!.endDate!).format(pattern: "dd MMMM yyyy")
+                : "",
             titleWidh: 230,
           ),
         ),
@@ -333,7 +343,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "i.\t\t\t\t\tSewa Bulanan Selama Hak Guna",
-            kios?.location ?? '............................................',
+            oCcy.format(kios?.monthCost ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -341,7 +351,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "j.\t\t\t\t\tTagihan Iuran Pemakaian Listrik",
-            kios?.location ?? '............................................',
+            oCcy.format(kios?.electricCost ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -819,7 +829,7 @@ class HakGuna {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 90),
                   pw.Paragraph(
-                    text: "(a)".toUpperCase(),
+                    text: (pic?.name ?? '').toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
@@ -845,7 +855,7 @@ class HakGuna {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 90),
                   pw.Paragraph(
-                    text: "(a)".toUpperCase(),
+                    text: (customer?.name ?? '').toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
