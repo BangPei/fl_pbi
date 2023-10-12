@@ -43,6 +43,7 @@ class PerjanjianHakGunaBloc
     on<OnChangedLuasKios>(_onChangedLuasKios);
     on<OnChangedJangkaWaktu>(_onChangedJangkaWaktu);
     on<OnChangedTandaHakGuna>(_onChangedTandaHakGuna);
+    on<OnChangedMulaiHakGuna>(_onChangedMulaiHakGuna);
     on<OnChangedMasaBerlaku>(_onChangedMasaBerlaku);
     on<OnChangedSewaBulanan>(_onChangedSewaBulanan);
     on<OnChangedTagihanListrik>(_onChangedTagihanListrik);
@@ -277,6 +278,20 @@ class PerjanjianHakGunaBloc
     emit(state.copyWith(hakGuna: hakGuna));
   }
 
+  void _onChangedMulaiHakGuna(
+      OnChangedMulaiHakGuna event, Emitter<PerjanjianHakGunaState> emit) {
+    HakGuna? hakGuna = state.hakGuna;
+    Kios kios = hakGuna?.kios ?? Kios();
+    if (event.val != null) {
+      kios.startDate =
+          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
+    } else {
+      kios.startDate = null;
+    }
+    hakGuna?.kios = kios;
+    emit(state.copyWith(hakGuna: hakGuna));
+  }
+
   void _onInit(OnInit event, Emitter<PerjanjianHakGunaState> emit) async {
     emit(state.copyWith(isLoading: true));
     try {
@@ -291,18 +306,18 @@ class PerjanjianHakGunaBloc
   }
 
   void _onSubmit(OnSubmit event, Emitter<PerjanjianHakGunaState> emit) async {
-    // try {
-    //   HakGuna? hakGuna = state.hakGuna;
-    //   _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
-    //     "data": hakGuna,
-    //     "pdf": hakGuna!.pdf(),
-    //     "title":
-    //         "SuratPerjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
-    //   });
-    //   emit(state.copyWith(isLoading: false));
-    // } catch (e) {
-    //   emit(state.copyWith(isLoading: false));
-    // }
+    try {
+      HakGuna? hakGuna = state.hakGuna;
+      _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
+        "data": hakGuna,
+        "pdf": hakGuna!.perjanjianPdf(),
+        "title":
+            "Surat Perjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
+      });
+      emit(state.copyWith(isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+    }
   }
 
   void _onSubmitTemplate(
@@ -312,7 +327,7 @@ class PerjanjianHakGunaBloc
         "data": HakGuna(),
         "pdf": HakGuna().perjanjianPdf(),
         "title":
-            "SuratPerjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
+            "Surat Perjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
       });
     } catch (e) {
       emit(state.copyWith(isLoading: false));

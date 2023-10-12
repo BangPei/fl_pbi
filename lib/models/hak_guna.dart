@@ -111,18 +111,18 @@ class HakGuna {
     double lineSpacing = 1.2 * PdfPageFormat.mm;
     String day = (createdAt == null)
         ? '............'
-        : Jiffy.parse(createdAt!, pattern: "dd MMMM yyyy")
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
             .format(pattern: 'EEEE');
     String dateNum = createdAt == null
         ? '........'
-        : Jiffy.parse(createdAt!, pattern: "dd MMMM yyyy").format(pattern: 'd');
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd").format(pattern: 'd');
     String month = createdAt == null
         ? '........'
-        : Jiffy.parse(createdAt!, pattern: "dd MMMM yyyy")
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
             .format(pattern: 'MMMM');
     String year = createdAt == null
         ? '........'
-        : Jiffy.parse(createdAt!, pattern: "dd MMMM yyyy")
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
             .format(pattern: 'yyyy');
 
     pdf.addPage(pw.MultiPage(
@@ -281,7 +281,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "b.\t\t\t\t\tBlok / Nomor",
-            '${kios?.block} ${kios?.blockNo}',
+            (kios?.block == null || kios?.blockNo == null)
+                ? '............................................'
+                : '${kios?.block} ${kios?.blockNo}',
             titleWidh: 230,
           ),
         ),
@@ -289,8 +291,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "c.\t\t\t\t\tJumlah Unit Kios",
-            kios?.totalKios.toString() ??
-                '............................................',
+            (kios?.totalKios == 0 || kios?.totalKios == null)
+                ? '............................................'
+                : (kios?.totalKios ?? 0).toString(),
             titleWidh: 230,
           ),
         ),
@@ -298,7 +301,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "d.\t\t\t\t\tLuas Ukuran Kios",
-            oCcy.format(kios?.kiosWide ?? 0),
+            (kios?.kiosWide == 0 || kios?.kiosWide == null)
+                ? '............................................'
+                : oCcy.format(kios?.kiosWide ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -317,7 +322,7 @@ class HakGuna {
             "f.\t\t\t\t\tMulai Waktu Hak Guna",
             kios?.startDate != null
                 ? Jiffy.parse(kios!.startDate!).format(pattern: "dd MMMM yyyy")
-                : "",
+                : '............................................',
             titleWidh: 230,
           ),
         ),
@@ -335,7 +340,7 @@ class HakGuna {
             "h.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
             kios?.endDate != null
                 ? Jiffy.parse(kios!.endDate!).format(pattern: "dd MMMM yyyy")
-                : "",
+                : '............................................',
             titleWidh: 230,
           ),
         ),
@@ -343,7 +348,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "i.\t\t\t\t\tSewa Bulanan Selama Hak Guna",
-            oCcy.format(kios?.monthCost ?? 0),
+            (kios?.monthCost == null || kios?.monthCost == 0)
+                ? '............................................'
+                : oCcy.format(kios?.monthCost ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -351,7 +358,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "j.\t\t\t\t\tTagihan Iuran Pemakaian Listrik",
-            oCcy.format(kios?.electricCost ?? 0),
+            (kios?.electricCost == null || kios?.electricCost == 0)
+                ? '............................................'
+                : oCcy.format(kios?.electricCost ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -808,8 +817,13 @@ class HakGuna {
           ),
         ),
         pw.Spacer(),
-        rowIdentity("Ditandatangani di", ""),
-        rowIdentity("Tanggal", ""),
+        rowIdentity("Ditandatangani di",
+            createdPlace ?? '............................................'),
+        rowIdentity(
+            "Tanggal",
+            createdAt == null
+                ? '............................................'
+                : Jiffy.parse(createdAt!).format(pattern: "dd MMMM yyyy")),
         pw.SizedBox(height: 15),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -829,7 +843,9 @@ class HakGuna {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 90),
                   pw.Paragraph(
-                    text: (pic?.name ?? '').toUpperCase(),
+                    text: pic?.name == null
+                        ? '(............................................)'
+                        : "(${pic?.name})".toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
@@ -855,7 +871,9 @@ class HakGuna {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 90),
                   pw.Paragraph(
-                    text: (customer?.name ?? '').toUpperCase(),
+                    text: customer?.name == null
+                        ? '(............................................)'
+                        : "(${customer?.name})".toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,

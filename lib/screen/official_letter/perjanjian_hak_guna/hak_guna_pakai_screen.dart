@@ -23,7 +23,9 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
   TextEditingController dateBirthController = TextEditingController();
   FocusNode dateBirthNode = FocusNode();
   TextEditingController validDateController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
   FocusNode validDateNode = FocusNode();
+  FocusNode starDateNode = FocusNode();
 
   @override
   void initState() {
@@ -346,6 +348,19 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                         .add(OnChangedLuasKios(luas));
                                   }
                                 },
+                              ),
+                            ),
+                            CustomFormField(
+                              title: "Mulai Hak Guna",
+                              textForm: CustomDatePicker(
+                                validator: ValidForm.emptyValue,
+                                focusNode: starDateNode,
+                                onCloseDatepicker: (val) {
+                                  context
+                                      .read<PerjanjianHakGunaBloc>()
+                                      .add(OnChangedMulaiHakGuna(val: val));
+                                },
+                                controller: startDateController,
                               ),
                             ),
                             CustomFormField(
