@@ -1,15 +1,13 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
+import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/models/customer.dart';
 import 'package:fl_pbi/models/hak_guna.dart';
 import 'package:fl_pbi/models/kios.dart';
 import 'package:fl_pbi/models/pic.dart';
 import 'package:fl_pbi/screen/profile/data/profile.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
@@ -52,7 +50,6 @@ class PerjanjianHakGunaBloc
     on<OnSubmitTemplate>(_onSubmitTemplate);
   }
 
-  BuildContext context = _nav.navKey.currentContext!;
   void _onChangedNoSurat(
       OnChangedNoSurat event, Emitter<PerjanjianHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
@@ -296,8 +293,8 @@ class PerjanjianHakGunaBloc
     emit(state.copyWith(isLoading: true));
     try {
       String? strProfile = await Session.get('profile');
-      Profile profile = await getProfileSession(strProfile ?? "{}");
-      HakGuna? hakGuna = await getHakGuna(profile);
+      Profile profile = await Common.getProfileSession(strProfile ?? "{}");
+      HakGuna? hakGuna = await Common.getHakGuna(profile);
       // Future.delayed(const Duration(seconds: 3));
       emit(state.copyWith(hakGuna: hakGuna, isLoading: false));
     } catch (e) {
@@ -332,24 +329,5 @@ class PerjanjianHakGunaBloc
     } catch (e) {
       emit(state.copyWith(isLoading: false));
     }
-  }
-
-  Future<Profile> getProfileSession(String strProfile) async {
-    // Future.delayed(const Duration(seconds: 1));
-    Profile profile = Profile.fromJson(jsonDecode(strProfile));
-    return profile;
-  }
-
-  Future<HakGuna?> getHakGuna(Profile profile) async {
-    // Future.delayed(const Duration(seconds: 2));
-    HakGuna hakGuna = HakGuna();
-    Pic pic = hakGuna.pic ?? Pic();
-    pic.name = profile.fullName;
-    pic.address = profile.currentAddress;
-    pic.dateBirth = profile.birthDate;
-    pic.nik = profile.identity?.idNumber;
-    pic.phone = profile.phone;
-    hakGuna.pic = pic;
-    return hakGuna;
   }
 }

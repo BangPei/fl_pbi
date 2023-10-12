@@ -890,4 +890,202 @@ class HakGuna {
     ));
     return pdf.save();
   }
+
+  Future<Uint8List> tandaDaftarPdf() async {
+    final pdf = pw.Document(
+      pageMode: PdfPageMode.outlines,
+    );
+    final font1 = await PdfGoogleFonts.tinosRegular();
+    final font2 = await PdfGoogleFonts.tinosBold();
+    final image = await imageFromAssetBundle('images/logo.png');
+    double lineSpacing = 1.2 * PdfPageFormat.mm;
+
+    pdf.addPage(pw.MultiPage(
+      pageFormat: Common.a4.copyWith(
+        marginBottom: 1.5 * PdfPageFormat.cm,
+        marginLeft: 35,
+        marginRight: 35,
+        marginTop: 35,
+      ),
+      theme: pw.ThemeData.withFont(
+        base: font1,
+        bold: font2,
+      ),
+      orientation: pw.PageOrientation.portrait,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      header: (pw.Context context) => Common.headers(image),
+      build: (context) => [
+        pw.Center(
+          child: pw.Container(
+            width: 308,
+            alignment: pw.Alignment.centerRight,
+            decoration: const pw.BoxDecoration(
+              border: pw.Border(
+                bottom: pw.BorderSide(
+                  width: 1,
+                  color: PdfColors.black,
+                ),
+              ),
+            ),
+            child: pw.Center(
+              child: pw.Text(
+                "SURAT TANDA DAFTAR HAK GUNA PAKAI KIOS",
+                style: pw.TextStyle(
+                  fontWeight: pw.FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ),
+        ),
+        pw.SizedBox(height: 3),
+        pw.Center(
+          child: pw.Text(
+            "Nomor : ${no ?? '.....................................'}",
+            style: const pw.TextStyle(fontSize: 12),
+          ),
+        ),
+        pw.SizedBox(height: 20),
+        pw.Paragraph(
+          text: "Yang bertandatangan dibawah ini :",
+          style: const pw.TextStyle(fontSize: 11),
+        ),
+        rowIdentity("Nama", pic?.name ?? ""),
+        rowIdentity("No. KTP", pic?.nik ?? ""),
+        rowIdentity(
+            "Tanggal Lahir",
+            pic?.dateBirth != null
+                ? Jiffy.parse(pic!.dateBirth!).format(pattern: "dd MMMM yyyy")
+                : ""),
+        rowIdentity("No. Telp", pic?.phone ?? ""),
+        rowIdentity("Pekerjaan", pic?.job ?? ""),
+        rowIdentity("Alamat", pic?.address ?? ""),
+        pw.SizedBox(height: 20),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text:
+                '\t\t\t\t\t\t\t\t\t\t\t\tDalam hal ini bertindak selaku Penanggung Jawab Pengelola ',
+            children: [
+              pw.TextSpan(
+                text: '“Perniagaan Bumi Indah” ',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              const pw.TextSpan(text: 'dengan ini memberikan '),
+              pw.TextSpan(
+                text: 'HAK GUNA PAKAI KIOS ',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              const pw.TextSpan(text: 'kepada :'),
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 20),
+        rowIdentity("Nama", customer?.name ?? ""),
+        rowIdentity("No. KTP", customer?.nik ?? ""),
+        rowIdentity("Alamat", customer?.address ?? ""),
+        pw.SizedBox(height: 20),
+        pw.Paragraph(
+            text: "Data Unit Kios :",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+        pw.SizedBox(height: 15),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "a.\t\t\t\t\tLokasi Kios",
+            kios?.location ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "b.\t\t\t\t\tBlok / Nomor",
+            (kios?.block == null || kios?.blockNo == null)
+                ? '............................................'
+                : '${kios?.block} ${kios?.blockNo}',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "c.\t\t\t\t\tJumlah Unit Kios",
+            (kios?.totalKios == 0 || kios?.totalKios == null)
+                ? '............................................'
+                : (kios?.totalKios ?? 0).toString(),
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "d.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
+            kios?.endDate != null
+                ? Jiffy.parse(kios!.endDate!).format(pattern: "dd MMMM yyyy")
+                : '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+          child: rowIdentity(
+            "e.\t\t\t\t\tNo. Perjanjian Hak Guna Pakai",
+            kios?.noHakGuna ?? '............................................',
+            titleWidh: 230,
+          ),
+        ),
+        pw.SizedBox(height: 20),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text:
+                '\t\t\t\t\t\t\t\t\t\t\t\tDemikian surat tanda daftar Hak Guna pakai kios ini dibuat sebagai bagian yang tidak terpisah dari Perjanjian Kontrak Hak Guna Pakai antara yang bersangkutan dengan pihak penanggung jawab pengelola Perniagaan Bumi Indah.',
+          ),
+        ),
+        pw.Spacer(),
+        rowIdentity("Dibuat di",
+            createdPlace ?? '............................................'),
+        rowIdentity(
+            "Tanggal",
+            createdAt == null
+                ? '............................................'
+                : Jiffy.parse(createdAt!).format(pattern: "dd MMMM yyyy")),
+        pw.SizedBox(height: 15),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+              text: 'Penanggung Jawab Pengeloal'),
+        ),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text: 'Kios ',
+            children: [
+              pw.TextSpan(
+                text: '“Perniagaan Bumi Indah” ',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 90),
+        pw.Paragraph(
+          text: pic?.name == null
+              ? '(............................................)'
+              : "(${pic?.name})".toUpperCase(),
+          style: pw.TextStyle(
+            fontWeight: pw.FontWeight.bold,
+            fontSize: 12,
+          ),
+          margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+        )
+      ],
+    ));
+    return pdf.save();
+  }
 }

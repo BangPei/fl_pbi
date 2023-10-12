@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:fl_pbi/models/hak_guna.dart';
+import 'package:fl_pbi/models/pic.dart';
+import 'package:fl_pbi/screen/profile/data/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -116,6 +121,25 @@ class Common {
         );
       },
     );
+  }
+
+  static Future<Profile> getProfileSession(String strProfile) async {
+    // Future.delayed(const Duration(seconds: 1));
+    Profile profile = Profile.fromJson(jsonDecode(strProfile));
+    return profile;
+  }
+
+  static Future<HakGuna?> getHakGuna(Profile profile) async {
+    // Future.delayed(const Duration(seconds: 2));
+    HakGuna hakGuna = HakGuna();
+    Pic pic = hakGuna.pic ?? Pic();
+    pic.name = profile.fullName;
+    pic.address = profile.currentAddress;
+    pic.dateBirth = profile.birthDate;
+    pic.nik = profile.identity?.idNumber;
+    pic.phone = profile.phone;
+    hakGuna.pic = pic;
+    return hakGuna;
   }
 }
 
