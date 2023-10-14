@@ -90,6 +90,16 @@ class RouteNavigation {
                   );
                 },
               ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'user',
+                name: "users",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: ChangePasswordForm(),
+                  );
+                },
+              ),
             ],
           ),
           GoRoute(

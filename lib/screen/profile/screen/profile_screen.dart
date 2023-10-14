@@ -118,6 +118,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              Visibility(
+                visible: true,
+                child: GestureDetector(
+                  onTap: () {
+                    context.pushNamed("change-password");
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(Icons.lock_open_outlined),
+                        title: Text("List User"),
+                        trailing: Icon(Icons.arrow_right),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               GestureDetector(
                 onTap: () async {
                   try {
