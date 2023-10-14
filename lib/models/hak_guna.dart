@@ -238,7 +238,7 @@ class HakGuna {
               ),
               const pw.TextSpan(
                   text:
-                      'telah sepakat dan menyetujui untuk menandatangani surat perjanjian Hak Guna Pakai Kios untuk berdagang atau berusaha di “PERNIAGAAN BUMI INDAH” Jl Bumi Indah Raya, Kelurahan Kuta Jaya, Kecamatan Pasarkemis, Kabupaten Tangerang, Provinsi Banten, yang isi serta syarat-syarat perjanjiannya diatur sebagai berikut :'),
+                      'telah sepakat dan menyetujui untuk menandatangani surat perjanjian Hak Guna Pakai Kios untuk berdagang atau berusaha di "PERNIAGAAN BUMI INDAH" Jl Bumi Indah Raya, Kelurahan Kuta Jaya, Kecamatan Pasarkemis, Kabupaten Tangerang, Provinsi Banten, yang isi serta syarat-syarat perjanjiannya diatur sebagai berikut :'),
             ],
           ),
         ),
@@ -379,7 +379,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "menyatakan sanggup menerima dan menyetujui ketentuan dan syarat-syarat dalam perjanjian hak guna pakai Kios di “Perniagaan Bumi Indah” sebagaimana tersebut dalam poin 1 (satu) diatas.",
+                      'menyatakan sanggup menerima dan menyetujui ketentuan dan syarat-syarat dalam perjanjian hak guna pakai Kios di "Perniagaan Bumi Indah" sebagaimana tersebut dalam poin 1 (satu) diatas.',
                 ),
               ],
             ),
@@ -419,7 +419,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "sanggup dan bersedia untuk tidak melakukan aktifitas dan kegiatan usaha yang bertentangan dengan hukum dan norma-norma sosial yang berkembang di masyarakat sekitar seperti kegiatan : Berjudi atau Perjudian, Minuman keras yang memabukan, penyalahgunaan Narkotika, tindakan Asusila, serta kegiatan atau usaha lain yang akan mengganggu keamanan, ketertiban dan kenyamanan ruko “Perniagaan Bumi Indah”.",
+                      "sanggup dan bersedia untuk tidak melakukan aktifitas dan kegiatan usaha yang bertentangan dengan hukum dan norma-norma sosial yang berkembang di masyarakat sekitar seperti kegiatan : Berjudi atau Perjudian, Minuman keras yang memabukan, penyalahgunaan Narkotika, tindakan Asusila, serta kegiatan atau usaha lain yang akan mengganggu keamanan, ketertiban dan kenyamanan ruko 'Perniagaan Bumi Indah'.",
                 ),
               ],
             ),
@@ -526,8 +526,9 @@ class HakGuna {
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
-                    text:
-                        "sanggup dan bersediamematuhu peraturan tata tertib dan peraturan teknis operasional di lingkungan kios “PERNIAGAAN BUMI INDAH”."),
+                  text:
+                      'sanggup dan bersediamematuhu peraturan tata tertib dan peraturan teknis operasional di lingkungan kios "PERNIAGAAN BUMI INDAH".',
+                ),
               ],
             ),
           ),
@@ -706,7 +707,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "sepakat bahwa hal-hal yang belum diatur dalam perjanjian ini yaitu peraturan tata tertib dan teknis operasional kegiatan di “PERNIAGAAN BUMI INDAH”, maka akan dibuat peraturan dan teknis operasional secara terpisah dari perjanjian ini oleh ",
+                      'sepakat bahwa hal-hal yang belum diatur dalam perjanjian ini yaitu peraturan tata tertib dan teknis operasional kegiatan di "PERNIAGAAN BUMI INDAH", maka akan dibuat peraturan dan teknis operasional secara terpisah dari perjanjian ini oleh ',
                 ),
                 pw.TextSpan(
                   text: "PIHAK PERTAMA ",
@@ -714,7 +715,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "selaku penanggung jawab pengelolaan kios “PERNIAGAAN BUMI INDAH” dengan memperhatikan masukan dari ",
+                      'selaku penanggung jawab pengelolaan kios "PERNIAGAAN BUMI INDAH" dengan memperhatikan masukan dari ',
                 ),
                 pw.TextSpan(
                   text: "PIHAK KEDUA.",
@@ -969,7 +970,7 @@ class HakGuna {
                 '\t\t\t\t\t\t\t\t\t\t\t\tDalam hal ini bertindak selaku Penanggung Jawab Pengelola ',
             children: [
               pw.TextSpan(
-                text: '“Perniagaan Bumi Indah” ',
+                text: '"Perniagaan Bumi Indah" ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               const pw.TextSpan(text: 'dengan ini memberikan '),
@@ -1067,7 +1068,7 @@ class HakGuna {
             text: 'Kios ',
             children: [
               pw.TextSpan(
-                text: '“Perniagaan Bumi Indah” ',
+                text: '"Perniagaan Bumi Indah" ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
             ],
