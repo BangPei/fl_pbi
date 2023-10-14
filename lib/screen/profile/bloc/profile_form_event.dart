@@ -92,3 +92,10 @@ class OnChangedAddress extends ProfileFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnChangedSwitch extends ProfileFormEvent {
+  final bool val;
+  const OnChangedSwitch(this.val);
+  @override
+  List<Object?> get props => [];
+}

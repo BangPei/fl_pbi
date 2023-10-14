@@ -93,7 +93,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     key: key,
                     children: [
                       SizedBox(
-                        width: size.width * 45 / 100,
+                        width: size.width * 49 / 100,
                         child: CustomFormField(
                           title: "Tempat Lahir",
                           textForm: TextFormField(
@@ -109,7 +109,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                       ),
                       SizedBox(
-                        width: size.width * 52 / 100,
+                        width: size.width * 48 / 100,
                         child: CustomFormField(
                           title: "Tanggal Lahir",
                           textForm: CustomDatePicker(
@@ -129,7 +129,7 @@ class _ProfileFormState extends State<ProfileForm> {
                   Wrap(
                     children: [
                       SizedBox(
-                        width: size.width * 44 / 100,
+                        width: size.width * 49 / 100,
                         child: CustomFormField(
                           title: "Jenis Kelamin",
                           textForm: DropdownButtonFormField<String>(
@@ -152,7 +152,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                       ),
                       SizedBox(
-                        width: size.width * 53 / 100,
+                        width: size.width * 48 / 100,
                         child: CustomFormField(
                           title: "Gol. Darah",
                           textForm: DropdownButtonFormField<String>(
@@ -179,7 +179,7 @@ class _ProfileFormState extends State<ProfileForm> {
                   Wrap(
                     children: [
                       SizedBox(
-                        width: size.width * 44 / 100,
+                        width: size.width * 49 / 100,
                         child: CustomFormField(
                           title: "Agama",
                           textForm: DropdownButtonFormField<String>(
@@ -208,7 +208,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                       ),
                       SizedBox(
-                        width: size.width * 53 / 100,
+                        width: size.width * 48 / 100,
                         child: CustomFormField(
                           title: "No. Tlp",
                           textForm: TextFormField(
@@ -253,9 +253,13 @@ class _ProfileFormState extends State<ProfileForm> {
                     ),
                   ),
                   CustomFormField(
+                    action: true,
                     title: "Alamat Tinggal Sesuai KTP",
                     textForm: TextFormField(
-                      initialValue: state.profile?.identity?.address,
+                      // initialValue: state.profile?.identity?.address,
+                      controller: TextEditingController(
+                        text: state.profile?.identity?.address,
+                      ),
                       onChanged: (val) {
                         context
                             .read<ProfileFormBloc>()
@@ -265,6 +269,10 @@ class _ProfileFormState extends State<ProfileForm> {
                       minLines: 3,
                       decoration: TextFormDecoration.box(),
                     ),
+                    onChangeSwitch: (val) {
+                      context.read<ProfileFormBloc>().add(OnChangedSwitch(val));
+                      setState(() {});
+                    },
                   ),
                 ],
               );

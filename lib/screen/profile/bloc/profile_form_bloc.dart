@@ -27,6 +27,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     on<OnChangedPhone>(_onChangedPhone);
     on<OnChangedCurrAddress>(_onChangedCurrAddress);
     on<OnChangedAddress>(_onChangedAddress);
+    on<OnChangedSwitch>(_onChangedSwitch);
   }
 
   void _onChangedAddress(
@@ -107,6 +108,18 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     Profile? profile = state.profile;
     IdentityCard identity = profile?.identity ?? IdentityCard();
     identity.idNumber = event.val;
+    profile?.identity = identity;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onChangedSwitch(OnChangedSwitch event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    IdentityCard identity = profile?.identity ?? IdentityCard();
+    if (event.val) {
+      identity.address = profile?.currentAddress;
+    } else {
+      identity.address = null;
+    }
     profile?.identity = identity;
     emit(state.copyWith(profile: profile));
   }
