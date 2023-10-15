@@ -28,6 +28,8 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     on<OnChangedCurrAddress>(_onChangedCurrAddress);
     on<OnChangedAddress>(_onChangedAddress);
     on<OnChangedSwitch>(_onChangedSwitch);
+    on<OnTappedPicture>(_onTappedPicture);
+    on<OnTappedIdentityPicture>(_onTappedIdentityPicture);
   }
 
   void _onChangedAddress(
@@ -62,6 +64,12 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       OnChangedReligion event, Emitter<ProfileFormState> emit) {
     Profile? profile = state.profile;
     profile?.religion = event.val;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onTappedPicture(OnTappedPicture event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    profile?.picture = event.val;
     emit(state.copyWith(profile: profile));
   }
 
@@ -120,6 +128,15 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     } else {
       identity.address = null;
     }
+    profile?.identity = identity;
+    emit(state.copyWith(profile: profile));
+  }
+
+  void _onTappedIdentityPicture(
+      OnTappedIdentityPicture event, Emitter<ProfileFormState> emit) {
+    Profile? profile = state.profile;
+    IdentityCard identity = profile?.identity ?? IdentityCard();
+    identity.picture = event.val;
     profile?.identity = identity;
     emit(state.copyWith(profile: profile));
   }

@@ -4,6 +4,7 @@ import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/screen/login/data/login_api.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -78,14 +79,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   setState(() => accountName = value));
                             });
                           },
-                          child: const Text(
-                            "Edit Profile",
-                            style: TextStyle(
-                              color: AppTheme.dark_grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                            ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Edit Profile",
+                                style: TextStyle(
+                                  color: AppTheme.nearlyWhite,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              SizedBox(width: 3),
+                              FaIcon(
+                                FontAwesomeIcons.pencil,
+                                color: Colors.white,
+                                size: 15,
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -118,24 +130,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              Visibility(
-                visible: true,
-                child: GestureDetector(
-                  onTap: () {
-                    context.pushNamed("change-password");
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 5.0),
-                    child: Card(
-                      child: ListTile(
-                        leading: Icon(Icons.lock_open_outlined),
-                        title: Text("List User"),
-                        trailing: Icon(Icons.arrow_right),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Visibility(
+              //   visible: true,
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       context.pushNamed("users");
+              //     },
+              //     child: const Padding(
+              //       padding: EdgeInsets.only(top: 5.0),
+              //       child: Card(
+              //         child: ListTile(
+              //           leading: Icon(FontAwesomeIcons.user),
+              //           title: Text("Daftar Pengguna"),
+              //           trailing: Icon(Icons.arrow_right),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               GestureDetector(
                 onTap: () async {
                   try {

@@ -16,6 +16,7 @@ import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dar
 import 'package:fl_pbi/screen/profile/screen/change_password_form.dart';
 import 'package:fl_pbi/screen/profile/screen/profile_form_screen.dart';
 import 'package:fl_pbi/screen/profile/screen/profile_screen.dart';
+import 'package:fl_pbi/screen/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -92,11 +93,11 @@ class RouteNavigation {
               ),
               GoRoute(
                 parentNavigatorKey: _nav.navKey,
-                path: 'user',
+                path: 'users',
                 name: "users",
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
-                    child: ChangePasswordForm(),
+                    child: UserScreen(),
                   );
                 },
               ),

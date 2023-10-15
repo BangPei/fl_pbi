@@ -99,3 +99,17 @@ class OnChangedSwitch extends ProfileFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnTappedPicture extends ProfileFormEvent {
+  final String val;
+  const OnTappedPicture(this.val);
+  @override
+  List<Object?> get props => [];
+}
+
+class OnTappedIdentityPicture extends ProfileFormEvent {
+  final String val;
+  const OnTappedIdentityPicture(this.val);
+  @override
+  List<Object?> get props => [];
+}

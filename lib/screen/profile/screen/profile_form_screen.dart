@@ -1,12 +1,20 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/profile/bloc/profile_form_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
+import 'package:fl_pbi/widget.dart/empty_image.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ProfileForm extends StatefulWidget {
@@ -63,31 +71,66 @@ class _ProfileFormState extends State<ProfileForm> {
                   context.read<ProfileFormBloc>().add(const OnSubmitProfile());
                 },
                 children: [
-                  CustomFormField(
-                    title: "Nama Lengkap Sesuai KTP",
-                    textForm: TextFormField(
-                      initialValue: state.profile?.fullName,
-                      validator: ValidForm.emptyValue,
-                      onChanged: (val) {
-                        context
-                            .read<ProfileFormBloc>()
-                            .add(OnChangedFullname(val));
-                      },
-                      decoration: TextFormDecoration.box(),
-                    ),
-                  ),
-                  CustomFormField(
-                    title: "No KTP",
-                    textForm: TextFormField(
-                      initialValue: state.profile?.identity?.idNumber,
-                      validator: ValidForm.emptyValue,
-                      onChanged: (val) {
-                        context.read<ProfileFormBloc>().add(OnChangedNik(val));
-                      },
-                      decoration: TextFormDecoration.box(),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [Common.ktpFormat],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: SizedBox(
+                          width: 100,
+                          child: state.profile!.picture != null
+                              ? ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12)),
+                                  child: Image.memory(
+                                    base64Decode(state.profile!.picture!),
+                                    fit: BoxFit.fill,
+                                  ),
+                                )
+                              : EmptyImageScreen(
+                                  height: 140,
+                                  title: "profile",
+                                  iconData: Icons.person,
+                                  onTap: () => pickPicture(),
+                                ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            CustomFormField(
+                              title: "Nama Lengkap Sesuai KTP",
+                              textForm: TextFormField(
+                                initialValue: state.profile?.fullName,
+                                validator: ValidForm.emptyValue,
+                                onChanged: (val) {
+                                  context
+                                      .read<ProfileFormBloc>()
+                                      .add(OnChangedFullname(val));
+                                },
+                                decoration: TextFormDecoration.box(),
+                              ),
+                            ),
+                            CustomFormField(
+                              title: "No KTP",
+                              textForm: TextFormField(
+                                initialValue: state.profile?.identity?.idNumber,
+                                validator: ValidForm.emptyValue,
+                                onChanged: (val) {
+                                  context
+                                      .read<ProfileFormBloc>()
+                                      .add(OnChangedNik(val));
+                                },
+                                decoration: TextFormDecoration.box(),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [Common.ktpFormat],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                   Wrap(
                     key: key,
@@ -256,7 +299,6 @@ class _ProfileFormState extends State<ProfileForm> {
                     action: true,
                     title: "Alamat Tinggal Sesuai KTP",
                     textForm: TextFormField(
-                      // initialValue: state.profile?.identity?.address,
                       controller: TextEditingController(
                         text: state.profile?.identity?.address,
                       ),
@@ -274,9 +316,67 @@ class _ProfileFormState extends State<ProfileForm> {
                       setState(() {});
                     },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5.0,
+                      vertical: 5,
+                    ),
+                    child: state.profile!.identity?.picture != null
+                        ? ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
+                            child: Image.memory(
+                              base64Decode(state.profile!.identity!.picture!),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : EmptyImageScreen(onTap: () => pickIdentityPicture()),
+                  ),
                 ],
               );
       }),
     );
+  }
+
+  pickPicture() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      String path = photo.path;
+      var result = await FlutterImageCompress.compressWithFile(
+        File(path).absolute.path,
+        minWidth: 1000,
+        minHeight: 500,
+        quality: 94,
+        // rotate: 90,
+      );
+      String base64 = base64Encode(result as List<int>);
+      // ignore: use_build_context_synchronously
+      context.read<ProfileFormBloc>().add(OnTappedPicture(base64));
+      setState(() {});
+    } else {
+      print("err");
+    }
+  }
+
+  pickIdentityPicture() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      String path = photo.path;
+      var result = await FlutterImageCompress.compressWithFile(
+        File(path).absolute.path,
+        minWidth: 1000,
+        minHeight: 500,
+        quality: 94,
+        // rotate: 90,
+      );
+      String base64 = base64Encode(result as List<int>);
+      // ignore: use_build_context_synchronously
+      context.read<ProfileFormBloc>().add(OnTappedIdentityPicture(base64));
+      setState(() {});
+    } else {
+      print("err");
+    }
   }
 }
