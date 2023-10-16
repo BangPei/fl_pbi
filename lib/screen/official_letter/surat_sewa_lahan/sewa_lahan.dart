@@ -270,13 +270,13 @@ class SuratSewaLahan {
         lineWithNumber(
           textNum: "3. ",
           child: pw.Text(
-            "Ijin pemanfaatan lahan kosong tersebut selama $periodeRent tahun, sampai dengan $periodeDate.",
+            "Ijin pemanfaatan lahan kosong tersebut selama ${periodeRent == 0 ? '........' : periodeRent} tahun, sampai dengan ${periodeDate == null ? '.............................' : Jiffy.parse(periodeDate!).format(pattern: 'dd MMMM yyyy')}.",
           ),
         ),
         lineWithNumber(
           textNum: "4. ",
           child: pw.Text(
-            "Adapun untuk perpanjangan kontrak dan laporan administrasi per ${extraTime ?? '........................'} tahun.",
+            "Adapun untuk perpanjangan kontrak dan laporan administrasi per ${extraTime == 0 ? '......' : extraTime} tahun.",
           ),
         ),
         lineWithNumber(
