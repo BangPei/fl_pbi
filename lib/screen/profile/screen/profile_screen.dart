@@ -17,11 +17,13 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Color color = AppTheme.nearlyDarkRed.withOpacity(0.5);
   String? accountName;
+  String? imageurl;
 
   @override
   void initState() {
     Session.get("fullName")
         .then((value) => setState(() => accountName = value));
+    Session.get("picture").then((value) => setState(() => imageurl = value));
     super.initState();
   }
 
@@ -53,10 +55,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(50),
                           ),
-                          image: DecorationImage(
-                            image: AssetImage(Common.imageProfile),
-                            fit: BoxFit.cover,
-                          ),
+                          image: (imageurl != null || imageurl != "")
+                              ? DecorationImage(
+                                  image: NetworkImage(imageurl!),
+                                  fit: BoxFit.cover,
+                                )
+                              : DecorationImage(
+                                  image: AssetImage(Common.imageProfile),
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                       Padding(
@@ -77,6 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             context.pushNamed("profile-form").then((val) {
                               Session.get("fullName").then((value) =>
                                   setState(() => accountName = value));
+                              Session.get("picture").then(
+                                  (value) => setState(() => imageurl = value));
                             });
                           },
                           child: const Row(

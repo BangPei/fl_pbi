@@ -11,7 +11,9 @@ class GetCurrentUserEvent extends ProfileFormEvent {
 }
 
 class OnSubmitProfile extends ProfileFormEvent {
-  const OnSubmitProfile();
+  final String? image;
+  final String? identity;
+  const OnSubmitProfile({this.image, this.identity});
   @override
   List<Object?> get props => [];
 }

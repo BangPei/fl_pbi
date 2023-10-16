@@ -169,12 +169,22 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       OnSubmitProfile event, Emitter<ProfileFormState> emit) async {
     emit(state.copyWith(isLoading: true));
     try {
-      Profile profile =
-          await ProfileAPI.put(state.profile!.id!, state.profile ?? Profile());
-      await Session.set("profile", jsonEncode(profile));
+      Profile profile = state.profile ?? Profile();
+      if (event.image != null) {
+        profile.picture = event.image;
+      }
+      if (event.identity != null) {
+        IdentityCard identity = profile.identity ?? IdentityCard();
+        identity.picture = event.identity;
+        profile.identity = identity;
+      }
+      Profile newProfile = await ProfileAPI.put(profile.id!, profile);
+      await Session.set("profile", jsonEncode(newProfile));
+      Session.set("fullName", newProfile.fullName ?? "");
+      Session.set("picture", newProfile.picture ?? "");
       emit(state.copyWith(
         isLoading: false,
-        profile: profile,
+        profile: newProfile,
         isSuccess: true,
       ));
     } catch (e) {

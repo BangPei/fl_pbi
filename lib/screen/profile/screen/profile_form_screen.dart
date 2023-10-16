@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/profile/bloc/profile_form_bloc.dart';
+import 'package:fl_pbi/widget.dart/clip_picture.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
@@ -23,6 +24,8 @@ class ProfileForm extends StatefulWidget {
 
 class _ProfileFormState extends State<ProfileForm> {
   late FocusNode _dateFocusNode;
+  String? imageBase64;
+  String? identityBase64;
   TextEditingController dateController = TextEditingController();
   GlobalKey key = GlobalKey<State<StatefulWidget>>();
 
@@ -65,7 +68,10 @@ class _ProfileFormState extends State<ProfileForm> {
                 title: "Edit Profile",
                 buttonTitle: "Simpan",
                 onSubmit: () {
-                  context.read<ProfileFormBloc>().add(const OnSubmitProfile());
+                  context.read<ProfileFormBloc>().add(OnSubmitProfile(
+                        image: imageBase64,
+                        identity: identityBase64,
+                      ));
                 },
                 children: [
                   Row(
@@ -76,21 +82,28 @@ class _ProfileFormState extends State<ProfileForm> {
                         padding: const EdgeInsets.all(6.0),
                         child: SizedBox(
                           width: 100,
-                          child: state.profile!.picture != null
-                              ? ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12)),
+                          child: imageBase64 != null
+                              ? ClipPicture(
+                                  onTap: () => pickPicture(),
                                   child: Image.memory(
-                                    base64Decode(state.profile!.picture!),
+                                    base64Decode(imageBase64!),
                                     fit: BoxFit.fill,
                                   ),
                                 )
-                              : EmptyImageScreen(
-                                  height: 140,
-                                  title: "profile",
-                                  iconData: Icons.person,
-                                  onTap: () => pickPicture(),
-                                ),
+                              : state.profile!.picture != null
+                                  ? ClipPicture(
+                                      onTap: () => pickPicture(),
+                                      child: Image.network(
+                                        state.profile!.picture!,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    )
+                                  : EmptyImageScreen(
+                                      height: 140,
+                                      title: "profile",
+                                      iconData: Icons.person,
+                                      onTap: () => pickPicture(),
+                                    ),
                         ),
                       ),
                       Expanded(
@@ -318,16 +331,26 @@ class _ProfileFormState extends State<ProfileForm> {
                       horizontal: 5.0,
                       vertical: 5,
                     ),
-                    child: state.profile!.identity?.picture != null
-                        ? ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                    child: identityBase64 != null
+                        ? ClipPicture(
+                            height: 40,
+                            onTap: () => pickIdentityPicture(),
                             child: Image.memory(
-                              base64Decode(state.profile!.identity!.picture!),
-                              fit: BoxFit.cover,
+                              base64Decode(identityBase64!),
+                              fit: BoxFit.fill,
                             ),
                           )
-                        : EmptyImageScreen(onTap: () => pickIdentityPicture()),
+                        : state.profile!.identity?.picture != null
+                            ? ClipPicture(
+                                height: 40,
+                                onTap: () => pickIdentityPicture(),
+                                child: Image.network(
+                                  state.profile!.identity!.picture!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : EmptyImageScreen(
+                                onTap: () => pickIdentityPicture()),
                   ),
                 ],
               );
@@ -347,9 +370,9 @@ class _ProfileFormState extends State<ProfileForm> {
         quality: 94,
         // rotate: 90,
       );
-      String base64 = base64Encode(result as List<int>);
+      imageBase64 = base64Encode(result as List<int>);
       // ignore: use_build_context_synchronously
-      context.read<ProfileFormBloc>().add(OnTappedPicture(base64));
+      // context.read<ProfileFormBloc>().add(OnTappedPicture(base64));
       setState(() {});
     } else {
       print("err");
@@ -368,9 +391,9 @@ class _ProfileFormState extends State<ProfileForm> {
         quality: 94,
         // rotate: 90,
       );
-      String base64 = base64Encode(result as List<int>);
+      identityBase64 = base64Encode(result as List<int>);
       // ignore: use_build_context_synchronously
-      context.read<ProfileFormBloc>().add(OnTappedIdentityPicture(base64));
+      // context.read<ProfileFormBloc>().add(OnTappedIdentityPicture(base64));
       setState(() {});
     } else {
       print("err");
