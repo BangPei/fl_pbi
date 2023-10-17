@@ -371,8 +371,6 @@ class _ProfileFormState extends State<ProfileForm> {
         // rotate: 90,
       );
       imageBase64 = base64Encode(result as List<int>);
-      // ignore: use_build_context_synchronously
-      // context.read<ProfileFormBloc>().add(OnTappedPicture(base64));
       setState(() {});
     } else {
       print("err");
@@ -392,8 +390,6 @@ class _ProfileFormState extends State<ProfileForm> {
         // rotate: 90,
       );
       identityBase64 = base64Encode(result as List<int>);
-      // ignore: use_build_context_synchronously
-      // context.read<ProfileFormBloc>().add(OnTappedIdentityPicture(base64));
       setState(() {});
     } else {
       print("err");
