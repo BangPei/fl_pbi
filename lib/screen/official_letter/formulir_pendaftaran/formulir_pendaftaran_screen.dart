@@ -33,7 +33,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
           title: "Nama",
           textForm: TextFormField(
             decoration: TextFormDecoration.box(),
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (vals) {
               context.read<FormulirPendaftaranBloc>().add(OnNameChanged(vals));
             },
@@ -42,7 +42,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
         CustomFormField(
           title: "No. KTP",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             keyboardType: TextInputType.number,
             inputFormatters: [Common.ktpFormat],
             decoration: TextFormDecoration.box(),
@@ -54,7 +54,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
         CustomFormField(
           title: "No.Tlp",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (vals) {
               context.read<FormulirPendaftaranBloc>().add(OnPhoneChanged(vals));
             },
@@ -64,7 +64,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
         CustomFormField(
           title: "Blok",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (vals) {
               context.read<FormulirPendaftaranBloc>().add(OnBlockChanged(vals));
             },
@@ -74,7 +74,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
         CustomFormField(
           title: "Alamat Pemohon",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (vals) {
               context
                   .read<FormulirPendaftaranBloc>()
@@ -88,7 +88,7 @@ class _FormulirPendaftaranScreenState extends State<FormulirPendaftaranScreen> {
         CustomFormField(
           title: "Nama Pengelola",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (vals) {
               context.read<FormulirPendaftaranBloc>().add(OnPicChanged(vals));
             },

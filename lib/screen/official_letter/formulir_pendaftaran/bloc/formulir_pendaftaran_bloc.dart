@@ -69,10 +69,10 @@ class FormulirPendaftaranBloc
   }
 
   void _onSubmit(OnSubmit event, Emitter<FormulirPendaftaranState> emit) {
-    Pendaftaran? pendaftaran = state.pendaftaran;
+    Pendaftaran? pendaftaran = state.pendaftaran ?? Pendaftaran();
     context.pushNamed("preview-pdf", extra: {
       "data": pendaftaran,
-      "pdf": pendaftaran!.pdf(),
+      "pdf": pendaftaran.pdf(),
       "title": "Surat Pendaftaran ${DateTime.now().millisecond.toString()}"
     });
   }

@@ -782,7 +782,6 @@ class HakGuna {
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
             pw.Container(
-              width: 200,
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
@@ -810,7 +809,6 @@ class HakGuna {
               ),
             ),
             pw.Container(
-              width: 200,
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
@@ -1011,7 +1009,7 @@ class HakGuna {
           textAlign: pw.TextAlign.justify,
           text: pw.TextSpan(
               style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
-              text: 'Penanggung Jawab Pengeloal'),
+              text: 'Penanggung Jawab Pengelola'),
         ),
         pw.RichText(
           textAlign: pw.TextAlign.justify,

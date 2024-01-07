@@ -71,7 +71,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Nomor Surat",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -83,7 +83,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Ditandatangani di",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -94,7 +94,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Tanggal Dibuat",
                               textForm: CustomDatePicker(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 focusNode: createdDateNode,
                                 onCloseDatepicker: (val) {
                                   context
@@ -120,7 +120,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               textForm: TextFormField(
                                 initialValue: state.hakGuna?.pic?.name,
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -131,7 +131,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Tanggal Lahir",
                               textForm: CustomDatePicker(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 focusNode: dateBirthNode,
                                 onCloseDatepicker: (val) {
                                   context
@@ -145,7 +145,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "No. KTP",
                               textForm: TextFormField(
                                 initialValue: state.hakGuna?.pic?.nik,
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [Common.ktpFormat],
                                 decoration: TextFormDecoration.box(),
@@ -160,7 +160,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "No.Tlp",
                               textForm: TextFormField(
                                 initialValue: state.hakGuna?.pic?.phone,
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -172,7 +172,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Posisi / Jabatan",
                               textForm: TextFormField(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -185,7 +185,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Alamat",
                               textForm: TextFormField(
                                 initialValue: state.hakGuna?.pic?.address,
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -211,7 +211,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Nama",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -222,7 +222,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "No. KTP",
                               textForm: TextFormField(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [Common.ktpFormat],
                                 decoration: TextFormDecoration.box(),
@@ -237,7 +237,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "No. Tlp",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -249,7 +249,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Pekerjaaan",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -260,7 +260,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Alamat",
                               textForm: TextFormField(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -288,7 +288,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                 controller: TextEditingController(
                                     text: "PERNIAGAAN BUMI INDAH"),
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -299,7 +299,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Blok Kios",
                               textForm: TextFormField(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 decoration: TextFormDecoration.box(),
                                 onChanged: (vals) {
                                   context
@@ -311,7 +311,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Nomor Kios",
                               textForm: TextFormField(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 decoration: TextFormDecoration.box(),
                                 onChanged: (vals) {
                                   context
@@ -324,7 +324,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Jumlah Kios",
                               textForm: TextFormField(
                                 controller: TextEditingController(text: "1"),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 decoration: TextFormDecoration.box(),
                                 onChanged: (val) {
                                   if (val.isNotEmpty) {
@@ -343,7 +343,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                 controller:
                                     TextEditingController(text: "4.5m x 17m"),
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (val) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -354,7 +354,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Mulai Hak Guna",
                               textForm: CustomDatePicker(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 focusNode: starDateNode,
                                 onCloseDatepicker: (val) {
                                   context
@@ -368,7 +368,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Jangka Waktu Hak Guna (Tahun)",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (val) {
                                   if (val.isNotEmpty) {
                                     int periode =
@@ -384,7 +384,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               title: "Tanda Daftar Hak Guna Perunit",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
@@ -395,7 +395,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Masa Berlaku",
                               textForm: CustomDatePicker(
-                                validator: ValidForm.emptyValue,
+                                // validator: ValidForm.emptyValue,
                                 focusNode: validDateNode,
                                 onCloseDatepicker: (val) {
                                   context

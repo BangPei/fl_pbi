@@ -69,7 +69,7 @@ class _TandaHakGunaScreenState extends State<TandaHakGunaScreen> {
                             title: "Nomor Surat",
                             textForm: TextFormField(
                               decoration: TextFormDecoration.box(),
-                              validator: ValidForm.emptyValue,
+                              // validator: ValidForm.emptyValue,
                               onChanged: (vals) {
                                 context
                                     .read<TandaHakGunaBloc>()

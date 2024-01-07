@@ -31,7 +31,7 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         CustomFormField(
           title: "Nama",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<PermohonanBloc>().add(OnChangedName(val));
             },
@@ -41,7 +41,7 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         CustomFormField(
           title: "NO. KTP",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<PermohonanBloc>().add(OnChangedNik(val));
             },
@@ -53,7 +53,7 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         CustomFormField(
           title: "NO. Telp",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<PermohonanBloc>().add(OnChangedPhone(val));
             },
@@ -63,7 +63,7 @@ class _SuratPermohonanScreenState extends State<SuratPermohonanScreen> {
         CustomFormField(
           title: "Alamat",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<PermohonanBloc>().add(OnChangedAddress(val));
             },

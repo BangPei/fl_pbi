@@ -53,7 +53,7 @@ class PerjanjianHakGunaBloc
   void _onChangedNoSurat(
       OnChangedNoSurat event, Emitter<PerjanjianHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
-    hakGuna?.no = event.val;
+    // hakGuna?.no = event.val;
     emit(state.copyWith(hakGuna: hakGuna));
   }
 
@@ -304,14 +304,14 @@ class PerjanjianHakGunaBloc
 
   void _onSubmit(OnSubmit event, Emitter<PerjanjianHakGunaState> emit) async {
     try {
-      HakGuna? hakGuna = state.hakGuna;
-      hakGuna?.kios?.location =
+      HakGuna? hakGuna = state.hakGuna ?? HakGuna();
+      hakGuna.kios?.location =
           hakGuna.kios?.location ?? "PERNIAGAAN BUMI INDAH";
-      hakGuna?.kios?.kiosWide = hakGuna.kios?.kiosWide ?? "4.5m x 17m";
-      hakGuna?.kios?.totalKios = hakGuna.kios?.totalKios ?? 1;
+      hakGuna.kios?.kiosWide = hakGuna.kios?.kiosWide ?? "4.5m x 17m";
+      hakGuna.kios?.totalKios = hakGuna.kios?.totalKios ?? 1;
       _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
         "data": hakGuna,
-        "pdf": hakGuna!.perjanjianPdf(),
+        "pdf": hakGuna.perjanjianPdf(),
         "title":
             "Surat Perjanjian Hak Guna ${DateTime.now().millisecond.toString()}"
       });

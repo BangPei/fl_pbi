@@ -96,7 +96,7 @@ class TandaHakGunaBloc extends Bloc<TandaHakGunaEvent, TandaHakGunaState> {
   void _onChangedNomorSurat(
       OnChangedNomorSurat event, Emitter<TandaHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
-    hakGuna?.no = event.val;
+    // hakGuna?.no = event.val;
     emit(state.copyWith(hakGuna: hakGuna));
   }
 

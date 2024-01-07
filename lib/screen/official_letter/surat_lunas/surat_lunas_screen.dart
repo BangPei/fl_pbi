@@ -54,7 +54,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "Nama Pengelola",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.name,
                       onChanged: (val) {
                         context.read<SuratLunasBloc>().add(OnNameChanged(val));
@@ -65,7 +65,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "No. KTP Pengelola",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.nik,
                       onChanged: (val) {
                         context.read<SuratLunasBloc>().add(OnNikChanged(val));
@@ -78,7 +78,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "Posisi / Jabatan Pengelola",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.position,
                       onChanged: (val) {
                         context
@@ -91,7 +91,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "No. Telp Pengelola",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.phone,
                       onChanged: (val) {
                         context.read<SuratLunasBloc>().add(OnPhoneChanged(val));
@@ -102,7 +102,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "Alamat Pengelola",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.address,
                       onChanged: (val) {
                         context
@@ -117,7 +117,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "No. Blok",
                     textForm: TextFormField(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       initialValue: state.lunas?.block,
                       onChanged: (val) {
                         context.read<SuratLunasBloc>().add(OnBlockChanged(val));
@@ -128,7 +128,7 @@ class _SuratLunasScreenState extends State<SuratLunasScreen> {
                   CustomFormField(
                     title: "Tanggal Lunas",
                     textForm: CustomDatePicker(
-                      validator: ValidForm.emptyValue,
+                      // validator: ValidForm.emptyValue,
                       focusNode: _dateFocusNode,
                       onCloseDatepicker: (val) {
                         context

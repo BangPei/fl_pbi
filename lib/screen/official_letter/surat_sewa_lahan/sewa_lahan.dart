@@ -242,7 +242,7 @@ class SuratSewaLahan {
                 ),
                 pw.TextSpan(
                   text:
-                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik ${areaCompany ?? "......................................"}.',
+                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik .......................................',
                 ),
               ],
             ),
@@ -664,7 +664,6 @@ class SuratSewaLahan {
               ),
             ),
             pw.Container(
-              width: 200,
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [

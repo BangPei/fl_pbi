@@ -14,7 +14,7 @@ class OfficialLetter {
         routeName: "formulir-pendaftaran",
       ),
       OfficialLetter(
-        title: "Perjanjian Hak Guna Pakai",
+        title: "Perjanjian Hak Guna Pakai Kios",
         routeName: "perjanjian-hak-guna",
       ),
       OfficialLetter(

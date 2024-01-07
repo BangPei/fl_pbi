@@ -55,7 +55,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
               builder: (context, state) {
             return CustomDatePicker(
               focusNode: dateFocusNode,
-              validator: ValidForm.emptyValue,
+              // validator: ValidForm.emptyValue,
               onCloseDatepicker: (val) {
                 context
                     .read<SewaLahanBloc>()
@@ -70,7 +70,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           title: "Pihak Pertama",
           textForm: TextFormField(
             initialValue: ownerName.toUpperCase(),
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPihakPertama(val));
             },
@@ -80,7 +80,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Pihak Kedua",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPihakKedua(val));
             },
@@ -90,7 +90,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "No. KTP Pihak Kedua",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedNik(val));
             },
@@ -102,7 +102,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "No.Tlp Pihak Kedua",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPhone(val));
             },
@@ -112,7 +112,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Alamat Pihak Kedua",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedAddress(val));
             },
@@ -124,7 +124,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Area Lahan",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedAreaLahan(val));
             },
@@ -135,7 +135,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           title: "Pemilik Area",
           textForm: TextFormField(
             initialValue: areaCompany.toUpperCase(),
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPemilikArea(val));
             },
@@ -145,7 +145,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Luas Area (Meter persegi)",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               if (val.isNotEmpty) {
                 double luas = double.parse(val.replaceAll(",", ""));
@@ -166,7 +166,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
               builder: (context, state) {
             return TextFormField(
               //
-              validator: ValidForm.emptyValue,
+              // validator: ValidForm.emptyValue,
               onChanged: (val) {
                 if (val.isNotEmpty) {
                   int luas = int.parse(val.replaceAll(",", ""));
@@ -186,7 +186,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Durasi Perpanjangan (Tahun)",
           textForm: TextFormField(
-            validator: ValidForm.emptyValue,
+            // validator: ValidForm.emptyValue,
             onChanged: (val) {
               if (val.isNotEmpty) {
                 int luas = int.parse(val.replaceAll(",", ""));

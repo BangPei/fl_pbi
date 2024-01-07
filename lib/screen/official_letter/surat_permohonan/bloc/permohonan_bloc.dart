@@ -47,11 +47,11 @@ class PermohonanBloc extends Bloc<PermohonanEvent, PermohonanState> {
   }
 
   void _onSubmit(OnSubmit event, Emitter<PermohonanState> emit) {
-    SuratPermohonan? permohonan = state.permohonan;
+    SuratPermohonan? permohonan = state.permohonan ?? SuratPermohonan();
 
     context.pushNamed("preview-pdf", extra: {
       "data": permohonan,
-      "pdf": permohonan!.pdf(),
+      "pdf": permohonan.pdf(),
       "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
     });
   }

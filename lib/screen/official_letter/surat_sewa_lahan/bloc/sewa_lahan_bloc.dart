@@ -125,12 +125,12 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
   }
 
   void _onSubmit(OnSubmit event, Emitter<SewaLahanState> emit) async {
-    SuratSewaLahan? sewaLahan = state.sewaLahan;
-    sewaLahan?.areaCompany = sewaLahan.areaCompany ?? areaCompany;
-    sewaLahan?.ownerName = sewaLahan.ownerName ?? ownerName;
+    SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
+    sewaLahan.areaCompany = sewaLahan.areaCompany ?? areaCompany;
+    sewaLahan.ownerName = sewaLahan.ownerName ?? ownerName;
     context.pushNamed("preview-pdf", extra: {
       "data": sewaLahan,
-      "pdf": sewaLahan!.pdf(),
+      "pdf": sewaLahan.pdf(),
       "title": "Surat Permohonan ${DateTime.now().millisecond.toString()}"
     });
   }

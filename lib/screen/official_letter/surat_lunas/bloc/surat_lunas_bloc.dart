@@ -94,10 +94,10 @@ class SuratLunasBloc extends Bloc<SuratLunasEvent, SuratLunasState> {
   void _onSubmit(OnSubmit event, Emitter<SuratLunasState> emit) async {
     emit(state.copyWith(isLoading: true));
     try {
-      SuratLunas? lunas = state.lunas;
+      SuratLunas? lunas = state.lunas ?? SuratLunas();
       _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
         "data": lunas,
-        "pdf": lunas!.pdf(),
+        "pdf": lunas.pdf(),
         "title":
             "Surat Keterangan Lunas ${DateTime.now().millisecond.toString()}"
       });
