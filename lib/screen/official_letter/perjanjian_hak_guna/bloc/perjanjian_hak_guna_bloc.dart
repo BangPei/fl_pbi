@@ -305,6 +305,7 @@ class PerjanjianHakGunaBloc
   void _onSubmit(OnSubmit event, Emitter<PerjanjianHakGunaState> emit) async {
     try {
       HakGuna? hakGuna = state.hakGuna ?? HakGuna();
+      hakGuna.kios = hakGuna.kios ?? Kios();
       hakGuna.kios?.location =
           hakGuna.kios?.location ?? "PERNIAGAAN BUMI INDAH";
       hakGuna.kios?.kiosWide = hakGuna.kios?.kiosWide ?? "4.5m x 17m";

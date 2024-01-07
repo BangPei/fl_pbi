@@ -218,7 +218,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
                     .add(OnChangedPeriodeSewaLahan(val: val));
                 setState(() {});
               },
-              controller: dateController,
+              controller: periodeDateController,
             );
           }),
         ),
