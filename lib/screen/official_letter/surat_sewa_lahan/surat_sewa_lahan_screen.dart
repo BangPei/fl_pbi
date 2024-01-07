@@ -9,7 +9,6 @@ import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jiffy/jiffy.dart';
 
 class SuratSewaLahanScreen extends StatefulWidget {
   const SuratSewaLahanScreen({super.key});
@@ -20,18 +19,21 @@ class SuratSewaLahanScreen extends StatefulWidget {
 
 class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
   late FocusNode dateFocusNode;
+  late FocusNode periodeDateFocusNode;
   TextEditingController dateController = TextEditingController();
   TextEditingController periodeDateController = TextEditingController();
 
   @override
   void initState() {
     dateFocusNode = FocusNode();
+    periodeDateFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
     dateFocusNode.dispose();
+    periodeDateFocusNode.dispose();
     super.dispose();
   }
 
@@ -207,18 +209,35 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
           title: "Periode Sewa Lahan",
           textForm: BlocBuilder<SewaLahanBloc, SewaLahanState>(
               builder: (context, state) {
-            String? newDate = state.sewaLahan?.periodeDate;
-            return TextFormField(
-              controller: TextEditingController(
-                text: (newDate == null)
-                    ? null
-                    : Jiffy.parse(newDate).format(pattern: "dd MMMM yyyy"),
-              ),
-              readOnly: true,
-              decoration: TextFormDecoration.box(),
+            return CustomDatePicker(
+              focusNode: periodeDateFocusNode,
+              // validator: ValidForm.emptyValue,
+              onCloseDatepicker: (val) {
+                context
+                    .read<SewaLahanBloc>()
+                    .add(OnChangedPeriodeSewaLahan(val: val));
+                setState(() {});
+              },
+              controller: dateController,
             );
           }),
         ),
+        // CustomFormField(
+        //   title: "Periode Sewa Lahan",
+        //   textForm: BlocBuilder<SewaLahanBloc, SewaLahanState>(
+        //       builder: (context, state) {
+        //     String? newDate = state.sewaLahan?.periodeDate;
+        //     return TextFormField(
+        //       controller: TextEditingController(
+        //         text: (newDate == null)
+        //             ? null
+        //             : Jiffy.parse(newDate).format(pattern: "dd MMMM yyyy"),
+        //       ),
+        //       readOnly: true,
+        //       decoration: TextFormDecoration.box(),
+        //     );
+        //   }),
+        // ),
       ],
     );
   }

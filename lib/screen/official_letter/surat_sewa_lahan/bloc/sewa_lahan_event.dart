@@ -62,6 +62,11 @@ class OnChangedTanggalPerjanjian extends SewaLahanEvent {
   const OnChangedTanggalPerjanjian({this.val});
 }
 
+class OnChangedPeriodeSewaLahan extends SewaLahanEvent {
+  final DateTime? val;
+  const OnChangedPeriodeSewaLahan({this.val});
+}
+
 class OnSubmit extends SewaLahanEvent {
   const OnSubmit();
 }

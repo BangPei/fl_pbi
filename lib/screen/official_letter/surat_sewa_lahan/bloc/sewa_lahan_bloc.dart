@@ -28,24 +28,33 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
     on<OnChangedDurasiSewa>(_onChangedDurasiSewa);
     on<OnChangedDurasiPerpanjangan>(_onChangedDurasiPerpanjangan);
     on<OnChangedTanggalPerjanjian>(_onChangedTanggalPerjanjian);
+    on<OnChangedPeriodeSewaLahan>(_onChangedPeriodeSewaLahan);
   }
   BuildContext context = _nav.navKey.currentContext!;
   void _onChangedTanggalPerjanjian(
       OnChangedTanggalPerjanjian event, Emitter<SewaLahanState> emit) {
     SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
-    if (event.val != null) {
-      sewaLahan.date =
-          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
-      if ((sewaLahan.periodeRent != null) || (sewaLahan.periodeRent ?? 0) > 0) {
-        var newDate = Jiffy.parseFromDateTime(event.val!)
-            .add(years: sewaLahan.periodeRent!)
-            .format(pattern: 'yyyy-MM-dd');
-        sewaLahan.periodeDate = newDate;
-      }
-    } else {
-      sewaLahan.date = null;
-      sewaLahan.periodeDate = null;
-    }
+    sewaLahan.date =
+        Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
+    // if (event.val != null) {
+    //   if ((sewaLahan.periodeRent != null) || (sewaLahan.periodeRent ?? 0) > 0) {
+    //     var newDate = Jiffy.parseFromDateTime(event.val!)
+    //         .add(years: sewaLahan.periodeRent!)
+    //         .format(pattern: 'yyyy-MM-dd');
+    //     sewaLahan.periodeDate = newDate;
+    //   }
+    // } else {
+    //   sewaLahan.date = null;
+    //   sewaLahan.periodeDate = null;
+    // }
+    emit(state.copyWith(sewaLahan: sewaLahan));
+  }
+
+  void _onChangedPeriodeSewaLahan(
+      OnChangedPeriodeSewaLahan event, Emitter<SewaLahanState> emit) {
+    SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
+    sewaLahan.periodeDate =
+        Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
     emit(state.copyWith(sewaLahan: sewaLahan));
   }
 
@@ -60,14 +69,14 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
       OnChangedDurasiSewa event, Emitter<SewaLahanState> emit) {
     SuratSewaLahan? sewaLahan = state.sewaLahan ?? SuratSewaLahan();
     sewaLahan.periodeRent = event.val;
-    if ((sewaLahan.date != null)) {
-      var newDate = Jiffy.parse(sewaLahan.date!)
-          .add(years: event.val)
-          .format(pattern: 'yyyy-MM-dd');
-      sewaLahan.periodeDate = newDate;
-    } else {
-      sewaLahan.periodeDate = null;
-    }
+    // if ((sewaLahan.date != null)) {
+    //   var newDate = Jiffy.parse(sewaLahan.date!)
+    //       .add(years: event.val)
+    //       .format(pattern: 'yyyy-MM-dd');
+    //   sewaLahan.periodeDate = newDate;
+    // } else {
+    //   sewaLahan.periodeDate = null;
+    // }
     emit(state.copyWith(sewaLahan: sewaLahan));
   }
 
