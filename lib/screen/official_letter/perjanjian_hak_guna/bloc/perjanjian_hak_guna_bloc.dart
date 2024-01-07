@@ -43,8 +43,8 @@ class PerjanjianHakGunaBloc
     on<OnChangedTandaHakGuna>(_onChangedTandaHakGuna);
     on<OnChangedMulaiHakGuna>(_onChangedMulaiHakGuna);
     on<OnChangedMasaBerlaku>(_onChangedMasaBerlaku);
-    on<OnChangedSewaBulanan>(_onChangedSewaBulanan);
-    on<OnChangedTagihanListrik>(_onChangedTagihanListrik);
+    // on<OnChangedSewaBulanan>(_onChangedSewaBulanan);
+    // on<OnChangedTagihanListrik>(_onChangedTagihanListrik);
     on<OnInit>(_onInit);
     on<OnSubmit>(_onSubmit);
     on<OnSubmitTemplate>(_onSubmitTemplate);
@@ -243,23 +243,23 @@ class PerjanjianHakGunaBloc
     emit(state.copyWith(hakGuna: hakGuna));
   }
 
-  void _onChangedSewaBulanan(
-      OnChangedSewaBulanan event, Emitter<PerjanjianHakGunaState> emit) {
-    HakGuna? hakGuna = state.hakGuna;
-    Kios kios = hakGuna?.kios ?? Kios();
-    kios.monthCost = event.val;
-    hakGuna?.kios = kios;
-    emit(state.copyWith(hakGuna: hakGuna));
-  }
+  // void _onChangedSewaBulanan(
+  //     OnChangedSewaBulanan event, Emitter<PerjanjianHakGunaState> emit) {
+  //   HakGuna? hakGuna = state.hakGuna;
+  //   Kios kios = hakGuna?.kios ?? Kios();
+  //   kios.monthCost = event.val;
+  //   hakGuna?.kios = kios;
+  //   emit(state.copyWith(hakGuna: hakGuna));
+  // }
 
-  void _onChangedTagihanListrik(
-      OnChangedTagihanListrik event, Emitter<PerjanjianHakGunaState> emit) {
-    HakGuna? hakGuna = state.hakGuna;
-    Kios kios = hakGuna?.kios ?? Kios();
-    kios.electricCost = event.val;
-    hakGuna?.kios = kios;
-    emit(state.copyWith(hakGuna: hakGuna));
-  }
+  // void _onChangedTagihanListrik(
+  //     OnChangedTagihanListrik event, Emitter<PerjanjianHakGunaState> emit) {
+  //   HakGuna? hakGuna = state.hakGuna;
+  //   Kios kios = hakGuna?.kios ?? Kios();
+  //   kios.electricCost = event.val;
+  //   hakGuna?.kios = kios;
+  //   emit(state.copyWith(hakGuna: hakGuna));
+  // }
 
   void _onChangedMasaBerlaku(
       OnChangedMasaBerlaku event, Emitter<PerjanjianHakGunaState> emit) {
@@ -305,6 +305,10 @@ class PerjanjianHakGunaBloc
   void _onSubmit(OnSubmit event, Emitter<PerjanjianHakGunaState> emit) async {
     try {
       HakGuna? hakGuna = state.hakGuna;
+      hakGuna?.kios?.location =
+          hakGuna.kios?.location ?? "PERNIAGAAN BUMI INDAH";
+      hakGuna?.kios?.kiosWide = hakGuna.kios?.kiosWide ?? "4.5m x 17m";
+      hakGuna?.kios?.totalKios = hakGuna.kios?.totalKios ?? 1;
       _nav.navKey.currentContext!.pushNamed("preview-pdf", extra: {
         "data": hakGuna,
         "pdf": hakGuna!.perjanjianPdf(),

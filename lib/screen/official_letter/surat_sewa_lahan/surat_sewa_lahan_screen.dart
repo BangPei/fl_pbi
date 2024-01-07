@@ -1,5 +1,6 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/currency_formater.dart';
+import 'package:fl_pbi/library/pbi_constant.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/bloc/sewa_lahan_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
@@ -68,6 +69,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Pihak Pertama",
           textForm: TextFormField(
+            initialValue: ownerName.toUpperCase(),
             validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPihakPertama(val));
@@ -132,6 +134,7 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
         CustomFormField(
           title: "Pemilik Area",
           textForm: TextFormField(
+            initialValue: areaCompany.toUpperCase(),
             validator: ValidForm.emptyValue,
             onChanged: (val) {
               context.read<SewaLahanBloc>().add(OnChangedPemilikArea(val));

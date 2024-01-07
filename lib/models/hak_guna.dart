@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:fl_pbi/library/common.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -107,7 +107,7 @@ class HakGuna {
     final font1 = await PdfGoogleFonts.tinosRegular();
     final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
-    final oCcy = NumberFormat("#,###", "en_US");
+    // final oCcy = NumberFormat("#,###", "en_US");
     double lineSpacing = 1.2 * PdfPageFormat.mm;
     String day = (createdAt == null)
         ? '............'
@@ -293,7 +293,7 @@ class HakGuna {
             "c.\t\t\t\t\tJumlah Unit Kios",
             (kios?.totalKios == 0 || kios?.totalKios == null)
                 ? '............................................'
-                : (kios?.totalKios ?? 0).toString(),
+                : "${kios?.totalKios ?? 0} Unit",
             titleWidh: 230,
           ),
         ),
@@ -301,9 +301,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "d.\t\t\t\t\tLuas Ukuran Kios",
-            (kios?.kiosWide == 0 || kios?.kiosWide == null)
-                ? '............................................'
-                : oCcy.format(kios?.kiosWide ?? 0),
+            kios?.kiosWide ?? '............................................',
             titleWidh: 230,
           ),
         ),
@@ -311,8 +309,9 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "e.\t\t\t\t\tJangka Waktu Hak Guna",
-            kios?.periodeRent.toString() ??
-                '............................................',
+            (kios?.periodeRent == 0 || kios?.periodeRent == null)
+                ? '............................................'
+                : "${kios?.periodeRent} Tahun",
             titleWidh: 230,
           ),
         ),
@@ -341,26 +340,6 @@ class HakGuna {
             kios?.endDate != null
                 ? Jiffy.parse(kios!.endDate!).format(pattern: "dd MMMM yyyy")
                 : '............................................',
-            titleWidh: 230,
-          ),
-        ),
-        pw.Padding(
-          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
-          child: rowIdentity(
-            "i.\t\t\t\t\tSewa Bulanan Selama Hak Guna",
-            (kios?.monthCost == null || kios?.monthCost == 0)
-                ? '............................................'
-                : oCcy.format(kios?.monthCost ?? 0),
-            titleWidh: 230,
-          ),
-        ),
-        pw.Padding(
-          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
-          child: rowIdentity(
-            "j.\t\t\t\t\tTagihan Iuran Pemakaian Listrik",
-            (kios?.electricCost == null || kios?.electricCost == 0)
-                ? '............................................'
-                : oCcy.format(kios?.electricCost ?? 0),
             titleWidh: 230,
           ),
         ),
@@ -419,7 +398,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "sanggup dan bersedia untuk tidak melakukan aktifitas dan kegiatan usaha yang bertentangan dengan hukum dan norma-norma sosial yang berkembang di masyarakat sekitar seperti kegiatan : Berjudi atau Perjudian, Minuman keras yang memabukan, penyalahgunaan Narkotika, tindakan Asusila, serta kegiatan atau usaha lain yang akan mengganggu keamanan, ketertiban dan kenyamanan ruko 'Perniagaan Bumi Indah'.",
+                      "sanggup dan bersedia untuk tidak melakukan aktifitas dan kegiatan usaha yang bertentangan dengan hukum dan norma-norma sosial yang berkembang di masyarakat sekitar seperti kegiatan : Berjudi atau Perjudian, Minuman keras yang memabukan, penyalahgunaan Narkotika, tindakan Asusila, serta kegiatan atau usaha lain yang akan mengganggu keamanan, ketertiban dan kenyamanan kawasan 'Perniagaan Bumi Indah'.",
                 ),
               ],
             ),
@@ -499,15 +478,14 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      "bertanggung jawab atas kerusakan kios sebagai akibat dari pemakaian dan atau kelalaian pemakaian, kecuali akibat dari kejadian yang bersifat ",
+                      "berkewajiban membayar IPL Bulanan yang telah ditentukan ",
                 ),
                 pw.TextSpan(
-                  text: "Force Majeure ",
-                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic),
+                  text: "Pihak Pertama  ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
                 const pw.TextSpan(
-                  text:
-                      "seperti bencana alam gempa bumi, tanah longsor, angin topan dan kebakaran, serta kejadian akibat huru-hara dan kerusuhan sosial lainnya.",
+                  text: "untuk kepentingan bersama.",
                 ),
               ],
             ),
@@ -527,7 +505,7 @@ class HakGuna {
                 ),
                 const pw.TextSpan(
                   text:
-                      'sanggup dan bersediamematuhu peraturan tata tertib dan peraturan teknis operasional di lingkungan kios "PERNIAGAAN BUMI INDAH".',
+                      'sanggup dan bersedia mematuhu peraturan tata tertib dan peraturan teknis operasional di lingkungan kios "PERNIAGAAN BUMI INDAH".',
                 ),
               ],
             ),
@@ -560,7 +538,7 @@ class HakGuna {
             text: pw.TextSpan(
               style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
               text:
-                  'Setelah berakhirmasa jangka waktu Hak Guna Pakai sesuai surat perjanjian ini, ',
+                  'Setelah berakhir masa jangka waktu Hak Guna Pakai sesuai surat perjanjian ini, ',
               children: [
                 pw.TextSpan(
                   text: "PIHAK KEDUA ",
@@ -774,32 +752,6 @@ class HakGuna {
         ),
         lineWithNumber(
           textNum: "18. ",
-          child: pw.RichText(
-            textAlign: pw.TextAlign.justify,
-            text: pw.TextSpan(
-              style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
-              text: 'Apabila ',
-              children: [
-                pw.TextSpan(
-                  text: "PIHAK KEDUA ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "tidak segera menempati kios maka ",
-                ),
-                pw.TextSpan(
-                  text: "PIHAK PERTAMA ",
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                const pw.TextSpan(
-                  text: "berhak mengklaim dan memotong nilai harga kios.",
-                ),
-              ],
-            ),
-          ),
-        ),
-        lineWithNumber(
-          textNum: "19. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(

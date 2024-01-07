@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
+import 'package:fl_pbi/library/pbi_constant.dart';
 import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/sewa_lahan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,6 +126,8 @@ class SewaLahanBloc extends Bloc<SewaLahanEvent, SewaLahanState> {
 
   void _onSubmit(OnSubmit event, Emitter<SewaLahanState> emit) async {
     SuratSewaLahan? sewaLahan = state.sewaLahan;
+    sewaLahan?.areaCompany = sewaLahan.areaCompany ?? areaCompany;
+    sewaLahan?.ownerName = sewaLahan.ownerName ?? ownerName;
     context.pushNamed("preview-pdf", extra: {
       "data": sewaLahan,
       "pdf": sewaLahan!.pdf(),

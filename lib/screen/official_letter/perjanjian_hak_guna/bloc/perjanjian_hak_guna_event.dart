@@ -98,7 +98,7 @@ class OnChangedJumlahKios extends PerjanjianHakGunaEvent {
 }
 
 class OnChangedLuasKios extends PerjanjianHakGunaEvent {
-  final double val;
+  final String val;
   const OnChangedLuasKios(this.val);
 }
 

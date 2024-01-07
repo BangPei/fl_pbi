@@ -285,6 +285,8 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Lokasi Kios",
                               textForm: TextFormField(
+                                controller: TextEditingController(
+                                    text: "PERNIAGAAN BUMI INDAH"),
                                 decoration: TextFormDecoration.box(),
                                 validator: ValidForm.emptyValue,
                                 onChanged: (vals) {
@@ -321,6 +323,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Jumlah Kios",
                               textForm: TextFormField(
+                                controller: TextEditingController(text: "1"),
                                 validator: ValidForm.emptyValue,
                                 decoration: TextFormDecoration.box(),
                                 onChanged: (val) {
@@ -337,16 +340,14 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             CustomFormField(
                               title: "Luas Kios",
                               textForm: TextFormField(
+                                controller:
+                                    TextEditingController(text: "4.5m x 17m"),
                                 decoration: TextFormDecoration.box(),
                                 validator: ValidForm.emptyValue,
                                 onChanged: (val) {
-                                  if (val.isNotEmpty) {
-                                    double luas =
-                                        double.parse(val.replaceAll(",", ""));
-                                    context
-                                        .read<PerjanjianHakGunaBloc>()
-                                        .add(OnChangedLuasKios(luas));
-                                  }
+                                  context
+                                      .read<PerjanjianHakGunaBloc>()
+                                      .add(OnChangedLuasKios(val));
                                 },
                               ),
                             ),
@@ -364,7 +365,7 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                               ),
                             ),
                             CustomFormField(
-                              title: "Jangka Waktu Hak Guna",
+                              title: "Jangka Waktu Hak Guna (Tahun)",
                               textForm: TextFormField(
                                 decoration: TextFormDecoration.box(),
                                 validator: ValidForm.emptyValue,
@@ -402,38 +403,6 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                       .add(OnChangedMasaBerlaku(val: val));
                                 },
                                 controller: validDateController,
-                              ),
-                            ),
-                            CustomFormField(
-                              title: "Sewa Bulanan Selama Hak Guna",
-                              textForm: TextFormField(
-                                decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
-                                onChanged: (val) {
-                                  if (val.isNotEmpty) {
-                                    double sewa =
-                                        double.parse(val.replaceAll(",", ""));
-                                    context
-                                        .read<PerjanjianHakGunaBloc>()
-                                        .add(OnChangedSewaBulanan(sewa));
-                                  }
-                                },
-                              ),
-                            ),
-                            CustomFormField(
-                              title: "Tagihan Iuran Pemakaian Listrik",
-                              textForm: TextFormField(
-                                decoration: TextFormDecoration.box(),
-                                validator: ValidForm.emptyValue,
-                                onChanged: (val) {
-                                  if (val.isNotEmpty) {
-                                    double tagihan =
-                                        double.parse(val.replaceAll(",", ""));
-                                    context
-                                        .read<PerjanjianHakGunaBloc>()
-                                        .add(OnChangedTagihanListrik(tagihan));
-                                  }
-                                },
                               ),
                             ),
                           ],

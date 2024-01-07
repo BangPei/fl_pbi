@@ -25,10 +25,10 @@ class SuratSewaLahan {
     this.nik = "......................................",
     this.phone = "......................................",
     this.name = "......................................",
-    this.ownerName = "......................................",
+    this.ownerName,
     this.date,
     this.areaName = "......................................",
-    this.areaCompany = "......................................",
+    this.areaCompany,
     this.periodeDate,
     this.wide = 0,
     this.extraTime = 0,
@@ -104,16 +104,16 @@ class SuratSewaLahan {
     final oCcy = NumberFormat("#,###", "en_US");
     String day = (date == null)
         ? '............'
-        : Jiffy.parse(date!, pattern: "dd MMMM yyyy").format(pattern: 'EEEE');
+        : Jiffy.parse(date!, pattern: "yyyy-MM-DD").format(pattern: 'EEEE');
     String dateNum = date == null
         ? '........'
-        : Jiffy.parse(date!, pattern: "dd MMMM yyyy").format(pattern: 'd');
+        : Jiffy.parse(date!, pattern: "yyyy-MM-DD").format(pattern: 'd');
     String month = date == null
         ? '........'
-        : Jiffy.parse(date!, pattern: "dd MMMM yyyy").format(pattern: 'MMMM');
+        : Jiffy.parse(date!, pattern: "yyyy-MM-DD").format(pattern: 'MMMM');
     String year = date == null
         ? '........'
-        : Jiffy.parse(date!, pattern: "dd MMMM yyyy").format(pattern: 'yyyy');
+        : Jiffy.parse(date!, pattern: "yyyy-MM-DD").format(pattern: 'yyyy');
 
     pdf.addPage(pw.MultiPage(
       pageFormat: Common.a4.copyWith(
@@ -163,9 +163,16 @@ class SuratSewaLahan {
               style: const pw.TextStyle(
                 lineSpacing: 1.5 * PdfPageFormat.mm,
               ),
-              text:
-                  '$ownerName , Mewakili Perniagaan Bumi Indah yang beralamat di Jl Bumi Indah Raya Kel. Sukamantri Kec. Pasarkemis 15560. Dalam hal ini bertindak untuk dan atas nama $areaCompany sebagai ',
+              text: '',
               children: [
+                pw.TextSpan(
+                  text:
+                      '${(ownerName?.toUpperCase() ?? "......................................").toUpperCase()},',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                pw.TextSpan(
+                    text:
+                        ' Mewakili Perniagaan Bumi Indah yang beralamat di Jl Bumi Indah Raya Kel. Sukamantri Kec. Pasarkemis 15560. Dalam hal ini bertindak untuk dan atas nama ${areaCompany ?? "......................................"} sebagai '),
                 pw.TextSpan(
                   text: '“Pihak Pertama”.',
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
@@ -180,7 +187,7 @@ class SuratSewaLahan {
           child: pw.Column(
             mainAxisAlignment: pw.MainAxisAlignment.start,
             children: [
-              rowIdentity("Nama", name ?? ""),
+              rowIdentity("Nama", (name ?? "").toUpperCase()),
               rowIdentity("No. KTP", nik ?? ""),
               rowIdentity("No. Telp", phone ?? ""),
               rowIdentity("Alamat", address ?? ""),
@@ -235,7 +242,7 @@ class SuratSewaLahan {
                 ),
                 pw.TextSpan(
                   text:
-                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik $areaCompany.',
+                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik ${areaCompany ?? "......................................"}.',
                 ),
               ],
             ),
@@ -260,8 +267,12 @@ class SuratSewaLahan {
                       'bersedia menyewa lahan yang dimaksud dalam perjanjian ini, yang hanya akan digunakan untuk tempat usaha ',
                 ),
                 pw.TextSpan(
-                  text: "kuliner.",
+                  text: "kuliner ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      '/ jenis usaha yang sudah mendapat persetujuan pengelola.',
                 ),
               ],
             ),
@@ -275,8 +286,24 @@ class SuratSewaLahan {
         ),
         lineWithNumber(
           textNum: "4. ",
-          child: pw.Text(
-            "Adapun untuk perpanjangan kontrak dan laporan administrasi per ${extraTime == 0 ? '......' : extraTime} tahun.",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: const pw.TextStyle(
+                lineSpacing: 1.5 * PdfPageFormat.mm,
+              ),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "Pihak Kedua ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      'diwajibkan membangun konblok area parkir masing - masing yang akan dipergunakan untuk kepentingan bersama.',
+                ),
+              ],
+            ),
           ),
         ),
         lineWithNumber(
@@ -375,6 +402,32 @@ class SuratSewaLahan {
               text: '',
               children: [
                 pw.TextSpan(
+                  text: "Pihak Kedua ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "tidak diperkanankan menjual, mengalihkan atau oper alih kepada Pihak Lain tanpa ijin persetujuan dari ",
+                ),
+                pw.TextSpan(
+                  text: "Pihak Pertama.",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "10. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: const pw.TextStyle(
+                lineSpacing: 1.5 * PdfPageFormat.mm,
+              ),
+              text: '',
+              children: [
+                pw.TextSpan(
                   text: "Pihak Pertama ",
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                 ),
@@ -402,7 +455,7 @@ class SuratSewaLahan {
           ),
         ),
         lineWithNumber(
-          textNum: "10.",
+          textNum: "11.",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
@@ -450,7 +503,7 @@ class SuratSewaLahan {
           ),
         ),
         lineWithNumber(
-          textNum: "11. ",
+          textNum: "12. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
@@ -472,7 +525,58 @@ class SuratSewaLahan {
           ),
         ),
         lineWithNumber(
-          textNum: "12. ",
+          textNum: "13. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: const pw.TextStyle(
+                lineSpacing: 1.5 * PdfPageFormat.mm,
+              ),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "Pihak Kedua ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "sanggup dan bersedia mematuhi peraturan tata tertib dan peraturan teknis operasional di lingkungan Perniagaan Bumi Indah.",
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "14. ",
+          child: pw.RichText(
+            textAlign: pw.TextAlign.justify,
+            text: pw.TextSpan(
+              style: const pw.TextStyle(
+                lineSpacing: 1.5 * PdfPageFormat.mm,
+              ),
+              text: '',
+              children: [
+                pw.TextSpan(
+                  text: "Pihak Kedua ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text:
+                      "berkewajiban membayar IPL Bulanan yang telah ditentukan ",
+                ),
+                pw.TextSpan(
+                  text: "Pihak Pertama ",
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                ),
+                const pw.TextSpan(
+                  text: "untuk kepentingan bersama.",
+                ),
+              ],
+            ),
+          ),
+        ),
+        lineWithNumber(
+          textNum: "15. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
@@ -487,7 +591,7 @@ class SuratSewaLahan {
                 ),
                 const pw.TextSpan(
                   text:
-                      "akan memberitahukan sekurang - kurangnya dalam waktu 1 (satu) bulan sebelum ",
+                      "akan memberitahukan sekurang - kurangnya dalam waktu 3 (tiga) bulan sebelum ",
                 ),
                 pw.TextSpan(
                   text: "Pihak Pertama ",
@@ -495,14 +599,14 @@ class SuratSewaLahan {
                 ),
                 const pw.TextSpan(
                   text:
-                      "mengakhiri perjanjian ini secara sepihak sebagaimana dimaksud pada poin 10 tersebut diatas.",
+                      "mengakhiri perjanjian ini secara sepihak sebagaimana dimaksud pada poin 11 tersebut diatas.",
                 ),
               ],
             ),
           ),
         ),
         lineWithNumber(
-          textNum: "13. ",
+          textNum: "16. ",
           child: pw.RichText(
             textAlign: pw.TextAlign.justify,
             text: pw.TextSpan(
@@ -546,7 +650,9 @@ class SuratSewaLahan {
                           bottom: 3.0 * PdfPageFormat.mm)),
                   pw.SizedBox(height: 90),
                   pw.Paragraph(
-                    text: "($ownerName)".toUpperCase(),
+                    text:
+                        "(${ownerName ?? '......................................'})"
+                            .toUpperCase(),
                     style: pw.TextStyle(
                       fontWeight: pw.FontWeight.bold,
                       fontSize: 12,
