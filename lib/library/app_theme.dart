@@ -1,3 +1,4 @@
+import 'package:fl_pbi/library/hexcolor.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -6,7 +7,7 @@ class AppTheme {
   static const Color white = Color(0xFFFFFFFF);
   static const Color background = Color(0xFFF2F3F8);
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
-  static const Color nearlyDarkRed = Color.fromARGB(255, 247, 28, 46);
+  static const Color nearlyDarkRed = Color.fromARGB(255, 250, 69, 85);
 
   static const Color nearlyBlue = Color(0xFF00B6F0);
   static const Color nearlyBlack = Color(0xFF213333);
@@ -87,5 +88,23 @@ class AppTheme {
     fontSize: 12,
     letterSpacing: 0.2,
     color: lightText, // was lightText
+  );
+
+  static Gradient gradient = LinearGradient(
+    colors: [
+      HexColor("#8A98E8"),
+      AppTheme.nearlyDarkRed,
+    ],
+    begin: const FractionalOffset(1.0, 0.0),
+    end: const FractionalOffset(0.0, 1.0),
+    stops: const [0.0, 1.0],
+    tileMode: TileMode.repeated,
+  );
+
+  static const BoxShadow boxShadow = BoxShadow(
+    color: Color.fromARGB(255, 138, 138, 138),
+    spreadRadius: 0.2,
+    blurRadius: 2,
+    offset: Offset(0, 1),
   );
 }

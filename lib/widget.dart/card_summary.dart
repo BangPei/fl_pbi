@@ -17,19 +17,13 @@ class _CardSummaryState extends State<CardSummary> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+      padding: const EdgeInsets.only(left: 15, right: 15),
       child: Container(
         height: 200,
         decoration: BoxDecoration(
           color: AppTheme.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(255, 223, 223, 223),
-              spreadRadius: 0.2,
-              blurRadius: 7,
-              offset: Offset(0, 1),
-            ),
-          ],
+          gradient: AppTheme.gradient,
+          boxShadow: const [AppTheme.boxShadow],
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -41,11 +35,11 @@ class _CardSummaryState extends State<CardSummary> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    "12 Januari 2024",
+                    "Periode : 12 Januari 2024",
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 160, 160, 160),
-                      fontSize: 18,
+                      color: AppTheme.white,
+                      fontSize: 17,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -59,7 +53,7 @@ class _CardSummaryState extends State<CardSummary> {
                     },
                     icon: Icon(
                       _iconData,
-                      color: AppTheme.blue,
+                      color: AppTheme.white,
                     ),
                   )
                 ],
@@ -75,7 +69,7 @@ class _CardSummaryState extends State<CardSummary> {
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.blue,
+                      color: AppTheme.white,
                     ),
                   ),
                   const Text(
@@ -83,11 +77,15 @@ class _CardSummaryState extends State<CardSummary> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.blue,
+                      color: AppTheme.white,
                     ),
                   ),
                 ],
               ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 10.0, left: 20, right: 20),
+              child: Divider(),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
@@ -147,7 +145,7 @@ class MoneyWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.blue,
+                  color: AppTheme.white,
                 ),
               ),
               Text(
@@ -155,7 +153,7 @@ class MoneyWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.blue,
+                  color: AppTheme.white,
                 ),
               ),
             ],

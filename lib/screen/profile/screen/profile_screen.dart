@@ -16,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Color color = AppTheme.nearlyDarkRed.withOpacity(0.5);
+  Color color = AppTheme.nearlyDarkRed;
   bool loading = false;
   String? accountName;
   String? imageurl;
