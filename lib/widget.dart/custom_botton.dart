@@ -31,13 +31,13 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed ?? () {},
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Visibility(
                   visible: icon == null ? false : true,
                   child: icon ?? const SizedBox.shrink()),
-              const SizedBox(width: 5),
+              // const SizedBox(width: 5),
               title ?? const Text("title")
             ],
           ),

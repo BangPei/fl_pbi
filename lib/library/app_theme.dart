@@ -11,8 +11,8 @@ class AppTheme {
   static const Color nearlyBlue = Color(0xFF00B6F0);
   static const Color nearlyBlack = Color(0xFF213333);
   static const Color grey = Color(0xFF3A5160);
-  // ignore: constant_identifier_names
-  static const Color dark_grey = Color(0xFF313A44);
+  static const Color darkGrey = Color(0xFF313A44);
+  static const Color blue = Color.fromARGB(255, 81, 139, 247);
 
   static const Color darkText = Color(0xFF253840);
   static const Color darkerText = Color(0xFF17262A);

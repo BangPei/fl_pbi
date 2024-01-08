@@ -42,6 +42,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: RouteNavigation.router,
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          scaffoldBackgroundColor: const Color.fromARGB(255, 247, 246, 246),
+        ),
       ),
     );
   }

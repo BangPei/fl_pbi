@@ -30,16 +30,13 @@ class _CustomFormState extends State<CustomForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: CustomAppbar(
-          title: widget.title,
-          leading: IconButton(
-            onPressed: () => context.pop(),
-            icon: const Icon(Icons.arrow_back),
-          ),
-          actions: widget.action,
+      appBar: CustomAppbar(
+        title: widget.title,
+        leading: IconButton(
+          onPressed: () => context.pop(),
+          icon: const Icon(Icons.arrow_back),
         ),
+        actions: widget.action,
       ),
       body: SingleChildScrollView(
         child: Form(

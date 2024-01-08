@@ -18,11 +18,8 @@ class _OfficialLetterScreenState extends State<OfficialLetterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: CustomAppbar(
-          title: "Surat Resmi",
-        ),
+      appBar: const CustomAppbar(
+        title: "Surat Resmi",
       ),
       body: ListView(
         padding: const EdgeInsets.all(0),

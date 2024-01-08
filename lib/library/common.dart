@@ -16,6 +16,8 @@ class Common {
   static String imageDollar = 'images/OIP.png';
   static String imageProfile = 'images/profile.png';
   static String imageHome = 'images/home.png';
+  static String imageEaten = 'images/eaten.png';
+  static String imageBurned = 'images/burned.png';
   static MaskTextInputFormatter ktpFormat = MaskTextInputFormatter(
     mask: '##.####.######.####',
     filter: {"#": RegExp(r'[0-9]')},

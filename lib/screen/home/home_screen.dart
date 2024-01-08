@@ -1,4 +1,6 @@
+import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/widget.dart/card_summary.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -15,18 +17,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: CustomAppbar(
-          leading: Container(
-            padding: const EdgeInsets.only(left: 5),
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Image.asset(Common.imageLogo),
+      appBar: CustomAppbar(
+        backgroundColor: AppTheme.white,
+        leading: Container(
+          padding: const EdgeInsets.only(left: 10),
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
           ),
-          title: "Perniagaan Bumi Indah",
+          child: Image.asset(Common.imageLogo),
+        ),
+        title: "Dashboard",
+      ),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            CardSummary(),
+          ],
         ),
       ),
     );

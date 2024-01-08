@@ -27,15 +27,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
           setState(() {});
         },
         items: [
-          // BottomNavigationBarItem(
-          //   label: "Dashboard",
-          //   icon: Image.asset(
-          //     Common.imageHome,
-          //     width: 30.0,
-          //     height: 30.0,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
+          BottomNavigationBarItem(
+            label: "Dashboard",
+            icon: Image.asset(
+              Common.imageHome,
+              width: 30.0,
+              height: 30.0,
+              fit: BoxFit.cover,
+            ),
+          ),
           BottomNavigationBarItem(
             label: "Surat Resmi",
             icon: Image.asset(
@@ -45,15 +45,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
               fit: BoxFit.cover,
             ),
           ),
-          // BottomNavigationBarItem(
-          //   label: "Keuangan",
-          //   icon: Image.asset(
-          //     Common.imageDollar,
-          //     width: 30.0,
-          //     height: 30.0,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
+          BottomNavigationBarItem(
+            label: "Keuangan",
+            icon: Image.asset(
+              Common.imageDollar,
+              width: 30.0,
+              height: 30.0,
+              fit: BoxFit.cover,
+            ),
+          ),
           BottomNavigationBarItem(
             label: "Akun",
             icon: Image.asset(
@@ -71,15 +71,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
   callPage(int index) {
     switch (index) {
       case 0:
-        // context.go("/");
-        context.go("/surat-resmi");
+        context.go("/");
+      // context.go("/surat-resmi");
       case 1:
-        // context.go("/surat-resmi");
+        context.go("/surat-resmi");
+      case 2:
+        context.go("/keuangan");
+      // context.go("/profile");
+      case 3:
         context.go("/profile");
-      // case 2:
-      //   context.go("/keuangan");
-      // case 3:
-      //   context.go("/profile");
       default:
         context.go("/surat-resmi");
     }
