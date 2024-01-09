@@ -54,7 +54,7 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppTheme.white,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(10),
                     boxShadow: const [
                       BoxShadow(
                         color: Color.fromARGB(255, 216, 216, 216),
@@ -73,6 +73,8 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                         color: park.type == 1 ? null : AppTheme.nearlyDarkRed,
                       ),
                     ),
+                    dense: true,
+                    visualDensity: const VisualDensity(vertical: -2),
                     subtitle: Text(Jiffy.parse(park.date!)
                         .format(pattern: "dd MMMM yyyy")),
                     leading: Icon(FontAwesomeIcons.dollarSign, color: color),

@@ -13,6 +13,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
   ParkingBloc() : super(const ParkingState()) {
     on<OnGetTotal>(_onGetTotal);
     on<OnGetSummary>(_onGetSummary);
+    on<OnLoadMore>(_onLoadMore);
   }
 
   void _onGetTotal(OnGetTotal event, Emitter<ParkingState> emit) async {
@@ -69,6 +70,46 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
           serverSide: state.serverSide,
           parks: state.parks,
           isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
+  void _onLoadMore(OnLoadMore event, Emitter<ParkingState> emit) async {
+    try {
+      if (state.serverSide?.nextPageUrl != null) {
+        ServerSide serverSide = await ParkingApi.get();
+        List<Parking> parks = state.parks ?? [];
+        for (var v in (serverSide.data ?? [])) {
+          parks.add(Parking.fromJson(v));
+        }
+        emit(state.copyWith(
+          serverSide: serverSide,
+          parks: parks,
+          loadMore: false,
+        ));
+      } else {
+        emit(state.copyWith(loadMore: false));
+      }
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          parks: state.parks,
+          isError: true,
+          loadMore: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          parks: state.parks,
+          isError: true,
+          loadMore: false,
           errorMessage: e.toString(),
         ));
       }

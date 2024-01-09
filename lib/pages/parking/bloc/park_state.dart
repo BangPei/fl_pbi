@@ -4,6 +4,7 @@ final class ParkingState extends Equatable {
   const ParkingState({
     this.cashFlow,
     this.cardLoaing = true,
+    this.loadMore = true,
     this.listLoading = true,
     this.isError = false,
     this.errorMessage,
@@ -15,6 +16,7 @@ final class ParkingState extends Equatable {
   final bool cardLoaing;
   final bool listLoading;
   final bool isError;
+  final bool loadMore;
   final String? errorMessage;
   final List<Parking>? parks;
   final ServerSide? serverSide;
@@ -22,6 +24,7 @@ final class ParkingState extends Equatable {
   ParkingState copyWith({
     CashFlow? cashFlow,
     bool? cardLoaing,
+    bool? loadMore,
     bool? listLoading,
     bool? isError,
     String? errorMessage,
@@ -32,6 +35,7 @@ final class ParkingState extends Equatable {
       cashFlow: cashFlow ?? this.cashFlow,
       cardLoaing: cardLoaing ?? this.cardLoaing,
       isError: isError ?? this.isError,
+      loadMore: loadMore ?? this.loadMore,
       listLoading: listLoading ?? this.listLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       parks: parks ?? this.parks,
@@ -48,5 +52,6 @@ final class ParkingState extends Equatable {
         parks,
         serverSide,
         listLoading,
+        loadMore,
       ];
 }

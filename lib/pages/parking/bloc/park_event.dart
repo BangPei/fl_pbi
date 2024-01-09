@@ -13,3 +13,8 @@ class OnGetSummary extends ParkingEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnLoadMore extends ParkingEvent {
+  @override
+  List<Object?> get props => [];
+}
