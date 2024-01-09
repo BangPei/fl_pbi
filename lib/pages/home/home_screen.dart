@@ -1,8 +1,6 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/widget.dart/card_summary.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
-import 'package:fl_pbi/widget.dart/form_title.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,22 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: "Dashboard",
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FormTitle(
-              title: 'Summary Uang Parkir',
-              padding: EdgeInsets.only(
-                left: 18,
-                top: 10,
-                bottom: 10,
-              ),
-            ),
-            CardSummary(),
-          ],
-        ),
-      ),
+      body: const SingleChildScrollView(),
     );
   }
 }

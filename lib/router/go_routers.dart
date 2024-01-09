@@ -50,6 +50,15 @@ class RouteNavigation {
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/keuangan',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: ParkingScreen(),
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
             path: '/profile',
             pageBuilder: (context, state) {
               return const NoTransitionPage(

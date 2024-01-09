@@ -5,6 +5,7 @@ import 'package:fl_pbi/models/pic.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -23,6 +24,7 @@ class Common {
     filter: {"#": RegExp(r'[0-9]')},
     type: MaskAutoCompletionType.eager,
   );
+  static final oCcy = NumberFormat("#,###", "en_US");
 
   static const double inch = 72.0;
   static const double cm = inch / 2.54;

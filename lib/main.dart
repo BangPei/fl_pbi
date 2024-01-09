@@ -1,3 +1,4 @@
+import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/router/go_routers.dart';
 import 'package:fl_pbi/pages/login/bloc/login_bloc.dart';
 import 'package:fl_pbi/pages/official_letter_form/formulir_pendaftaran/bloc/formulir_pendaftaran_bloc.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<PermohonanBloc>(create: (__) => PermohonanBloc()),
         BlocProvider<SuratLunasBloc>(create: (__) => SuratLunasBloc()),
         BlocProvider<SewaLahanBloc>(create: (__) => SewaLahanBloc()),
+        BlocProvider<ParkingBloc>(create: (__) => ParkingBloc()),
         BlocProvider<TandaHakGunaBloc>(create: (__) => TandaHakGunaBloc()),
         BlocProvider<PerjanjianHakGunaBloc>(
             create: (__) => PerjanjianHakGunaBloc()),
