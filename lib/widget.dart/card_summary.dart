@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
 class CardSummary extends StatefulWidget {
   const CardSummary({
@@ -34,9 +35,9 @@ class _CardSummaryState extends State<CardSummary> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Periode : 12 Januari 2024",
-                    style: TextStyle(
+                  Text(
+                    "Periode : ${Jiffy.now().format(pattern: "dd MMMM yyyy")}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       color: AppTheme.white,
                       fontSize: 17,
@@ -136,6 +137,7 @@ class MoneyWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon,
+          const SizedBox(width: 3),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -2,21 +2,7 @@ import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/main_layout/bottom_navigator.dart';
-import 'package:fl_pbi/screen/home/home_screen.dart';
-import 'package:fl_pbi/screen/login/login_screen.dart';
-import 'package:fl_pbi/screen/official_letter/formulir_pendaftaran/formulir_pendaftaran_screen.dart';
-import 'package:fl_pbi/screen/official_letter/perjanjian_hak_guna/hak_guna_pakai_screen.dart';
-import 'package:fl_pbi/screen/official_letter/surat_lunas/surat_lunas_screen.dart';
-import 'package:fl_pbi/screen/official_letter/surat_permohonan/surat_permohonan_screen.dart';
-
-import 'package:fl_pbi/screen/official_letter/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
-import 'package:fl_pbi/screen/official_letter/tanda_hak_guna/tanda_hak_guna_screen.dart';
-import 'package:fl_pbi/screen/official_letter2.dart/official_letter_screen.dart';
-import 'package:fl_pbi/screen/official_letter2.dart/official_pdf_main_layout.dart';
-import 'package:fl_pbi/screen/profile/screen/change_password_form.dart';
-import 'package:fl_pbi/screen/profile/screen/profile_form_screen.dart';
-import 'package:fl_pbi/screen/profile/screen/profile_screen.dart';
-// import 'package:fl_pbi/screen/user/user_screen.dart';
+import 'package:fl_pbi/pages/pages_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

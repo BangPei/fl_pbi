@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:fl_pbi/screen/login/data/login.dart';
-import 'package:fl_pbi/screen/profile/data/profile.dart';
+import 'package:fl_pbi/pages/login/data/login.dart';
+import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 

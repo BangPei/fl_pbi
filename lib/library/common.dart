@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fl_pbi/models/hak_guna.dart';
 import 'package:fl_pbi/models/pic.dart';
-import 'package:fl_pbi/screen/profile/data/profile.dart';
+import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
