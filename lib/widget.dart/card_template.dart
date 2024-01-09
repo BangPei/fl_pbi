@@ -9,11 +9,11 @@ class CardTemplate extends StatelessWidget {
   const CardTemplate({
     required this.title,
     this.content,
-    Key? key,
+    super.key,
     this.onPressed,
     this.showAddButton,
     this.showShimmer,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +54,10 @@ class DefaultCardTitle extends StatelessWidget {
 
   const DefaultCardTitle(
     this.title, {
-    Key? key,
+    super.key,
     this.showAddButton,
     this.onPressed,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(

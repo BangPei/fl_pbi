@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/login/data/login_api.dart';

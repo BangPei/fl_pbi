@@ -8,14 +8,14 @@ class LeftExpantionTile extends StatefulWidget {
   final bool? visibility;
   final ValueChanged<bool>? onExpansionChanged;
   const LeftExpantionTile({
-    Key? key,
+    super.key,
     required this.title,
     this.icon,
     this.children,
     this.onExpansionChanged,
     this.visibility,
     required this.menu,
-  }) : super(key: key);
+  });
 
   @override
   State<LeftExpantionTile> createState() => _LeftExpantionTileState();

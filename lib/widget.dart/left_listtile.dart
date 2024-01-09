@@ -9,12 +9,12 @@ class LeftListTile extends StatefulWidget {
   final IconData? icon;
 
   const LeftListTile({
-    Key? key,
+    super.key,
     required this.title,
     this.visibility,
     this.icon,
     this.routeName,
-  }) : super(key: key);
+  });
 
   @override
   State<LeftListTile> createState() => _LeftListTileState();

@@ -7,12 +7,12 @@ class CardBanner extends StatelessWidget {
   final Widget? leading;
   final GestureTapCallback? onTap;
   const CardBanner({
-    Key? key,
+    super.key,
     required this.title,
     this.trailing,
     this.leading,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

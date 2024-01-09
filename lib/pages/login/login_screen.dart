@@ -62,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                 )
               ],
             ),
-            height: 350,
+            height: 360,
             width: 350,
             child: Form(
               key: _formKey,
