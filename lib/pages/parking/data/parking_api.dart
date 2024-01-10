@@ -9,8 +9,8 @@ class ParkingApi {
     return data;
   }
 
-  static Future<ServerSide> get() async {
-    final client = await Api.restClient();
+  static Future<ServerSide> get({Map<String, dynamic>? params}) async {
+    final client = await Api.restClient(params: params);
     var data = client.getParkingList();
     return data;
   }

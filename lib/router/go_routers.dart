@@ -56,6 +56,19 @@ class RouteNavigation {
                 child: ParkingScreen(),
               );
             },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form',
+                name: "keuangan-form",
+                pageBuilder: (context, state) {
+                  var extra = state.extra as Map<String, dynamic>;
+                  return NoTransitionPage(
+                    child: ParkingFormScreen(type: extra['type']),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,

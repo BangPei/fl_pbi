@@ -79,7 +79,14 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
   void _onLoadMore(OnLoadMore event, Emitter<ParkingState> emit) async {
     try {
       if (state.serverSide?.nextPageUrl != null) {
-        ServerSide serverSide = await ParkingApi.get();
+        emit(state.copyWith(loadMore: true));
+        Map<String, dynamic> params = {};
+        var url = Uri.parse(state.serverSide!.nextPageUrl!);
+        List<String> listParam = url.query.split("&");
+        for (var v in listParam) {
+          params[v.split("=")[0]] = v.split("=")[1];
+        }
+        ServerSide serverSide = await ParkingApi.get(params: params);
         List<Parking> parks = state.parks ?? [];
         for (var v in (serverSide.data ?? [])) {
           parks.add(Parking.fromJson(v));

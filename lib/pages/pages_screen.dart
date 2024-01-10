@@ -7,3 +7,4 @@ export 'package:fl_pbi/pages/profile/screen/change_password_form.dart';
 export 'package:fl_pbi/pages/profile/screen/profile_form_screen.dart';
 export 'package:fl_pbi/pages/profile/screen/profile_screen.dart';
 export 'package:fl_pbi/pages/parking/parking_screen.dart';
+export 'package:fl_pbi/pages/parking/parking_from_screen.dart';

@@ -16,7 +16,38 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (val) async {
+          final nav = Navigator.of(context);
+          if (!val) {
+            final result = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Yakin Ingin Keluar ?"),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: const Text("No")),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: const Text("Yes")),
+                        ],
+                      );
+                    }) ??
+                false;
+            if (result) {
+              nav.pop();
+            }
+          }
+        },
+        child: widget.child,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
@@ -83,5 +114,32 @@ class _BottomNavigationState extends State<BottomNavigation> {
       default:
         context.go("/surat-resmi");
     }
+  }
+
+  dialogAlert() async {
+    bool isClose = false;
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                isClose = false;
+                setState(() {});
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                isClose = false;
+                setState(() {});
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    ).then((value) => isClose);
   }
 }
