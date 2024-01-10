@@ -83,12 +83,13 @@ class _ParkingScreenState extends State<ParkingScreen> {
   }
 
   dialogInOutCome() {
-    return showModalBottomSheet(
+    return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
-          return SizedBox(
-            height: 230,
+          return Dialog(
             child: SizedBox(
+              height: 200,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -133,14 +134,11 @@ class _ParkingScreenState extends State<ParkingScreen> {
                           backgroundColor:
                               const Color.fromARGB(255, 221, 13, 31)
                                   .withOpacity(0.7),
-                          onTap: () {},
+                          onTap: () => context
+                              .goNamed("keuangan-form", extra: {"type": 2}),
                         ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 25.0),
-                      child: Divider(),
-                    )
                   ],
                 ),
               ),

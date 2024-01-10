@@ -16,38 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PopScope(
-        canPop: false,
-        onPopInvoked: (val) async {
-          final nav = Navigator.of(context);
-          if (!val) {
-            final result = await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Yakin Ingin Keluar ?"),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(false);
-                              },
-                              child: const Text("No")),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(true);
-                              },
-                              child: const Text("Yes")),
-                        ],
-                      );
-                    }) ??
-                false;
-            if (result) {
-              nav.pop();
-            }
-          }
-        },
-        child: widget.child,
-      ),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

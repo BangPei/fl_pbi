@@ -65,13 +65,25 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                     ],
                   ),
                   child: ListTile(
-                    title: Text(
-                      "$positive Rp. ${Common.oCcy.format(park.amount)}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17,
-                        color: park.type == 1 ? null : AppTheme.nearlyDarkRed,
-                      ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "$positive Rp. ${Common.oCcy.format(park.amount)}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
+                            color:
+                                park.type == 1 ? null : AppTheme.nearlyDarkRed,
+                          ),
+                        ),
+                        Badge(
+                          backgroundColor: color,
+                          label: Text(
+                            park.type == 1 ? "masuk" : "keluar",
+                          ),
+                        )
+                      ],
                     ),
                     dense: true,
                     visualDensity: const VisualDensity(vertical: -2),

@@ -60,7 +60,11 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
         builder: (context, state) {
           return CustomForm(
             title: "Form Uang ${widget.type == 1 ? 'Masuk' : 'Keluar'}",
-            onSubmit: () {},
+            onSubmit: () {
+              context
+                  .read<ParkFormBloc>()
+                  .add(OnSubmit(type: widget.type, image: evidentBase64));
+            },
             buttonTitle: "Simpan",
             children: [
               CustomFormField(
@@ -81,8 +85,10 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
                   keyboardType: TextInputType.number,
                   decoration: TextFormDecoration.box(),
                   onChanged: (val) {
-                    int value = int.parse(val);
-                    context.read<ParkFormBloc>().add(OnChangedAmount(value));
+                    if (val != "" || val.isNotEmpty) {
+                      int value = int.parse(val);
+                      context.read<ParkFormBloc>().add(OnChangedAmount(value));
+                    }
                   },
                 ),
               ),
@@ -96,12 +102,9 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 5.0,
-                  vertical: 5,
-                ),
-                child: evidentBase64 != null
+              CustomFormField(
+                title: "Lampiran",
+                textForm: evidentBase64 != null
                     ? ClipPicture(
                         height: 40,
                         onTap: () => pickPicture(),
