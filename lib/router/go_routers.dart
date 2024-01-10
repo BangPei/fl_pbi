@@ -64,7 +64,8 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   var extra = state.extra as Map<String, dynamic>;
                   return NoTransitionPage(
-                    child: ParkingFormScreen(type: extra['type']),
+                    child:
+                        ParkingFormScreen(type: extra['type'], id: extra['id']),
                   );
                 },
               ),

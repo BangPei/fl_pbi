@@ -16,7 +16,8 @@ import 'package:jiffy/jiffy.dart';
 
 class ParkingFormScreen extends StatefulWidget {
   final int type;
-  const ParkingFormScreen({super.key, required this.type});
+  final int? id;
+  const ParkingFormScreen({super.key, required this.type, this.id});
 
   @override
   State<ParkingFormScreen> createState() => _ParkingFormScreenState();
