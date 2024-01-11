@@ -21,4 +21,22 @@ class ParkingApi {
     var data = client.postParking(park);
     return data;
   }
+
+  static Future<dynamic> delete(int id) async {
+    final client = await Api.restClient();
+    var data = client.removeParking(id);
+    return data;
+  }
+
+  static Future<Parking> getId(int id) async {
+    final client = await Api.restClient();
+    var data = client.getParkingById(id);
+    return data;
+  }
+
+  static Future<Parking> put(Parking parking) async {
+    final client = await Api.restClient();
+    var data = client.putParking(parking.id, parking);
+    return data;
+  }
 }

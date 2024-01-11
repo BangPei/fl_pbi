@@ -32,3 +32,10 @@ class OnSubmit extends ParkFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnGetPark extends ParkFormEvent {
+  final int id;
+  const OnGetPark(this.id);
+  @override
+  List<Object?> get props => [];
+}

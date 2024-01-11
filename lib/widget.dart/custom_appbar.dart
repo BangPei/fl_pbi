@@ -40,7 +40,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSize {
                 top: 16 - 8.0 * topBarOpacity,
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   leading ?? const SizedBox.shrink(),
                   Expanded(

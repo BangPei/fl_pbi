@@ -14,6 +14,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
     on<OnGetTotal>(_onGetTotal);
     on<OnGetSummary>(_onGetSummary);
     on<OnLoadMore>(_onLoadMore);
+    on<OnRemovePark>(_onRemovePark);
   }
 
   void _onGetTotal(OnGetTotal event, Emitter<ParkingState> emit) async {
@@ -51,6 +52,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
       }
       emit(state.copyWith(
         listLoading: false,
+        loadMore: false,
         serverSide: serverSide,
         parks: parks,
       ));
@@ -62,6 +64,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
           serverSide: state.serverSide,
           parks: state.parks,
           isError: true,
+          loadMore: false,
           errorMessage: err.response?.data?["message"] ?? err.message,
         ));
       } else {
@@ -70,6 +73,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
           serverSide: state.serverSide,
           parks: state.parks,
           isError: true,
+          loadMore: false,
           errorMessage: e.toString(),
         ));
       }
@@ -115,6 +119,44 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
           listLoading: false,
           serverSide: state.serverSide,
           parks: state.parks,
+          isError: true,
+          loadMore: false,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
+  void _onRemovePark(OnRemovePark event, Emitter<ParkingState> emit) async {
+    emit(state.copyWith(listLoading: true));
+    try {
+      await ParkingApi.delete(event.id!);
+      CashFlow cashFlow = await ParkingApi.getTotal();
+      List<Parking> parks = state.parks ?? [];
+      parks.removeWhere((e) => e.id == event.id);
+      emit(state.copyWith(
+        listLoading: false,
+        cashFlow: cashFlow,
+        parks: parks,
+      ));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          cashFlow: state.cashFlow,
+          parks: state.parks,
+          isError: true,
+          loadMore: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          parks: state.parks,
+          cashFlow: state.cashFlow,
           isError: true,
           loadMore: false,
           errorMessage: e.toString(),

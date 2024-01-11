@@ -4,7 +4,9 @@ import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ListSummaryScreen extends StatefulWidget {
@@ -26,9 +28,11 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
     return BlocBuilder<ParkingBloc, ParkingState>(
       builder: (context, state) {
         if (state.listLoading) {
-          return const Text("Loading");
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state.isError) {
-          return const Text("Error");
+          return Center(child: Text(state.errorMessage ?? "Error"));
         }
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -64,33 +68,51 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                       )
                     ],
                   ),
-                  child: ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Slidable(
+                    key: ValueKey(park.id),
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
                       children: [
-                        Text(
-                          "$positive Rp. ${Common.oCcy.format(park.amount)}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                            color:
-                                park.type == 1 ? null : AppTheme.nearlyDarkRed,
-                          ),
+                        SlidableAction(
+                          onPressed: (context) async => await confirm(park.id!),
+                          backgroundColor: AppTheme.nearlyDarkRed,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Hapus',
                         ),
-                        Badge(
-                          backgroundColor: color,
-                          label: Text(
-                            park.type == 1 ? "masuk" : "keluar",
-                          ),
-                        )
                       ],
                     ),
-                    dense: true,
-                    visualDensity: const VisualDensity(vertical: -2),
-                    subtitle: Text(Jiffy.parse(park.date!)
-                        .format(pattern: "dd MMMM yyyy")),
-                    leading: Icon(FontAwesomeIcons.dollarSign, color: color),
-                    trailing: Icon(icon, color: color),
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "$positive Rp. ${Common.oCcy.format(park.amount)}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17,
+                              color: park.type == 1
+                                  ? null
+                                  : AppTheme.nearlyDarkRed,
+                            ),
+                          ),
+                          Badge(
+                            backgroundColor: color,
+                            label: Text(
+                              park.type == 1 ? "masuk" : "keluar",
+                            ),
+                          )
+                        ],
+                      ),
+                      dense: true,
+                      visualDensity: const VisualDensity(vertical: -2),
+                      subtitle: Text(Jiffy.parse(park.date!)
+                          .format(pattern: "dd MMMM yyyy")),
+                      leading: Icon(FontAwesomeIcons.dollarSign, color: color),
+                      trailing: Icon(icon, color: color),
+                      onTap: () => context.goNamed("keuangan-form",
+                          extra: {"type": park.type, "id": park.id}),
+                    ),
                   ),
                 ),
               );
@@ -100,5 +122,30 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
         );
       },
     );
+  }
+
+  confirm(int id) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Transaksi akan dihapus, Yakin?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+                context.read<ParkingBloc>().add(OnRemovePark(id));
+              },
+              child: const Text('Yes'),
+            )
+          ],
+        );
+      },
+    );
+    return confirmed;
   }
 }

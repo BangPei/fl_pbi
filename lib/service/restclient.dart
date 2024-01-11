@@ -31,11 +31,20 @@ abstract class RestClient {
   @GET("transaction")
   Future<ServerSide> getParkingList();
 
+  @GET("transaction/{id}")
+  Future<Parking> getParkingById(@Path() int id);
+
+  @DELETE("transaction/{id}")
+  Future<dynamic> removeParking(@Path() int id);
+
   @GET("transaction/total")
   Future<CashFlow> getTotal();
 
   @POST("transaction")
   Future<Parking> postParking(@Body() Parking park);
+
+  @PUT("transaction/{id}")
+  Future<Parking> putParking(@Path() int id, @Body() Parking park);
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 

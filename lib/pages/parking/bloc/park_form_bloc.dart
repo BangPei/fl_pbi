@@ -14,6 +14,7 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
     on<OnChangedAmount>(_onChangedAmount);
     on<OnChangedRemark>(_onChangedRemark);
     on<OnSubmit>(_onSubmit);
+    on<OnGetPark>(_onGetPark);
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<ParkFormState> emit) {
@@ -39,13 +40,49 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
     emit(state.copyWith(park: park));
   }
 
+  void _onGetPark(OnGetPark event, Emitter<ParkFormState> emit) async {
+    try {
+      emit(state.copyWith(listLoading: true, isSuccess: false));
+      Parking park = await ParkingApi.getId(event.id);
+      emit(state.copyWith(
+        listLoading: false,
+        park: park,
+      ));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          listLoading: false,
+          park: state.park,
+          isError: true,
+          isSuccess: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          listLoading: false,
+          park: state.park,
+          isError: true,
+          isSuccess: false,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
   void _onSubmit(OnSubmit event, Emitter<ParkFormState> emit) async {
     try {
       emit(state.copyWith(listLoading: true));
       Parking? park = state.park ?? Parking();
       park.type = event.type;
-      park.picture = event.image;
-      park = await ParkingApi.post(park);
+      if (event.image != null) {
+        park.picture = event.image;
+      }
+      if (park.id != null) {
+        park = await ParkingApi.put(park);
+      } else {
+        park = await ParkingApi.post(park);
+      }
       emit(state.copyWith(park: park, listLoading: false, isSuccess: true));
     } catch (e) {
       if (e.runtimeType == DioException) {

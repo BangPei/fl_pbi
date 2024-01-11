@@ -32,9 +32,11 @@ class _CardSummaryState extends State<CardSummary> {
     return BlocBuilder<ParkingBloc, ParkingState>(
       builder: (context, state) {
         if (state.cardLoaing) {
-          return const Text('Loading');
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else if (state.isError) {
-          return const Text('Error');
+          return Center(child: Text(state.errorMessage ?? "error"));
         } else {
           return Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),

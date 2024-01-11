@@ -4,6 +4,7 @@ import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_form_bloc.dart';
 import 'package:fl_pbi/widget.dart/clip_picture.dart';
+import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
@@ -11,6 +12,7 @@ import 'package:fl_pbi/widget.dart/empty_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -28,8 +30,13 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
   late FocusNode dateFocusNode;
   TextEditingController dateController = TextEditingController();
 
+  get buttonTitle => null;
+
   @override
   void initState() {
+    if (widget.id != null) {
+      context.read<ParkFormBloc>().add(OnGetPark(widget.id!));
+    }
     dateFocusNode = FocusNode();
     super.initState();
   }
@@ -59,6 +66,18 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
       },
       child: BlocBuilder<ParkFormBloc, ParkFormState>(
         builder: (context, state) {
+          if (state.listLoading) {
+            return Scaffold(
+              appBar: CustomAppbar(
+                title: "Form Uang ${widget.type == 1 ? 'Masuk' : 'Keluar'}",
+                leading: IconButton(
+                  onPressed: () => context.pop(),
+                  icon: const Icon(Icons.arrow_back),
+                ),
+              ),
+              body: const Center(child: CircularProgressIndicator()),
+            );
+          }
           return CustomForm(
             title: "Form Uang ${widget.type == 1 ? 'Masuk' : 'Keluar'}",
             onSubmit: () {
@@ -82,6 +101,7 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
               CustomFormField(
                 title: "Jumlah Uang",
                 textForm: TextFormField(
+                  initialValue: (state.park?.amount ?? 0).toString(),
                   validator: ValidForm.emptyValue,
                   keyboardType: TextInputType.number,
                   decoration: TextFormDecoration.box(),
@@ -96,6 +116,7 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
               CustomFormField(
                 title: "Keterangan",
                 textForm: TextFormField(
+                  initialValue: state.park?.remark ?? "",
                   validator: ValidForm.emptyValue,
                   decoration: TextFormDecoration.box(),
                   onChanged: (val) {

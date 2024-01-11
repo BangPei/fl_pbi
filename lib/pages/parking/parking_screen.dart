@@ -47,6 +47,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
         },
         child: SingleChildScrollView(
           controller: _controller,
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Column(
@@ -125,8 +126,11 @@ class _ParkingScreenState extends State<ParkingScreen> {
                           backgroundColor:
                               const Color.fromARGB(255, 154, 11, 211)
                                   .withOpacity(0.7),
-                          onTap: () => context
-                              .goNamed("keuangan-form", extra: {"type": 1}),
+                          onTap: () {
+                            Navigator.pop(context, true);
+                            context
+                                .goNamed("keuangan-form", extra: {"type": 1});
+                          },
                         ),
                         const SizedBox(width: 10),
                         buttonTrans(
@@ -134,8 +138,11 @@ class _ParkingScreenState extends State<ParkingScreen> {
                           backgroundColor:
                               const Color.fromARGB(255, 221, 13, 31)
                                   .withOpacity(0.7),
-                          onTap: () => context
-                              .goNamed("keuangan-form", extra: {"type": 2}),
+                          onTap: () {
+                            Navigator.pop(context, true);
+                            context
+                                .goNamed("keuangan-form", extra: {"type": 2});
+                          },
                         ),
                       ],
                     ),

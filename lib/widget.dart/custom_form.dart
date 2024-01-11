@@ -86,10 +86,10 @@ class BodyForm extends StatelessWidget {
             physics: const ScrollPhysics(),
             children: children,
           ),
-          Center(
-            child: SizedBox(
-              width: 150,
-              child: CustomButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
                 title: Text(buttonTitle ?? 'Print'),
                 icon: const FaIcon(
                   FontAwesomeIcons.solidFloppyDisk,
@@ -98,7 +98,7 @@ class BodyForm extends StatelessWidget {
                 ),
                 onPressed: onPressed,
               ),
-            ),
+            ],
           )
         ],
       ),

@@ -37,7 +37,6 @@ class Profile {
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
-    print(json);
     id = json['id'];
     fullName = json['fullName'];
     email = json['email'];

@@ -32,13 +32,18 @@ class CustomButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Visibility(
-                  visible: icon == null ? false : true,
-                  child: icon ?? const SizedBox.shrink()),
-              // const SizedBox(width: 5),
-              title ?? const Text("title")
+                visible: icon == null ? false : true,
+                child: icon ?? const SizedBox.shrink(),
+              ),
+              const SizedBox(width: 5),
+              title ??
+                  const Text(
+                    "title",
+                    style: TextStyle(fontSize: 18),
+                  )
             ],
           ),
         ),
