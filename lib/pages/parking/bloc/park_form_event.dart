@@ -39,3 +39,10 @@ class OnGetPark extends ParkFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnResetForm extends ParkFormEvent {
+  final int type;
+  const OnResetForm(this.type);
+  @override
+  List<Object?> get props => [];
+}

@@ -2,7 +2,7 @@ part of 'park_form_bloc.dart';
 
 final class ParkFormState extends Equatable {
   const ParkFormState({
-    this.listLoading = true,
+    this.listLoading = false,
     this.isError = false,
     this.isSuccess = false,
     this.errorMessage,

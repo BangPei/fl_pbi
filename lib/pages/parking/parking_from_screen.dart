@@ -29,6 +29,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
   String? evidentBase64;
   late FocusNode dateFocusNode;
   TextEditingController dateController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController remarkController = TextEditingController();
 
   get buttonTitle => null;
 
@@ -36,6 +38,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
   void initState() {
     if (widget.id != null) {
       context.read<ParkFormBloc>().add(OnGetPark(widget.id!));
+    } else {
+      context.read<ParkFormBloc>().add(OnResetForm(widget.type));
     }
     dateFocusNode = FocusNode();
     super.initState();
@@ -63,6 +67,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
           dateController.text =
               Jiffy.parse(state.park!.date!).format(pattern: "dd MMMM yyyy");
         }
+        amountController.text = (state.park?.amount ?? 0).toString();
+        remarkController.text = state.park?.remark ?? "";
       },
       child: BlocBuilder<ParkFormBloc, ParkFormState>(
         builder: (context, state) {
@@ -101,7 +107,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
               CustomFormField(
                 title: "Jumlah Uang",
                 textForm: TextFormField(
-                  initialValue: (state.park?.amount ?? 0).toString(),
+                  // initialValue: (state.park?.amount ?? 0).toString(),
+                  controller: amountController,
                   validator: ValidForm.emptyValue,
                   keyboardType: TextInputType.number,
                   decoration: TextFormDecoration.box(),
@@ -116,7 +123,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
               CustomFormField(
                 title: "Keterangan",
                 textForm: TextFormField(
-                  initialValue: state.park?.remark ?? "",
+                  // initialValue: state.park?.remark ?? "",
+                  controller: remarkController,
                   validator: ValidForm.emptyValue,
                   decoration: TextFormDecoration.box(),
                   onChanged: (val) {

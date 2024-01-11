@@ -15,6 +15,18 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
     on<OnChangedRemark>(_onChangedRemark);
     on<OnSubmit>(_onSubmit);
     on<OnGetPark>(_onGetPark);
+    on<OnResetForm>(_onResetForm);
+  }
+
+  void _onResetForm(OnResetForm event, Emitter<ParkFormState> emit) async {
+    Parking park = Parking();
+    park.type = event.type;
+    emit(state.copyWith(
+      park: park,
+      listLoading: false,
+      isError: false,
+      isSuccess: false,
+    ));
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<ParkFormState> emit) {
