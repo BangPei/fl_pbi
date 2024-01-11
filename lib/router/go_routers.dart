@@ -21,7 +21,7 @@ class RouteNavigation {
         return null;
       }
     },
-    initialLocation: '/',
+    initialLocation: '/surat-resmi',
     routes: [
       GoRoute(
         parentNavigatorKey: _nav.navKey,
