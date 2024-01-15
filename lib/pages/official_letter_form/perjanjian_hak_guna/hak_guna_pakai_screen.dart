@@ -104,6 +104,24 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                 controller: createdDateController,
                               ),
                             ),
+                            SwitchListTile(
+                              title: const Text(
+                                "Kontrak",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              value: state.hakGuna!.isContract ?? false,
+                              onChanged: (val) {
+                                setState(() {
+                                  context
+                                      .read<PerjanjianHakGunaBloc>()
+                                      .add(OnChangeContract(val));
+                                });
+                              },
+                              activeColor: Colors.blue[400],
+                            )
                           ],
                         ),
                       ),
@@ -353,15 +371,16 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                             ),
                             CustomFormField(
                               title: "Mulai Hak Guna",
-                              textForm: CustomDatePicker(
+                              textForm: TextFormField(
+                                controller: TextEditingController(
+                                    text: "Saat Serah Terima Kunci"),
+                                decoration: TextFormDecoration.box(),
                                 // validator: ValidForm.emptyValue,
-                                focusNode: starDateNode,
-                                onCloseDatepicker: (val) {
+                                onChanged: (val) {
                                   context
                                       .read<PerjanjianHakGunaBloc>()
-                                      .add(OnChangedMulaiHakGuna(val: val));
+                                      .add(OnChangedMulaiHakGuna(val));
                                 },
-                                controller: startDateController,
                               ),
                             ),
                             CustomFormField(
@@ -380,31 +399,36 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                 },
                               ),
                             ),
-                            CustomFormField(
-                              title: "Tanda Daftar Hak Guna Perunit",
-                              textForm: TextFormField(
-                                decoration: TextFormDecoration.box(),
-                                // validator: ValidForm.emptyValue,
-                                onChanged: (vals) {
-                                  context
-                                      .read<PerjanjianHakGunaBloc>()
-                                      .add(OnChangedTandaHakGuna(vals));
-                                },
+                            Visibility(
+                              visible: !((state.hakGuna?.isContract) ?? false),
+                              child: CustomFormField(
+                                title: "Tanda Daftar Hak Guna Perunit",
+                                textForm: TextFormField(
+                                  controller:
+                                      TextEditingController(text: "50.000.000"),
+                                  decoration: TextFormDecoration.box(),
+                                  // validator: ValidForm.emptyValue,
+                                  onChanged: (vals) {
+                                    context
+                                        .read<PerjanjianHakGunaBloc>()
+                                        .add(OnChangedTandaHakGuna(vals));
+                                  },
+                                ),
                               ),
                             ),
-                            CustomFormField(
-                              title: "Masa Berlaku",
-                              textForm: CustomDatePicker(
-                                // validator: ValidForm.emptyValue,
-                                focusNode: validDateNode,
-                                onCloseDatepicker: (val) {
-                                  context
-                                      .read<PerjanjianHakGunaBloc>()
-                                      .add(OnChangedMasaBerlaku(val: val));
-                                },
-                                controller: validDateController,
-                              ),
-                            ),
+                            // CustomFormField(
+                            //   title: "Masa Berlaku",
+                            //   textForm: CustomDatePicker(
+                            //     // validator: ValidForm.emptyValue,
+                            //     focusNode: validDateNode,
+                            //     onCloseDatepicker: (val) {
+                            //       context
+                            //           .read<PerjanjianHakGunaBloc>()
+                            //           .add(OnChangedMasaBerlaku(val: val));
+                            //     },
+                            //     controller: validDateController,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

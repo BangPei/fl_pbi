@@ -21,6 +21,7 @@ class PerjanjianHakGunaBloc
     extends Bloc<PerjanjianHakGunaEvent, PerjanjianHakGunaState> {
   PerjanjianHakGunaBloc() : super(const PerjanjianHakGunaState()) {
     on<OnChangedNoSurat>(_onChangedNoSurat);
+    on<OnChangeContract>(_onChangeContract);
     on<OnChangedSignPlace>(_onChangedSignPlace);
     on<OnChangedDate>(_onChangedDate);
     on<OnChangedNamePihakPertama>(_onChangedNamePihakPertama);
@@ -50,10 +51,17 @@ class PerjanjianHakGunaBloc
     on<OnSubmitTemplate>(_onSubmitTemplate);
   }
 
+  void _onChangeContract(
+      OnChangeContract event, Emitter<PerjanjianHakGunaState> emit) {
+    HakGuna? hakGuna = state.hakGuna;
+    hakGuna?.isContract = event.val;
+    emit(state.copyWith(hakGuna: hakGuna));
+  }
+
   void _onChangedNoSurat(
       OnChangedNoSurat event, Emitter<PerjanjianHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
-    // hakGuna?.no = event.val;
+    hakGuna?.no = event.val;
     emit(state.copyWith(hakGuna: hakGuna));
   }
 
@@ -279,12 +287,7 @@ class PerjanjianHakGunaBloc
       OnChangedMulaiHakGuna event, Emitter<PerjanjianHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
     Kios kios = hakGuna?.kios ?? Kios();
-    if (event.val != null) {
-      kios.startDate =
-          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
-    } else {
-      kios.startDate = null;
-    }
+    kios.startDate = event.val;
     hakGuna?.kios = kios;
     emit(state.copyWith(hakGuna: hakGuna));
   }

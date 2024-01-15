@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:fl_pbi/library/common.dart';
-// import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -16,18 +15,22 @@ class HakGuna {
   Pic? pic;
   Customer? customer;
   Kios? kios;
+  bool? isContract;
 
-  HakGuna(
-      {this.no,
-      this.createdAt,
-      this.createdPlace,
-      this.pic,
-      this.customer,
-      this.kios});
+  HakGuna({
+    this.no,
+    this.createdAt,
+    this.createdPlace,
+    this.pic,
+    this.customer,
+    this.kios,
+    this.isContract = false,
+  });
 
   HakGuna.fromJson(Map<String, dynamic> json) {
     no = json['no'];
     createdAt = json['created_at'];
+    isContract = json['is_contract'];
     createdPlace = json['created_place'];
     pic = json['pic'] != null ? Pic.fromJson(json['pic']) : null;
     customer =
@@ -39,6 +42,7 @@ class HakGuna {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['no'] = no;
     data['created_at'] = createdAt;
+    data['is_contract'] = isContract;
     data['created_place'] = createdPlace;
     if (pic != null) {
       data['pic'] = pic!.toJson();
@@ -319,30 +323,31 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "f.\t\t\t\t\tMulai Waktu Hak Guna",
-            kios?.startDate != null
-                ? Jiffy.parse(kios!.startDate!).format(pattern: "dd MMMM yyyy")
-                : '............................................',
+            kios?.startDate ?? 'Saat Serah Terima Kunci',
             titleWidh: 230,
           ),
         ),
         pw.Padding(
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
-            "g.\t\t\t\t\tTanda Daftar Hak Guna Pakai Perunit",
-            kios?.signHakGuna ?? '............................................',
+            "g.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
+            (kios?.periodeRent == 0 || kios?.periodeRent == null)
+                ? '............................................'
+                : "${kios?.periodeRent} Tahun Dari Serah Terima Kunci",
             titleWidh: 230,
           ),
         ),
-        pw.Padding(
-          padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
-          child: rowIdentity(
-            "h.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
-            kios?.endDate != null
-                ? Jiffy.parse(kios!.endDate!).format(pattern: "dd MMMM yyyy")
-                : '............................................',
-            titleWidh: 230,
-          ),
-        ),
+        !(isContract ?? true)
+            ? pw.Padding(
+                padding:
+                    const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
+                child: rowIdentity(
+                  "h.\t\t\t\t\tTanda Daftar Hak Guna Pakai Perunit",
+                  "Rp. ${kios?.signHakGuna ?? '50,000,000'}",
+                  titleWidh: 230,
+                ),
+              )
+            : pw.SizedBox.shrink(),
         pw.SizedBox(height: 10),
         lineWithNumber(
           textNum: "2. ",

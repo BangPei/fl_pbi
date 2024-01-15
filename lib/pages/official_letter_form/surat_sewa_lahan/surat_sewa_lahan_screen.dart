@@ -185,26 +185,26 @@ class _SuratSewaLahanScreenState extends State<SuratSewaLahanScreen> {
             );
           }),
         ),
-        CustomFormField(
-          title: "Durasi Perpanjangan (Tahun)",
-          textForm: TextFormField(
-            // validator: ValidForm.emptyValue,
-            onChanged: (val) {
-              if (val.isNotEmpty) {
-                int luas = int.parse(val.replaceAll(",", ""));
-                context
-                    .read<SewaLahanBloc>()
-                    .add(OnChangedDurasiPerpanjangan(luas));
-              }
-            },
-            textAlign: TextAlign.end,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              CurrencyInputFormatter(),
-            ],
-            decoration: TextFormDecoration.box(),
-          ),
-        ),
+        // CustomFormField(
+        //   title: "Durasi Perpanjangan (Tahun)",
+        //   textForm: TextFormField(
+        //     // validator: ValidForm.emptyValue,
+        //     onChanged: (val) {
+        //       if (val.isNotEmpty) {
+        //         int luas = int.parse(val.replaceAll(",", ""));
+        //         context
+        //             .read<SewaLahanBloc>()
+        //             .add(OnChangedDurasiPerpanjangan(luas));
+        //       }
+        //     },
+        //     textAlign: TextAlign.end,
+        //     inputFormatters: [
+        //       FilteringTextInputFormatter.digitsOnly,
+        //       CurrencyInputFormatter(),
+        //     ],
+        //     decoration: TextFormDecoration.box(),
+        //   ),
+        // ),
         CustomFormField(
           title: "Periode Sewa Lahan",
           textForm: BlocBuilder<SewaLahanBloc, SewaLahanState>(

@@ -113,8 +113,13 @@ class OnChangedTandaHakGuna extends PerjanjianHakGunaEvent {
 }
 
 class OnChangedMulaiHakGuna extends PerjanjianHakGunaEvent {
-  final DateTime? val;
-  const OnChangedMulaiHakGuna({this.val});
+  final String val;
+  const OnChangedMulaiHakGuna(this.val);
+}
+
+class OnChangeContract extends PerjanjianHakGunaEvent {
+  final bool val;
+  const OnChangeContract(this.val);
 }
 
 class OnChangedMasaBerlaku extends PerjanjianHakGunaEvent {
