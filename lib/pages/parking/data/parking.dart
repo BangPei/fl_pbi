@@ -3,6 +3,7 @@ import 'package:fl_pbi/models/user.dart';
 class Parking {
   int? id;
   int? amount;
+  String? code;
   String? date;
   int? type;
   String? remark;
@@ -15,6 +16,7 @@ class Parking {
     this.id,
     this.amount,
     this.date,
+    this.code,
     this.type,
     this.remark,
     this.picture,
@@ -26,6 +28,7 @@ class Parking {
   Parking.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
+    code = json['code'];
     date = json['date'];
     type = json['type'];
     remark = json['remark'];
@@ -41,6 +44,7 @@ class Parking {
     data['id'] = id;
     data['amount'] = amount;
     data['date'] = date;
+    data['code'] = code;
     data['type'] = type;
     data['remark'] = remark;
     data['picture'] = picture;

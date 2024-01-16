@@ -82,11 +82,33 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                         ),
                       ],
                     ),
-                    child: ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                (park.code == null || park.code == "")
+                                    ? 'Code : --'
+                                    : "Code : ${park.code}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(width: 5),
+                              Badge(
+                                backgroundColor: color,
+                                label: Text(
+                                  park.type == 1 ? "masuk" : "keluar",
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
                             "$positive Rp. ${Common.oCcy.format(park.amount)}",
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
@@ -96,22 +118,17 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                                   : AppTheme.nearlyDarkRed,
                             ),
                           ),
-                          Badge(
-                            backgroundColor: color,
-                            label: Text(
-                              park.type == 1 ? "masuk" : "keluar",
-                            ),
-                          )
-                        ],
-                      ),
-                      dense: true,
-                      visualDensity: const VisualDensity(vertical: -2),
-                      subtitle: Text(Jiffy.parse(park.date!)
-                          .format(pattern: "dd MMMM yyyy")),
-                      leading: Icon(FontAwesomeIcons.dollarSign, color: color),
-                      trailing: Icon(icon, color: color),
-                      onTap: () => context.goNamed("keuangan-form",
-                          extra: {"type": park.type, "id": park.id}),
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -2),
+                          subtitle: Text(Jiffy.parse(park.date!)
+                              .format(pattern: "dd MMMM yyyy")),
+                          leading:
+                              Icon(FontAwesomeIcons.dollarSign, color: color),
+                          trailing: Icon(icon, color: color),
+                          onTap: () => context.goNamed("keuangan-form",
+                              extra: {"type": park.type, "id": park.id}),
+                        ),
+                      ],
                     ),
                   ),
                 ),
