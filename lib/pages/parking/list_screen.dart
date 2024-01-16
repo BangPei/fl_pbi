@@ -3,6 +3,7 @@ import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -90,12 +91,31 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                (park.code == null || park.code == "")
-                                    ? 'Code : --'
-                                    : "Code : ${park.code}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
+                              Row(
+                                children: [
+                                  Text(
+                                    (park.code == null || park.code == "")
+                                        ? 'Code : --'
+                                        : "Code : ${park.code}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Visibility(
+                                    visible: (park.code != "") ? true : false,
+                                    replacement: const SizedBox.shrink(),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await Clipboard.setData(
+                                            ClipboardData(text: park.code!));
+                                      },
+                                      child: const Icon(
+                                        Icons.copy_all_rounded,
+                                        color: AppTheme.blue,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                               const SizedBox(width: 5),
                               Badge(
