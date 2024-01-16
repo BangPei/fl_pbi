@@ -45,6 +45,9 @@ abstract class RestClient {
 
   @PUT("transaction/{id}")
   Future<Parking> putParking(@Path() int id, @Body() Parking park);
+
+  @POST("number")
+  Future<dynamic> postNumber(@Body() Map<String, dynamic> body);
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 

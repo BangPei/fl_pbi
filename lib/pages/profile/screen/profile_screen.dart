@@ -1,8 +1,13 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/session_manager.dart';
+import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/login/data/login_api.dart';
+import 'package:fl_pbi/pages/profile/data/block_api.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
+import 'package:fl_pbi/widget.dart/custom_botton.dart';
+import 'package:fl_pbi/widget.dart/custom_form.dart';
+import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  TextEditingController numberController = TextEditingController();
   Color color = AppTheme.nearlyDarkRed;
   bool loading = false;
   String? accountName;
@@ -36,221 +42,252 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80),
-          child: CustomAppbar(
-            title: "",
-            backgroundColor: color,
-          ),
+      backgroundColor: Colors.transparent,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: CustomAppbar(
+          title: "",
+          backgroundColor: color,
         ),
-        body: loading
-            ? const LoadingScreen()
-            : SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: color,
-                      child: Align(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(50),
-                                ),
-                                image: (imageurl == null || imageurl == "")
-                                    ? DecorationImage(
-                                        image: AssetImage(Common.imageProfile),
-                                        fit: BoxFit.cover,
-                                      )
-                                    : DecorationImage(
-                                        image: NetworkImage(imageurl!),
-                                        fit: BoxFit.cover,
-                                      ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4),
-                              child: Text(
-                                accountName ?? "Account Name",
-                                style: const TextStyle(
-                                  color: AppTheme.nearlyWhite,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: InkWell(
-                                onTap: () {
-                                  context.pushNamed("profile-form").then((val) {
-                                    Session.get("fullName").then((value) =>
-                                        setState(() => accountName = value));
-                                    Session.get("picture").then((value) =>
-                                        setState(() => imageurl = value));
-                                  });
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Edit Profile",
-                                      style: TextStyle(
-                                        color: AppTheme.nearlyWhite,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                    SizedBox(width: 3),
-                                    FaIcon(
-                                      FontAwesomeIcons.pencil,
-                                      color: Colors.white,
-                                      size: 15,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 13, top: 10),
-                      child: Text(
-                        "Data Master",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 114, 113, 113)),
-                      ),
-                    ),
-                    const Card(
+      ),
+      body: loading
+          ? const LoadingScreen()
+          : SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: color,
+                    child: Align(
                       child: Column(
                         children: [
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -2),
-                            leading: Icon(
-                              Icons.numbers,
-                              color: AppTheme.blue,
+                          Container(
+                            height: 100,
+                            width: 100,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(50),
+                              ),
+                              image: (imageurl == null || imageurl == "")
+                                  ? DecorationImage(
+                                      image: AssetImage(Common.imageProfile),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : DecorationImage(
+                                      image: NetworkImage(imageurl!),
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
-                            title: Text("Nomor Kios"),
-                            trailing: Icon(Icons.arrow_right),
                           ),
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -2),
-                            leading: Icon(
-                              Icons.block,
-                              color: AppTheme.nearlyDarkRed,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              accountName ?? "Account Name",
+                              style: const TextStyle(
+                                color: AppTheme.nearlyWhite,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                              ),
                             ),
-                            title: Text("Blok Kios"),
-                            trailing: Icon(Icons.arrow_right),
                           ),
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -2),
-                            leading: Icon(
-                              Icons.person_3_outlined,
-                              color: Colors.purple,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: InkWell(
+                              onTap: () {
+                                context.pushNamed("profile-form").then((val) {
+                                  Session.get("fullName").then((value) =>
+                                      setState(() => accountName = value));
+                                  Session.get("picture").then((value) =>
+                                      setState(() => imageurl = value));
+                                });
+                              },
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Edit Profile",
+                                    style: TextStyle(
+                                      color: AppTheme.nearlyWhite,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  SizedBox(width: 3),
+                                  FaIcon(
+                                    FontAwesomeIcons.pencil,
+                                    color: Colors.white,
+                                    size: 15,
+                                  )
+                                ],
+                              ),
                             ),
-                            title: Text("Customer"),
-                            trailing: Icon(Icons.arrow_right),
                           ),
                         ],
                       ),
                     ),
-
-                    const Padding(
-                      padding: EdgeInsets.only(left: 13, top: 10),
-                      child: Text(
-                        "Pengaturan Akun",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 114, 113, 113)),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 13, top: 10),
+                    child: Text(
+                      "Data Master",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 114, 113, 113)),
+                    ),
+                  ),
+                  Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -2),
+                          leading: const Icon(
+                            Icons.numbers,
+                            color: AppTheme.blue,
+                          ),
+                          title: const Text("Nomor Kios"),
+                          trailing: const Icon(Icons.arrow_right),
+                          onTap: () {
+                            final formKey = GlobalKey<FormState>();
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Masukan Nomor"),
+                                    content: SizedBox(
+                                      height: 105,
+                                      child: Form(
+                                        key: formKey,
+                                        child: CustomFormField(
+                                          title: "",
+                                          textForm: TextFormField(
+                                            controller: numberController,
+                                            // initialValue: (state.park?.amount ?? 0).toString(),
+                                            validator: ValidForm.emptyValue,
+                                            decoration:
+                                                TextFormDecoration.box(),
+                                            onChanged: (val) {},
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      CustomButton(
+                                        backgroundColor: Colors.blue,
+                                        title: const Text("Simpan"),
+                                        onPressed: () async {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            try {
+                                              Map<String, dynamic> body = {
+                                                "name": numberController.text
+                                              };
+                                              await BlockApi.postNumber(body);
+                                            } catch (e) {
+                                              // ignore: avoid_print
+                                              print(e);
+                                            }
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                        const ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -2),
+                          leading: Icon(
+                            Icons.block,
+                            color: AppTheme.nearlyDarkRed,
+                          ),
+                          title: Text("Blok Kios"),
+                          trailing: Icon(Icons.arrow_right),
+                        ),
+                        const ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -2),
+                          leading: Icon(
+                            Icons.person_3_outlined,
+                            color: Colors.purple,
+                          ),
+                          title: Text("Customer"),
+                          trailing: Icon(Icons.arrow_right),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 13, top: 10),
+                    child: Text(
+                      "Pengaturan Akun",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 114, 113, 113)),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context.pushNamed("change-password");
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Card(
+                        child: ListTile(
+                          leading: Icon(Icons.lock_open_outlined),
+                          title: Text("Ganti Password"),
+                          trailing: Icon(Icons.arrow_right),
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        context.pushNamed("change-password");
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.lock_open_outlined),
-                            title: Text("Ganti Password"),
-                            trailing: Icon(Icons.arrow_right),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      try {
+                        await LoginApi.logout();
+                        await Session.clear();
+                        // ignore: use_build_context_synchronously
+                        context.go('/auth');
+                      } catch (e) {
+                        // print(e);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.nearlyBlack,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    // Visibility(
-                    //   visible: true,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       context.pushNamed("users");
-                    //     },
-                    //     child: const Padding(
-                    //       padding: EdgeInsets.only(top: 5.0),
-                    //       child: Card(
-                    //         child: ListTile(
-                    //           leading: Icon(FontAwesomeIcons.user),
-                    //           title: Text("Daftar Pengguna"),
-                    //           trailing: Icon(Icons.arrow_right),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    GestureDetector(
-                      onTap: () async {
-                        try {
-                          await LoginApi.logout();
-                          await Session.clear();
-                          // ignore: use_build_context_synchronously
-                          context.go('/auth');
-                        } catch (e) {
-                          // print(e);
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 10),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              "Logout",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: AppTheme.nearlyBlack,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ));
+                  )
+                ],
+              ),
+            ),
+    );
   }
 }
