@@ -47,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: loading
             ? const LoadingScreen()
             : SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,6 +123,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 13, top: 10),
+                      child: Text(
+                        "Data Master",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 114, 113, 113)),
+                      ),
+                    ),
+                    const Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -2),
+                            leading: Icon(
+                              Icons.numbers,
+                              color: AppTheme.blue,
+                            ),
+                            title: Text("Nomor Kios"),
+                            trailing: Icon(Icons.arrow_right),
+                          ),
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -2),
+                            leading: Icon(
+                              Icons.block,
+                              color: AppTheme.nearlyDarkRed,
+                            ),
+                            title: Text("Blok Kios"),
+                            trailing: Icon(Icons.arrow_right),
+                          ),
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -2),
+                            leading: Icon(
+                              Icons.person_3_outlined,
+                              color: Colors.purple,
+                            ),
+                            title: Text("Customer"),
+                            trailing: Icon(Icons.arrow_right),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     const Padding(
                       padding: EdgeInsets.only(left: 13, top: 10),
                       child: Text(
