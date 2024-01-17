@@ -1,13 +1,9 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/session_manager.dart';
-import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/login/data/login_api.dart';
-import 'package:fl_pbi/pages/profile/data/block_api.dart';
+import 'package:fl_pbi/pages/profile/screen/dialog_body.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
-import 'package:fl_pbi/widget.dart/custom_botton.dart';
-import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,7 +17,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController numberController = TextEditingController();
   Color color = AppTheme.nearlyDarkRed;
   bool loading = false;
   String? accountName;
@@ -152,53 +147,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: const Text("Nomor Kios"),
                           trailing: const Icon(Icons.arrow_right),
                           onTap: () {
-                            final formKey = GlobalKey<FormState>();
                             showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text("Masukan Nomor"),
-                                    content: SizedBox(
-                                      height: 105,
-                                      child: Form(
-                                        key: formKey,
-                                        child: CustomFormField(
-                                          title: "",
-                                          textForm: TextFormField(
-                                            controller: numberController,
-                                            // initialValue: (state.park?.amount ?? 0).toString(),
-                                            validator: ValidForm.emptyValue,
-                                            decoration:
-                                                TextFormDecoration.box(),
-                                            onChanged: (val) {},
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    actions: [
-                                      CustomButton(
-                                        backgroundColor: Colors.blue,
-                                        title: const Text("Simpan"),
-                                        onPressed: () async {
-                                          if (formKey.currentState!
-                                              .validate()) {
-                                            try {
-                                              Map<String, dynamic> body = {
-                                                "name": numberController.text
-                                              };
-                                              await BlockApi.postNumber(body);
-                                            } catch (e) {
-                                              // ignore: avoid_print
-                                              print(e);
-                                            }
-                                            // ignore: use_build_context_synchronously
-                                            Navigator.pop(context);
-                                          }
-                                        },
-                                      )
-                                    ],
-                                  );
-                                });
+                              context: context,
+                              builder: (context) {
+                                return const Dialog(
+                                  child: DialogBody(),
+                                );
+                              },
+                            );
                           },
                         ),
                         const ListTile(

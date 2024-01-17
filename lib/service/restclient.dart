@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/models/serverside.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
 import 'package:fl_pbi/pages/parking/data/cash_flow.dart';
@@ -48,6 +49,9 @@ abstract class RestClient {
 
   @POST("number")
   Future<dynamic> postNumber(@Body() Map<String, dynamic> body);
+
+  @GET("number")
+  Future<List<Number>> getNumbers();
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 
