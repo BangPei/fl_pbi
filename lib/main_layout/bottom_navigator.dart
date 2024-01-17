@@ -55,6 +55,18 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
           ),
           BottomNavigationBarItem(
+            label: "Blok Kios",
+            icon: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Image.asset(
+                Common.imageBuilding,
+                width: 25.0,
+                height: 25.0,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          BottomNavigationBarItem(
             label: "Akun",
             icon: Image.asset(
               Common.imageProfile,
@@ -78,9 +90,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         context.go("/keuangan");
       case 2:
         // context.go("/keuangan");
+        context.go("/block");
+      case 3:
         context.go("/profile");
-      // case 3:
-      //   context.go("/profile");
       default:
         context.go("/surat-resmi");
     }

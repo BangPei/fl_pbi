@@ -331,9 +331,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "g.\t\t\t\t\tMasa Berlaku Hak Guna Pakai",
-            (kios?.periodeRent == 0 || kios?.periodeRent == null)
-                ? '............................................'
-                : "${kios?.periodeRent} Tahun Dari Serah Terima Kunci",
+            kios?.endDate ?? '............................................',
             titleWidh: 230,
           ),
         ),

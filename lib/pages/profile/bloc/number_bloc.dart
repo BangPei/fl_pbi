@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/models/number.dart';
-import 'package:fl_pbi/pages/profile/data/block_api.dart';
+import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'number_event.dart';

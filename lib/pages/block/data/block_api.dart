@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/service/api.dart';
 
 class BlockApi {
@@ -11,6 +12,12 @@ class BlockApi {
   static Future<List<Number>> getNumbers() async {
     final client = await Api.restClient();
     var data = client.getNumbers();
+    return data;
+  }
+
+  static Future<List<Block>> getBlocks() async {
+    final client = await Api.restClient();
+    var data = client.getBlocks();
     return data;
   }
 }

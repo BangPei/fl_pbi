@@ -416,19 +416,21 @@ class _PerjanjianHakGunaPakaiState extends State<PerjanjianHakGunaPakai> {
                                 ),
                               ),
                             ),
-                            // CustomFormField(
-                            //   title: "Masa Berlaku",
-                            //   textForm: CustomDatePicker(
-                            //     // validator: ValidForm.emptyValue,
-                            //     focusNode: validDateNode,
-                            //     onCloseDatepicker: (val) {
-                            //       context
-                            //           .read<PerjanjianHakGunaBloc>()
-                            //           .add(OnChangedMasaBerlaku(val: val));
-                            //     },
-                            //     controller: validDateController,
-                            //   ),
-                            // ),
+                            Visibility(
+                              visible: !((state.hakGuna?.isContract) ?? false),
+                              child: CustomFormField(
+                                title: "Masa Berlaku",
+                                textForm: TextFormField(
+                                  decoration: TextFormDecoration.box(),
+                                  // validator: ValidForm.emptyValue,
+                                  onChanged: (vals) {
+                                    context
+                                        .read<PerjanjianHakGunaBloc>()
+                                        .add(OnChangedMasaBerlaku(vals));
+                                  },
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

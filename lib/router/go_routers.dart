@@ -73,6 +73,28 @@ class RouteNavigation {
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/block',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: BlockScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form',
+                name: "block-form",
+                pageBuilder: (context, state) {
+                  // var extra = state.extra as Map<String, dynamic>;
+                  return const NoTransitionPage(
+                    child: BlockFormScreen(),
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
             path: '/profile',
             pageBuilder: (context, state) {
               return const NoTransitionPage(

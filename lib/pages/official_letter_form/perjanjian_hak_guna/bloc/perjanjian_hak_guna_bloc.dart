@@ -273,12 +273,8 @@ class PerjanjianHakGunaBloc
       OnChangedMasaBerlaku event, Emitter<PerjanjianHakGunaState> emit) {
     HakGuna? hakGuna = state.hakGuna;
     Kios kios = hakGuna?.kios ?? Kios();
-    if (event.val != null) {
-      kios.endDate =
-          Jiffy.parseFromDateTime(event.val!).format(pattern: "yyyy-MM-dd");
-    } else {
-      kios.endDate = null;
-    }
+    kios.endDate = event.val;
+
     hakGuna?.kios = kios;
     emit(state.copyWith(hakGuna: hakGuna));
   }
