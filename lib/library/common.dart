@@ -57,6 +57,7 @@ class Common {
             pw.Expanded(
               child: pw.Column(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: [
                   pw.Text(
                     'PERNIAGAAN BUMI INDAH',
@@ -67,7 +68,8 @@ class Common {
                     ),
                   ),
                   pw.Text(
-                    "Jl. Bumi Indah Raya Kel. Sukamantri Kec. Pasar Kemis 15560",
+                    "Jl. Bumi Indah Raya Ruko Naura Blok NR No. 19, Kel. Sukamantri\nKec. PasarKemis 15560",
+                    textAlign: pw.TextAlign.center,
                     style: pw.TextStyle(
                       color: PdfColors.blue,
                       fontWeight: pw.FontWeight.bold,
