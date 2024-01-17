@@ -85,9 +85,19 @@ class RouteNavigation {
                 path: 'form',
                 name: "block-form",
                 pageBuilder: (context, state) {
-                  // var extra = state.extra as Map<String, dynamic>;
                   return const NoTransitionPage(
                     child: BlockFormScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form/:id',
+                name: "block-form-crud",
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: BlockFormScreen(
+                        id: int.parse(state.pathParameters['id']!)),
                   );
                 },
               ),

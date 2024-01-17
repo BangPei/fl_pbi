@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class FormTitle extends StatelessWidget {
   final String title;
+  final double? fontSize;
   final EdgeInsetsGeometry? padding;
-  const FormTitle({super.key, required this.title, this.padding});
+  const FormTitle(
+      {super.key, required this.title, this.padding, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,9 @@ class FormTitle extends StatelessWidget {
           ),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.w700,
-          fontSize: 18,
+          fontSize: fontSize ?? 18,
           color: AppTheme.nearlyBlack,
         ),
       ),

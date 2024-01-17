@@ -6,6 +6,7 @@ import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class BlockScreen extends StatefulWidget {
   const BlockScreen({super.key});
@@ -29,7 +30,7 @@ class _BlockScreenState extends State<BlockScreen> {
         title: "List Blok Kios & Lahan",
         actions: IconButton(
           visualDensity: const VisualDensity(vertical: -4),
-          onPressed: () {},
+          onPressed: () => context.goNamed('block-form'),
           icon: const FaIcon(FontAwesomeIcons.plus),
         ),
       ),
@@ -55,7 +56,10 @@ class _BlockScreenState extends State<BlockScreen> {
                       color: AppTheme.white,
                       size: 40,
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      context.goNamed('block-form-crud',
+                          pathParameters: {"id": block.id.toString()});
+                    },
                   ),
                 );
               },
