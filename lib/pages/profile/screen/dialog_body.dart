@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/pages/profile/bloc/number_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_badge.dart';
 import 'package:fl_pbi/widget.dart/custom_botton.dart';
@@ -10,7 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DialogBody extends StatefulWidget {
-  const DialogBody({super.key});
+  final Function(Number)? onTap;
+  final List<Number>? numbers;
+  const DialogBody({super.key, this.onTap, this.numbers});
   @override
   State<DialogBody> createState() => _DialogBodyState();
 }
@@ -26,7 +29,7 @@ class _DialogBodyState extends State<DialogBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 16, 4, 20),
+      padding: const EdgeInsets.fromLTRB(4, 20, 4, 20),
       child: BlocListener<NumberBloc, NumberState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -95,15 +98,30 @@ class _DialogBodyState extends State<DialogBody> {
                                 child: Center(
                                   child: Wrap(
                                     children: (state.numbers ?? []).map((e) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: CustomeBadge(
-                                          text: e.name ?? "",
-                                          width: 35,
-                                          height: 35,
-                                          borderSide: const BorderSide(
-                                            width: 1,
-                                            color: AppTheme.nearlyBlue,
+                                      bool isExist = (widget.numbers ?? [])
+                                          .any((f) => f.id == e.id);
+                                      return GestureDetector(
+                                        onTap: () {
+                                          widget.onTap == null
+                                              ? null
+                                              : isExist
+                                                  ? null
+                                                  : widget.onTap!(e);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: CustomeBadge(
+                                            text: e.name ?? "",
+                                            width: 35,
+                                            height: 35,
+                                            backgroundColor: isExist
+                                                ? AppTheme.deactivatedText
+                                                    .withOpacity(0.2)
+                                                : null,
+                                            borderSide: const BorderSide(
+                                              width: 1,
+                                              color: AppTheme.nearlyBlue,
+                                            ),
                                           ),
                                         ),
                                       );

@@ -20,4 +20,10 @@ class BlockApi {
     var data = client.getBlocks();
     return data;
   }
+
+  static Future<Block> getBlock(String id) async {
+    final client = await Api.restClient();
+    var data = client.getBlockById(id);
+    return data;
+  }
 }

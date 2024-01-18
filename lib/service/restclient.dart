@@ -56,6 +56,9 @@ abstract class RestClient {
 
   @GET("block")
   Future<List<Block>> getBlocks();
+
+  @GET("block/{id}")
+  Future<Block> getBlockById(@Path() String id);
   // @GET("sales/{id}")
   // Future<Salesman> salesmanFindById(@Path() String id);
 

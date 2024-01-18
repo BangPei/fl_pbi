@@ -5,8 +5,12 @@ class FormTitle extends StatelessWidget {
   final String title;
   final double? fontSize;
   final EdgeInsetsGeometry? padding;
-  const FormTitle(
-      {super.key, required this.title, this.padding, this.fontSize});
+  const FormTitle({
+    super.key,
+    required this.title,
+    this.padding,
+    this.fontSize,
+  });
 
   @override
   Widget build(BuildContext context) {
