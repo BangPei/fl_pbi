@@ -22,3 +22,15 @@ class OnResetForm extends BlockFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnSubmit extends BlockFormEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class OnAddNumber extends BlockFormEvent {
+  final Number number;
+  const OnAddNumber(this.number);
+  @override
+  List<Object?> get props => [];
+}

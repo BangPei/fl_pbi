@@ -41,7 +41,9 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
           }
           return CustomForm(
             title: "Form Blok Kios/Lahan",
-            onSubmit: () {},
+            onSubmit: () {
+              context.read<BlockFormBloc>().add(OnSubmit());
+            },
             showCard: false,
             buttonTitle: "Simpan",
             children: [
@@ -81,8 +83,16 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                                     builder: (context) {
                                       return Dialog(
                                         child: DialogBlockNumber(
-                                            blockName: state.block?.name ?? "",
-                                            no: e),
+                                          blockName: state.block?.name ?? "",
+                                          no: e,
+                                          onPress: (no) {
+                                            context
+                                                .read<BlockFormBloc>()
+                                                .add(OnAddNumber(no));
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                          },
+                                        ),
                                       );
                                     },
                                   );
@@ -106,7 +116,26 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                         children: (state.block?.numbers ?? []).map((e) {
                           return CardBlockNumber(
                             number: e,
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: DialogBlockNumber(
+                                      blockName: state.block?.name ?? "",
+                                      no: e,
+                                      onPress: (no) {
+                                        context
+                                            .read<BlockFormBloc>()
+                                            .add(OnAddNumber(no));
+                                        Navigator.pop(context);
+                                        setState(() {});
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         }).toList(),
                       ),

@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:fl_pbi/library/currency_formater.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/models/number.dart';
-import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
 import 'package:fl_pbi/widget.dart/clip_picture.dart';
 import 'package:fl_pbi/widget.dart/custom_botton.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
@@ -11,14 +9,15 @@ import 'package:fl_pbi/widget.dart/custom_formfield.dart';
 import 'package:fl_pbi/widget.dart/empty_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DialogBlockNumber extends StatefulWidget {
   final String? blockName;
   final Number no;
-  const DialogBlockNumber({super.key, this.blockName, required this.no});
+  final Function(Number)? onPress;
+  const DialogBlockNumber(
+      {super.key, this.blockName, required this.no, this.onPress});
 
   @override
   State<DialogBlockNumber> createState() => _DialogBlockNumberState();
@@ -65,10 +64,10 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                       validator: ValidForm.emptyValue,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [DecimalInputFormatter(decimalRange: 2)],
-                      onChanged: (val) {
-                        context.read<BlockFormBloc>().add(OnChangedName(val));
-                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}')),
+                      ],
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
@@ -81,13 +80,10 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        CurrencyInputFormatter()
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}')),
                       ],
                       validator: ValidForm.emptyValue,
-                      onChanged: (val) {
-                        context.read<BlockFormBloc>().add(OnChangedName(val));
-                      },
                       decoration: TextFormDecoration.box(),
                     ),
                   ),
@@ -98,11 +94,12 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
               title: "Harga",
               textForm: TextFormField(
                 controller: priceController,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
                 validator: ValidForm.emptyValue,
-                onChanged: (val) {
-                  context.read<BlockFormBloc>().add(OnChangedName(val));
-                },
                 decoration: TextFormDecoration.box(),
               ),
             ),
@@ -128,9 +125,28 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                         )
                       : EmptyImageScreen(onTap: () => pickPicture()),
             ),
-            const CustomButton(
-              title: Text("Simpan"),
-              icon: Icon(Icons.save_outlined),
+            CustomButton(
+              title: const Text("Simpan"),
+              icon: const Icon(Icons.save_outlined),
+              onPressed: () {
+                Number number = widget.no;
+                double width, length, price;
+                width = double.parse(
+                    widthController.text == "" ? "0" : widthController.text);
+                length = double.parse(
+                    lengthController.text == "" ? "0" : lengthController.text);
+                price = double.parse(
+                    priceController.text == "" ? "0" : priceController.text);
+                number.data = {
+                  "width": width,
+                  "length": length,
+                  "price": price,
+                  "wide": width * length,
+                  "picture": kiosPicture,
+                  "name": "Blok ${widget.blockName} No ${number.name}"
+                };
+                widget.onPress == null ? null : widget.onPress!(number);
+              },
             )
           ],
         ),
