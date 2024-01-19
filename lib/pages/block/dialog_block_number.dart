@@ -25,15 +25,19 @@ class DialogBlockNumber extends StatefulWidget {
 
 class _DialogBlockNumberState extends State<DialogBlockNumber> {
   String? kiosPicture;
+  bool isBase64 = false;
   var widthController = TextEditingController();
   var lengthController = TextEditingController();
   var priceController = TextEditingController();
+  Number number = Number();
 
   @override
   void initState() {
+    number = widget.no;
     widthController.text = (widget.no.data?['width'] ?? 0).toString();
     lengthController.text = (widget.no.data?['length'] ?? 0).toString();
     priceController.text = (widget.no.data?['price'] ?? 0).toString();
+    isBase64 = widget.no.data?['isBase64'] ?? false;
     super.initState();
   }
 
@@ -115,21 +119,29 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                       ),
                     )
                   : widget.no.data?['picture'] != null
-                      ? ClipPicture(
-                          height: 40,
-                          onTap: () => pickPicture(),
-                          child: Image.network(
-                            widget.no.data['picture'],
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                      ? (widget.no.data?['isBase64'] == true)
+                          ? ClipPicture(
+                              height: 40,
+                              onTap: () => pickPicture(),
+                              child: Image.memory(
+                                base64Decode(widget.no.data?['picture']!),
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          : ClipPicture(
+                              height: 40,
+                              onTap: () => pickPicture(),
+                              child: Image.network(
+                                widget.no.data['picture'],
+                                fit: BoxFit.cover,
+                              ),
+                            )
                       : EmptyImageScreen(onTap: () => pickPicture()),
             ),
             CustomButton(
               title: const Text("Simpan"),
               icon: const Icon(Icons.save_outlined),
               onPressed: () {
-                Number number = widget.no;
                 double width, length, price;
                 width = double.parse(
                     widthController.text == "" ? "0" : widthController.text);
@@ -142,7 +154,8 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                   "length": length,
                   "price": price,
                   "wide": width * length,
-                  "picture": kiosPicture,
+                  "picture": kiosPicture ?? widget.no.data?['picture'],
+                  "isBase64": isBase64,
                   "name": "Blok ${widget.blockName} No ${number.name}"
                 };
                 widget.onPress == null ? null : widget.onPress!(number);
@@ -167,6 +180,7 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
         // rotate: 90,
       );
       kiosPicture = base64Encode(result as List<int>);
+      isBase64 = true;
       setState(() {});
     } else {
       // ignore: avoid_print

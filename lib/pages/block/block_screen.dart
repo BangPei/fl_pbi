@@ -43,26 +43,31 @@ class _BlockScreenState extends State<BlockScreen> {
           } else if (state.isError) {
             return Center(child: Text(state.errorMessage ?? "Error"));
           } else {
-            return ListView.builder(
-              itemCount: (state.blocks ?? []).length,
-              itemBuilder: (ctx, i) {
-                Block block = state.blocks![i];
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CardBanner(
-                    title: "Blok ${block.name}",
-                    trailing: const FaIcon(
-                      Icons.arrow_right,
-                      color: AppTheme.white,
-                      size: 40,
-                    ),
-                    onTap: () {
-                      context.goNamed('block-form-crud',
-                          pathParameters: {"id": block.id.toString()});
-                    },
-                  ),
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<BlockBloc>().add(OnGetBlocks());
               },
+              child: ListView.builder(
+                itemCount: (state.blocks ?? []).length,
+                itemBuilder: (ctx, i) {
+                  Block block = state.blocks![i];
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CardBanner(
+                      title: "Blok ${block.name}",
+                      trailing: const FaIcon(
+                        Icons.arrow_right,
+                        color: AppTheme.white,
+                        size: 40,
+                      ),
+                      onTap: () {
+                        context.goNamed('block-form-crud',
+                            pathParameters: {"id": block.id.toString()});
+                      },
+                    ),
+                  );
+                },
+              ),
             );
           }
         },

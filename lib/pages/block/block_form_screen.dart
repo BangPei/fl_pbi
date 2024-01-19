@@ -1,4 +1,5 @@
 import 'package:fl_pbi/library/app_theme.dart';
+import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
 import 'package:fl_pbi/pages/block/card_block_number.dart';
@@ -33,7 +34,16 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<BlockFormBloc, BlockFormState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.isSuccess) {
+          Common.modalInfo(
+            context,
+            title: "Success",
+            message: "Berhasil Merubah Data",
+            mode: MODE.success,
+          );
+        }
+      },
       child: BlocBuilder<BlockFormBloc, BlockFormState>(
         builder: (context, state) {
           if (state.isLoading) {

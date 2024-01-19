@@ -26,4 +26,16 @@ class BlockApi {
     var data = client.getBlockById(id);
     return data;
   }
+
+  static Future<Block> postBlock(Map<String, dynamic> body) async {
+    final client = await Api.restClient();
+    var data = client.postBlock(body);
+    return data;
+  }
+
+  static Future<Block> putBlock(Map<String, dynamic> body) async {
+    final client = await Api.restClient();
+    var data = client.putBlock(body['id'], body);
+    return data;
+  }
 }

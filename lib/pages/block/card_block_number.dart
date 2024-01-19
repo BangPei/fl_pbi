@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/models/number.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +71,31 @@ class CardBlockNumber extends StatelessWidget {
               ListTile(
                 dense: true,
                 contentPadding: const EdgeInsets.all(0),
-                leading: const Icon(
-                  FontAwesomeIcons.building,
-                  color: AppTheme.blue,
-                  size: 50,
-                ),
+                leading: (number.data['picture'] == null)
+                    ? const Icon(
+                        FontAwesomeIcons.building,
+                        color: AppTheme.blue,
+                        size: 50,
+                      )
+                    : Container(
+                        height: 200,
+                        width: 60,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          image: (number.data['isBase64'] == true)
+                              ? DecorationImage(
+                                  image: MemoryImage(
+                                      base64Decode(number.data['picture']!)),
+                                  fit: BoxFit.cover,
+                                )
+                              : DecorationImage(
+                                  image: NetworkImage(number.data['picture']!),
+                                  fit: BoxFit.cover,
+                                ),
+                        )),
                 title: RichText(
                   text: const TextSpan(
                     text: "Pemilik : ",

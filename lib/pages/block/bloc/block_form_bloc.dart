@@ -18,34 +18,57 @@ class BlockFormBloc extends Bloc<BlockFormEvent, BlockFormState> {
   }
 
   void _onSubmit(OnSubmit event, Emitter<BlockFormState> emit) async {
-    Block block = state.block ?? Block();
-    Map<String, dynamic> map = {
-      "id": block.id,
-      "name": block.name,
-      "numbers": []
-    };
-    for (var e in (block.numbers ?? [])) {
-      Map<String, dynamic> query = {
-        "number": {
-          "id": e.id,
-          "name": e.name,
-        },
-        "width": e.data['width'],
-        "length": e.data['length'],
-        "price": e.data['price'],
-        "picture": e.data['picture'],
+    try {
+      emit(state.copyWith(isLoading: true));
+      Block block = state.block ?? Block();
+      Map<String, dynamic> map = {
+        "id": block.id,
+        "name": block.name,
+        "numbers": []
       };
-      map['numbers'].add(query);
-    }
-    if (block.id != null) {
-      //put
-    } else {
-      //post
+      for (var e in (block.numbers ?? [])) {
+        Map<String, dynamic> query = {
+          "number": {
+            "id": e.id,
+            "name": e.name,
+          },
+          "width": e.data['width'],
+          "length": e.data['length'],
+          "price": e.data['price'],
+          "picture": e.data['picture'],
+        };
+        map['numbers'].add(query);
+      }
+      Block newBlock = Block();
+      if (block.id != null) {
+        newBlock = await BlockApi.putBlock(map);
+      } else {
+        newBlock = await BlockApi.postBlock(map);
+      }
+      emit(state.copyWith(block: newBlock, isLoading: false, isSuccess: true));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          block: state.block,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          block: state.block,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
     }
   }
 
   void _onAddNumber(OnAddNumber event, Emitter<BlockFormState> emit) {
     Block block = state.block ?? Block();
+    block.numbers = state.block?.numbers ?? [];
     Number number = event.number;
     bool isExist = (block.numbers ?? []).any((e) => e.id == number.id);
     if (isExist) {
@@ -62,7 +85,12 @@ class BlockFormBloc extends Bloc<BlockFormEvent, BlockFormState> {
 
   void _onResetForm(OnResetForm event, Emitter<BlockFormState> emit) {
     Block block = Block();
-    emit(state.copyWith(block: block));
+    emit(state.copyWith(
+      block: block,
+      isLoading: false,
+      isError: false,
+      isSuccess: false,
+    ));
   }
 
   void _onChangedName(OnChangedName event, Emitter<BlockFormState> emit) {
@@ -72,7 +100,7 @@ class BlockFormBloc extends Bloc<BlockFormEvent, BlockFormState> {
   }
 
   void _onGetBlock(OnGetBlock event, Emitter<BlockFormState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, isSuccess: false));
     try {
       Block block = await BlockApi.getBlock(event.id.toString());
       emit(state.copyWith(isLoading: false, block: block));

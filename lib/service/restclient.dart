@@ -59,12 +59,10 @@ abstract class RestClient {
 
   @GET("block/{id}")
   Future<Block> getBlockById(@Path() String id);
-  // @GET("sales/{id}")
-  // Future<Salesman> salesmanFindById(@Path() String id);
 
-  // @GET("customer")
-  // Future<List<Customer>> findAllCustomer();
+  @POST("block")
+  Future<Block> postBlock(@Body() Map<String, dynamic> body);
 
-  // @GET("customer/{id}")
-  // Future<Customer> customerFindById(@Path() String id);
+  @PUT("block/{id}")
+  Future<Block> putBlock(@Path() int id, @Body() Map<String, dynamic> body);
 }
