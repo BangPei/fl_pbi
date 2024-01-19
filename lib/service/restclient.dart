@@ -2,8 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/models/serverside.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
-import 'package:fl_pbi/pages/parking/data/cash_flow.dart';
+import 'package:fl_pbi/models/cash_flow.dart';
 import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:retrofit/dio.dart';
@@ -65,4 +66,22 @@ abstract class RestClient {
 
   @PUT("block/{id}")
   Future<Block> putBlock(@Path() int id, @Body() Map<String, dynamic> body);
+
+  @GET("ipl")
+  Future<ServerSide> getIPLList();
+
+  @GET("ipl/{id}")
+  Future<IPL> getIPLById(@Path() int id);
+
+  @DELETE("ipl/{id}")
+  Future<dynamic> removeIPL(@Path() int id);
+
+  @GET("ipl/total")
+  Future<CashFlow> getIplTotal();
+
+  @POST("ipl")
+  Future<IPL> postIPL(@Body() Parking park);
+
+  @PUT("ipl/{id}")
+  Future<IPL> putIPL(@Path() int id, @Body() Parking park);
 }
