@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
+import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:fl_pbi/widget.dart/money_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +33,7 @@ class _CardSummaryState extends State<CardSummary> {
     return BlocBuilder<ParkingBloc, ParkingState>(
       builder: (context, state) {
         if (state.cardLoaing) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const LoadingScreen();
         } else if (state.isError) {
           return Center(child: Text(state.errorMessage ?? "error"));
         } else {

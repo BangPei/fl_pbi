@@ -33,7 +33,7 @@ class MoneyWidget extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.white,
                   ),
@@ -41,7 +41,7 @@ class MoneyWidget extends StatelessWidget {
                 Text(
                   data,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.white,
                   ),

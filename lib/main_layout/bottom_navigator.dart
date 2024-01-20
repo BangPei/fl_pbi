@@ -36,19 +36,20 @@ class _BottomNavigationState extends State<BottomNavigation> {
           //     fit: BoxFit.cover,
           //   ),
           // ),
+
           BottomNavigationBarItem(
-            label: "Surat Resmi",
+            label: "Keuangan",
             icon: Image.asset(
-              Common.imageLogo,
+              Common.imageDollar,
               width: 30.0,
               height: 30.0,
               fit: BoxFit.cover,
             ),
           ),
           BottomNavigationBarItem(
-            label: "Keuangan",
+            label: "Surat Resmi",
             icon: Image.asset(
-              Common.imageDollar,
+              Common.imageLogo,
               width: 30.0,
               height: 30.0,
               fit: BoxFit.cover,
@@ -83,13 +84,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   callPage(int index) {
     switch (index) {
       case 0:
-        // context.go("/");
-        context.go("/surat-resmi");
+        context.go("/finance");
       case 1:
-        // context.go("/surat-resmi");
-        context.go("/keuangan");
+        context.go("/surat-resmi");
       case 2:
-        // context.go("/keuangan");
         context.go("/block");
       case 3:
         context.go("/profile");

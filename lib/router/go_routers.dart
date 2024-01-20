@@ -21,7 +21,7 @@ class RouteNavigation {
         return null;
       }
     },
-    initialLocation: '/surat-resmi',
+    initialLocation: '/finance',
     routes: [
       GoRoute(
         parentNavigatorKey: _nav.navKey,
@@ -47,29 +47,6 @@ class RouteNavigation {
                 child: HomeScreen(),
               );
             },
-          ),
-          GoRoute(
-            parentNavigatorKey: _dashboardNavigatorKey,
-            path: '/keuangan',
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: ParkingScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                parentNavigatorKey: _nav.navKey,
-                path: 'form',
-                name: "keuangan-form",
-                pageBuilder: (context, state) {
-                  var extra = state.extra as Map<String, dynamic>;
-                  return NoTransitionPage(
-                    child:
-                        ParkingFormScreen(type: extra['type'], id: extra['id']),
-                  );
-                },
-              ),
-            ],
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
@@ -101,6 +78,41 @@ class RouteNavigation {
                   );
                 },
               ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/finance',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: FinanceScreen(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'parking',
+                name: "parking",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: ParkingScreen(),
+                  );
+                },
+                // routes: [
+                //   GoRoute(
+                //     parentNavigatorKey: _nav.navKey,
+                //     path: 'form',
+                //     name: "keuangan-form",
+                //     pageBuilder: (context, state) {
+                //       var extra = state.extra as Map<String, dynamic>;
+                //       return NoTransitionPage(
+                //         child:
+                //             ParkingFormScreen(type: extra['type'], id: extra['id']),
+                //       );
+                //     },
+                //   ),
+                // ],
+              )
             ],
           ),
           GoRoute(

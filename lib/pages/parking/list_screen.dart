@@ -75,7 +75,16 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: (context) async => await confirm(park.id!),
+                          onPressed: (context) async {
+                            await Common.modalConfirm(
+                              context,
+                              onConfirm: () {
+                                context
+                                    .read<ParkingBloc>()
+                                    .add(OnRemovePark(park.id));
+                              },
+                            );
+                          },
                           backgroundColor: AppTheme.nearlyDarkRed,
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
@@ -159,30 +168,5 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
         );
       },
     );
-  }
-
-  confirm(int id) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Transaksi akan dihapus, Yakin?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('No'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-                context.read<ParkingBloc>().add(OnRemovePark(id));
-              },
-              child: const Text('Yes'),
-            )
-          ],
-        );
-      },
-    );
-    return confirmed;
   }
 }

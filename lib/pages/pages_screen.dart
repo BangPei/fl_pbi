@@ -10,3 +10,4 @@ export 'package:fl_pbi/pages/parking/parking_screen.dart';
 export 'package:fl_pbi/pages/parking/parking_from_screen.dart';
 export 'package:fl_pbi/pages/block/screen/block_screen.dart';
 export 'package:fl_pbi/pages/block/screen/block_form_screen.dart';
+export 'package:fl_pbi/pages/finance/screen/finance_screen.dart';

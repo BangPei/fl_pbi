@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fl_pbi/models/hak_guna.dart';
 import 'package:fl_pbi/models/pic.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
+import 'package:fl_pbi/widget.dart/button_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -147,6 +148,109 @@ class Common {
     pic.phone = profile.phone;
     hakGuna.pic = pic;
     return hakGuna;
+  }
+
+  static dialogInOutCome(BuildContext context,
+      {Function? onTapIn, Function? onTapOut}) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (ctx) {
+          return Dialog(
+            child: SizedBox(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Pilih Transaksi',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 19),
+                          ),
+                          InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: const Icon(
+                              FontAwesomeIcons.xmark,
+                              size: 20,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ButtonTransaction(
+                          title: "Uang Masuk",
+                          backgroundColor:
+                              const Color.fromARGB(255, 154, 11, 211)
+                                  .withOpacity(0.7),
+                          onTap: () {
+                            Navigator.pop(ctx, true);
+                            onTapIn == null ? null : onTapIn();
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        ButtonTransaction(
+                          title: "Uang Keluar",
+                          backgroundColor:
+                              const Color.fromARGB(255, 221, 13, 31)
+                                  .withOpacity(0.7),
+                          onTap: () {
+                            Navigator.pop(ctx, true);
+                            onTapOut == null ? null : onTapOut();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  static modalConfirm(
+    BuildContext context, {
+    String? textAlert,
+    Function? onCancel,
+    Function? onConfirm,
+  }) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(textAlert ?? 'Transaksi akan dihapus, Yakin?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+                onCancel == null ? null : onCancel();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+                onConfirm == null ? null : onConfirm();
+              },
+              child: const Text('Yes'),
+            )
+          ],
+        );
+      },
+    );
+    return confirmed;
   }
 }
 

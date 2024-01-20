@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/models/serverside.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
+import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
 import 'package:fl_pbi/models/cash_flow.dart';
@@ -84,4 +85,7 @@ abstract class RestClient {
 
   @PUT("ipl/{id}")
   Future<IPL> putIPL(@Path() int id, @Body() Parking park);
+
+  @GET("finance/total")
+  Future<Finance> getFinanceTotal();
 }

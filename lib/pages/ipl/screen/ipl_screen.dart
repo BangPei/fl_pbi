@@ -1,5 +1,5 @@
 import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
+import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
 import 'package:fl_pbi/pages/parking/card_summary.dart';
 import 'package:fl_pbi/pages/parking/list_screen.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
@@ -7,22 +7,21 @@ import 'package:fl_pbi/widget.dart/form_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
-class ParkingScreen extends StatefulWidget {
-  const ParkingScreen({super.key});
+class IPLScreen extends StatefulWidget {
+  const IPLScreen({super.key});
 
   @override
-  State<ParkingScreen> createState() => _ParkingScreenState();
+  State<IPLScreen> createState() => _ParkingScreenState();
 }
 
-class _ParkingScreenState extends State<ParkingScreen> {
+class _ParkingScreenState extends State<IPLScreen> {
   final ScrollController _controller = ScrollController();
   @override
   void initState() {
     _controller.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
-        context.read<ParkingBloc>().add(OnLoadMore());
+        //
       }
     });
     super.initState();
@@ -31,32 +30,22 @@ class _ParkingScreenState extends State<ParkingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: CustomAppbar(
-        title: "Summary Uang Parkir",
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: const Icon(Icons.arrow_back),
-        ),
+        title: "Summary Uang IPL",
         actions: IconButton(
           visualDensity: const VisualDensity(vertical: -4),
-          onPressed: () {
-            Common.dialogInOutCome(
-              context,
-              onTapIn: () {
-                context.goNamed("keuangan-form", extra: {"type": 1});
-              },
-              onTapOut: () {
-                context.goNamed("keuangan-form", extra: {"type": 2});
-              },
-            );
-          },
+          onPressed: Common.dialogInOutCome(
+            context,
+            onTapIn: () {},
+            onTapOut: () {},
+          ),
           icon: const FaIcon(FontAwesomeIcons.plus),
         ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<ParkingBloc>().add(OnGetSummary());
-          context.read<ParkingBloc>().add(OnGetTotal());
+          //
         },
         child: SingleChildScrollView(
           controller: _controller,
@@ -75,7 +64,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
                   ),
                 ),
                 const ListSummaryScreen(),
-                BlocBuilder<ParkingBloc, ParkingState>(
+                BlocBuilder<IplBloc, IplState>(
                   builder: (context, state) {
                     if (state.loadMore) {
                       return const SizedBox(
