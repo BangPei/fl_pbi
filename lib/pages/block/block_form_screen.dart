@@ -1,4 +1,3 @@
-import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:fl_pbi/pages/block/dialog_block_number.dart';
 import 'package:fl_pbi/pages/profile/screen/dialog_body.dart';
 import 'package:fl_pbi/widget.dart/custom_form.dart';
 import 'package:fl_pbi/widget.dart/custom_formfield.dart';
+import 'package:fl_pbi/widget.dart/empty_card.dart';
 import 'package:fl_pbi/widget.dart/form_title.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -150,37 +150,10 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                         }).toList(),
                       ),
                     )
-                  : emptyCard(),
+                  : const EmptyCard(),
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget emptyCard() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: AppTheme.white,
-          borderRadius: BorderRadius.circular(6),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(255, 216, 216, 216),
-              spreadRadius: 0.2,
-              blurRadius: 2,
-              offset: Offset(0, 1),
-            )
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            "Tidak Ada Data",
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ),
       ),
     );
   }
