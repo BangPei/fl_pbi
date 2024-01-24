@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/models/serverside.dart';
+import 'package:fl_pbi/models/trans.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
@@ -88,4 +89,7 @@ abstract class RestClient {
 
   @GET("finance/total")
   Future<Finance> getFinanceTotal();
+
+  @GET("ipl/yearly/{year}/type/{type}")
+  Future<List<Trans>> getIplYearly(@Path() String year, @Path() String type);
 }

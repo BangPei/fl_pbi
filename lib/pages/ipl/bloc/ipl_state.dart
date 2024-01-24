@@ -8,6 +8,7 @@ final class IplState extends Equatable {
     this.listLoading = true,
     this.isError = false,
     this.errorMessage,
+    this.trans,
     this.ipls,
     this.serverSide,
   });
@@ -19,6 +20,7 @@ final class IplState extends Equatable {
   final bool loadMore;
   final String? errorMessage;
   final List<IPL>? ipls;
+  final List<Trans>? trans;
   final ServerSide? serverSide;
 
   IplState copyWith({
@@ -30,6 +32,7 @@ final class IplState extends Equatable {
     String? errorMessage,
     ServerSide? serverSide,
     List<IPL>? ipls,
+    List<Trans>? trans,
   }) {
     return IplState(
       cashFlow: cashFlow ?? this.cashFlow,
@@ -39,6 +42,7 @@ final class IplState extends Equatable {
       listLoading: listLoading ?? this.listLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       ipls: ipls ?? this.ipls,
+      trans: trans ?? this.trans,
       serverSide: serverSide ?? this.serverSide,
     );
   }
@@ -50,6 +54,7 @@ final class IplState extends Equatable {
         isError,
         errorMessage,
         ipls,
+        trans,
         serverSide,
         listLoading,
         loadMore,

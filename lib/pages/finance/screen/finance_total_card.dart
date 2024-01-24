@@ -101,9 +101,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                       Common.imageEaten,
                       scale: 2.5,
                     ),
-                    onTap: () {
-                      context.goNamed('parking');
-                    },
+                    onTap: () => context.goNamed('parking'),
                   ),
                   MoneyWidget(
                     data: "Rp. ${_visible ? oCcy.format(0) : "*********"}",
@@ -112,7 +110,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                       Common.imageBurned,
                       scale: 2.5,
                     ),
-                    onTap: () {},
+                    onTap: () => context.goNamed('ipl'),
                   ),
                 ],
               ),

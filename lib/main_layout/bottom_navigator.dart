@@ -1,5 +1,9 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -17,64 +21,48 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        fixedColor: const Color.fromARGB(255, 241, 4, 36),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: _currentIndex,
+        backgroundColor: AppTheme.nearlyDarkRed,
         onTap: (i) {
           _currentIndex = i;
           callPage(_currentIndex);
           setState(() {});
         },
         items: [
-          // BottomNavigationBarItem(
-          //   label: "Dashboard",
-          //   icon: Image.asset(
-          //     Common.imageHome,
-          //     width: 30.0,
-          //     height: 30.0,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-
-          BottomNavigationBarItem(
-            label: "Keuangan",
-            icon: Image.asset(
-              Common.imageDollar,
-              width: 30.0,
-              height: 30.0,
-              fit: BoxFit.cover,
+          const CurvedNavigationBarItem(
+            child: Icon(
+              FontAwesomeIcons.dollarSign,
+              color: AppTheme.nearlyDarkRed,
             ),
+            label: 'Keuangan',
           ),
-          BottomNavigationBarItem(
-            label: "Surat Resmi",
-            icon: Image.asset(
-              Common.imageLogo,
-              width: 30.0,
-              height: 30.0,
-              fit: BoxFit.cover,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: "Blok Kios",
-            icon: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: Image.asset(
-                Common.imageBuilding,
-                width: 25.0,
-                height: 25.0,
-                fit: BoxFit.contain,
+          CurvedNavigationBarItem(
+            child: Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Common.imageLogo),
+                  scale: 2,
+                ),
               ),
             ),
+            label: 'Surat Resmi',
           ),
-          BottomNavigationBarItem(
-            label: "Akun",
-            icon: Image.asset(
-              Common.imageProfile,
-              width: 30.0,
-              height: 30.0,
-              fit: BoxFit.cover,
+          const CurvedNavigationBarItem(
+            child: Icon(
+              FontAwesomeIcons.building,
+              color: AppTheme.nearlyDarkRed,
             ),
+            label: 'Blok',
+          ),
+          const CurvedNavigationBarItem(
+            child: Icon(
+              FontAwesomeIcons.user,
+              color: AppTheme.nearlyDarkRed,
+            ),
+            label: 'Profil',
           ),
         ],
       ),

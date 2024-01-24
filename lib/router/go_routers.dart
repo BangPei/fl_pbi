@@ -2,6 +2,7 @@ import 'package:fl_pbi/injector/injector.dart';
 import 'package:fl_pbi/injector/navigation_service.dart';
 import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/main_layout/bottom_navigator.dart';
+import 'package:fl_pbi/pages/ipl/screen/ipl_screen.dart';
 import 'package:fl_pbi/pages/pages_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -96,6 +97,30 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
                     child: ParkingScreen(),
+                  );
+                },
+                // routes: [
+                //   GoRoute(
+                //     parentNavigatorKey: _nav.navKey,
+                //     path: 'form',
+                //     name: "keuangan-form",
+                //     pageBuilder: (context, state) {
+                //       var extra = state.extra as Map<String, dynamic>;
+                //       return NoTransitionPage(
+                //         child:
+                //             ParkingFormScreen(type: extra['type'], id: extra['id']),
+                //       );
+                //     },
+                //   ),
+                // ],
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'ipl',
+                name: "ipl",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: IPLScreen(),
                   );
                 },
                 // routes: [
