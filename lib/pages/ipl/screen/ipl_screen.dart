@@ -1,11 +1,10 @@
-import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/models/trans.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
 import 'package:fl_pbi/widget.dart/card_total.dart';
 import 'package:fl_pbi/widget.dart/custom_appbar.dart';
 import 'package:fl_pbi/widget.dart/custom_botton.dart';
 import 'package:fl_pbi/widget.dart/form_title.dart';
+import 'package:fl_pbi/widget.dart/list_transaction.dart';
 import 'package:fl_pbi/widget.dart/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,47 +103,7 @@ class _ParkingScreenState extends State<IPLScreen> {
                     if (state.listLoading) {
                       return const LoadingScreen();
                     }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: (state.trans ?? []).length,
-                      itemBuilder: (context, i) {
-                        Trans tran = state.trans![i];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                            horizontal: 16,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppTheme.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromARGB(255, 216, 216, 216),
-                                  spreadRadius: 0.2,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 1),
-                                )
-                              ],
-                            ),
-                            child: ListTile(
-                              dense: true,
-                              visualDensity: const VisualDensity(vertical: -3),
-                              subtitle: Text(
-                                "Rp. ${(tran.amount ?? 0)}",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: AppTheme.blue,
-                                ),
-                              ),
-                              title: Text(
-                                  "${tran.month ?? ''} ${tran.year ?? ''}"),
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                    return ListTransaction(trans: state.trans ?? []);
                   },
                 )
               ],
