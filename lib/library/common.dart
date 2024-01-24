@@ -252,6 +252,33 @@ class Common {
     );
     return confirmed;
   }
+
+  static yearPicker(
+      {required BuildContext context,
+      required Function(DateTime) onTap,
+      int? selecteYear}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text("Select Year"),
+          content: SizedBox(
+            width: 300,
+            height: 300,
+            child: YearPicker(
+              firstDate: DateTime(DateTime.now().year - 100, 1),
+              lastDate: DateTime(DateTime.now().year + 100, 1),
+              selectedDate: DateTime(selecteYear ?? DateTime.now().year),
+              onChanged: (DateTime dateTime) {
+                onTap(dateTime);
+                Navigator.pop(ctx);
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 enum MODE { success, error }
