@@ -27,15 +27,15 @@ class BlockApi {
     return data;
   }
 
-  static Future<Block> postBlock(Map<String, dynamic> body) async {
+  static Future<Block> postBlock(Block blok) async {
     final client = await Api.restClient();
-    var data = client.postBlock(body);
+    var data = client.postBlock(blok);
     return data;
   }
 
-  static Future<Block> putBlock(Map<String, dynamic> body) async {
+  static Future<Block> putBlock(Block block) async {
     final client = await Api.restClient();
-    var data = client.putBlock(body['id'], body);
+    var data = client.putBlock(block.id, block);
     return data;
   }
 }

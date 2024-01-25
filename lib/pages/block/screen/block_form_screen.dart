@@ -85,27 +85,27 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                           builder: (context) {
                             return Dialog(
                               child: DialogBody(
-                                numbers: state.block?.numbers,
+                                blockDetails: state.block?.details,
                                 onTap: (e) {
                                   Navigator.pop(context);
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Dialog(
-                                        child: DialogBlockNumber(
-                                          blockName: state.block?.name ?? "",
-                                          no: e,
-                                          onPress: (no) {
-                                            context
-                                                .read<BlockFormBloc>()
-                                                .add(OnAddNumber(no));
-                                            Navigator.pop(context);
-                                            setState(() {});
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  // showDialog(
+                                  //   context: context,
+                                  //   builder: (context) {
+                                  //     return Dialog(
+                                  //       child: DialogBlockNumber(
+                                  //         blockName: state.block?.name ?? "",
+                                  //         detail: e,
+                                  //         onPress: (no) {
+                                  //           context
+                                  //               .read<BlockFormBloc>()
+                                  //               .add(OnAddNumber(no));
+                                  //           Navigator.pop(context);
+                                  //           setState(() {});
+                                  //         },
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  // );
                                 },
                               ),
                             );
@@ -118,14 +118,14 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                   ],
                 ),
               ),
-              (state.block?.numbers ?? []).isNotEmpty
+              (state.block?.details ?? []).isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: (state.block?.numbers ?? []).map((e) {
+                        children: (state.block?.details ?? []).map((e) {
                           return CardBlockNumber(
-                            number: e,
+                            blockDetail: e,
                             onTap: () {
                               showDialog(
                                 context: context,
@@ -133,11 +133,11 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                                   return Dialog(
                                     child: DialogBlockNumber(
                                       blockName: state.block?.name ?? "",
-                                      no: e,
+                                      detail: e,
                                       onPress: (no) {
                                         context
                                             .read<BlockFormBloc>()
-                                            .add(OnAddNumber(no));
+                                            .add(OnAddNumber(no.number!));
                                         Navigator.pop(context);
                                         setState(() {});
                                       },

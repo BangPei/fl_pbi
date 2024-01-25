@@ -21,29 +21,29 @@ class BlockFormBloc extends Bloc<BlockFormEvent, BlockFormState> {
     try {
       emit(state.copyWith(isLoading: true));
       Block block = state.block ?? Block();
-      Map<String, dynamic> map = {
-        "id": block.id,
-        "name": block.name,
-        "numbers": []
-      };
-      for (var e in (block.numbers ?? [])) {
-        Map<String, dynamic> query = {
-          "number": {
-            "id": e.id,
-            "name": e.name,
-          },
-          "width": e.data['width'],
-          "length": e.data['length'],
-          "price": e.data['price'],
-          "picture": e.data['picture'],
-        };
-        map['numbers'].add(query);
-      }
+      // Map<String, dynamic> map = {
+      //   "id": block.id,
+      //   "name": block.name,
+      //   "numbers": []
+      // };
+      // for (var e in (block.numbers ?? [])) {
+      //   Map<String, dynamic> query = {
+      //     "number": {
+      //       "id": e.id,
+      //       "name": e.name,
+      //     },
+      //     "width": e.data['width'],
+      //     "length": e.data['length'],
+      //     "price": e.data['price'],
+      //     "picture": e.data['picture'],
+      //   };
+      //   map['numbers'].add(query);
+      // }
       Block newBlock = Block();
       if (block.id != null) {
-        newBlock = await BlockApi.putBlock(map);
+        newBlock = await BlockApi.putBlock(block);
       } else {
-        newBlock = await BlockApi.postBlock(map);
+        newBlock = await BlockApi.postBlock(block);
       }
       emit(state.copyWith(block: newBlock, isLoading: false, isSuccess: true));
     } catch (e) {
@@ -67,20 +67,20 @@ class BlockFormBloc extends Bloc<BlockFormEvent, BlockFormState> {
   }
 
   void _onAddNumber(OnAddNumber event, Emitter<BlockFormState> emit) {
-    Block block = state.block ?? Block();
-    block.numbers = state.block?.numbers ?? [];
-    Number number = event.number;
-    bool isExist = (block.numbers ?? []).any((e) => e.id == number.id);
-    if (isExist) {
-      for (var e in (block.numbers ?? [])) {
-        if (e.id == number.id) {
-          e = number;
-        }
-      }
-    } else {
-      (block.numbers ?? []).add(number);
-    }
-    emit(state.copyWith(block: block));
+    // Block block = state.block ?? Block();
+    // block.numbers = state.block?.numbers ?? [];
+    // Number number = event.number;
+    // bool isExist = (block.numbers ?? []).any((e) => e.id == number.id);
+    // if (isExist) {
+    //   for (var e in (block.numbers ?? [])) {
+    //     if (e.id == number.id) {
+    //       e = number;
+    //     }
+    //   }
+    // } else {
+    //   (block.numbers ?? []).add(number);
+    // }
+    // emit(state.copyWith(block: block));
   }
 
   void _onResetForm(OnResetForm event, Emitter<BlockFormState> emit) {

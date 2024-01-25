@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:fl_pbi/library/app_theme.dart';
-import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardBlockNumber extends StatelessWidget {
-  final Number number;
+  final BlockDetail blockDetail;
   final GestureTapCallback? onTap;
   const CardBlockNumber({
     super.key,
-    required this.number,
+    required this.blockDetail,
     this.onTap,
   });
 
@@ -46,14 +46,14 @@ class CardBlockNumber extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        number.data['name'] ?? "",
+                        blockDetail.name ?? "",
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),
                       ),
                       Text(
-                        "Rp. ${number.data['price']}",
+                        "Rp. ${blockDetail.price}",
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -71,7 +71,7 @@ class CardBlockNumber extends StatelessWidget {
               ListTile(
                 dense: true,
                 contentPadding: const EdgeInsets.all(0),
-                leading: (number.data['picture'] == null)
+                leading: (blockDetail.picture == null)
                     ? const Icon(
                         FontAwesomeIcons.building,
                         color: AppTheme.blue,
@@ -85,14 +85,14 @@ class CardBlockNumber extends StatelessWidget {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10),
                           ),
-                          image: (number.data['isBase64'] == true)
+                          image: (blockDetail.isBase64 == true)
                               ? DecorationImage(
                                   image: MemoryImage(
-                                      base64Decode(number.data['picture']!)),
+                                      base64Decode(blockDetail.picture!)),
                                   fit: BoxFit.cover,
                                 )
                               : DecorationImage(
-                                  image: NetworkImage(number.data['picture']!),
+                                  image: NetworkImage(blockDetail.picture!),
                                   fit: BoxFit.cover,
                                 ),
                         )),
@@ -112,7 +112,7 @@ class CardBlockNumber extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  "Luas Area : ${number.data['width']} x ${number.data['length']} = ${number.data['wide']} m2",
+                  "Luas Area : ${blockDetail.width} x ${blockDetail.length} = ${blockDetail.wide} m2",
                   style: const TextStyle(fontSize: 14),
                 ),
               )

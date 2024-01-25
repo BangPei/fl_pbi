@@ -2,6 +2,7 @@ import 'package:fl_pbi/library/app_theme.dart';
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/profile/bloc/number_bloc.dart';
 import 'package:fl_pbi/widget.dart/custom_badge.dart';
 import 'package:fl_pbi/widget.dart/custom_botton.dart';
@@ -12,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DialogBody extends StatefulWidget {
   final Function(Number)? onTap;
-  final List<Number>? numbers;
-  const DialogBody({super.key, this.onTap, this.numbers});
+  final List<BlockDetail>? blockDetails;
+  const DialogBody({super.key, this.onTap, this.blockDetails});
   @override
   State<DialogBody> createState() => _DialogBodyState();
 }
@@ -98,8 +99,8 @@ class _DialogBodyState extends State<DialogBody> {
                                 child: Center(
                                   child: Wrap(
                                     children: (state.numbers ?? []).map((e) {
-                                      bool isExist = (widget.numbers ?? [])
-                                          .any((f) => f.id == e.id);
+                                      bool isExist = (widget.blockDetails ?? [])
+                                          .any((f) => f.number?.id == e.id);
                                       return GestureDetector(
                                         onTap: () {
                                           widget.onTap == null
