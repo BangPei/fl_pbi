@@ -64,10 +64,10 @@ abstract class RestClient {
   Future<Block> getBlockById(@Path() String id);
 
   @POST("block")
-  Future<Block> postBlock(@Body() Map<String, dynamic> body);
+  Future<Block> postBlock(@Body() Block block);
 
   @PUT("block/{id}")
-  Future<Block> putBlock(@Path() int id, @Body() Map<String, dynamic> body);
+  Future<Block> putBlock(@Path() int id, @Body() Block block);
 
   @GET("ipl")
   Future<ServerSide> getIPLList();

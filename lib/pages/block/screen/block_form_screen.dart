@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/common.dart';
 import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
+import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/block/screen/card_block_number.dart';
 import 'package:fl_pbi/pages/block/screen/dialog_block_number.dart';
 import 'package:fl_pbi/pages/profile/screen/dialog_body.dart';
@@ -87,25 +88,27 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                               child: DialogBody(
                                 blockDetails: state.block?.details,
                                 onTap: (e) {
+                                  BlockDetail detail = BlockDetail();
+                                  detail.number = e;
                                   Navigator.pop(context);
-                                  // showDialog(
-                                  //   context: context,
-                                  //   builder: (context) {
-                                  //     return Dialog(
-                                  //       child: DialogBlockNumber(
-                                  //         blockName: state.block?.name ?? "",
-                                  //         detail: e,
-                                  //         onPress: (no) {
-                                  //           context
-                                  //               .read<BlockFormBloc>()
-                                  //               .add(OnAddNumber(no));
-                                  //           Navigator.pop(context);
-                                  //           setState(() {});
-                                  //         },
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  // );
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        child: DialogBlockNumber(
+                                          blockName: state.block?.name ?? "",
+                                          detail: detail,
+                                          onPress: (no) {
+                                            context
+                                                .read<BlockFormBloc>()
+                                                .add(OnAddNumber(no));
+                                            Navigator.pop(context);
+                                            setState(() {});
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
                                 },
                               ),
                             );
@@ -134,10 +137,10 @@ class _BlockFormScreenState extends State<BlockFormScreen> {
                                     child: DialogBlockNumber(
                                       blockName: state.block?.name ?? "",
                                       detail: e,
-                                      onPress: (no) {
+                                      onPress: (detail) {
                                         context
                                             .read<BlockFormBloc>()
-                                            .add(OnAddNumber(no.number!));
+                                            .add(OnAddNumber(detail));
                                         Navigator.pop(context);
                                         setState(() {});
                                       },

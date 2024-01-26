@@ -4,8 +4,8 @@ import 'package:fl_pbi/library/session_manager.dart';
 import 'package:fl_pbi/service/restclient.dart';
 
 class Api {
-  // static const String baseUrl = "http://192.168.1.5:3000/api/";
-  static const String baseUrl = "http://192.168.100.11:3000/api/";
+  static const String baseUrl = "http://192.168.1.5:3000/api/";
+  // static const String baseUrl = "http://192.168.100.11:3000/api/";
   // static const String baseUrl = "https://api.perniagaan-pbi.com/api/";
 
   static restClient({Map<String, dynamic>? params}) async {

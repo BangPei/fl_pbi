@@ -437,12 +437,12 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Block> postBlock(Map<String, dynamic> body) async {
+  Future<Block> postBlock(Block block) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
+    _data.addAll(block.toJson());
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Block>(Options(
       method: 'POST',
@@ -467,13 +467,13 @@ class _RestClient implements RestClient {
   @override
   Future<Block> putBlock(
     int id,
-    Map<String, dynamic> body,
+    Block block,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
+    _data.addAll(block.toJson());
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Block>(Options(
       method: 'PUT',

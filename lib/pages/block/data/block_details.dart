@@ -6,9 +6,9 @@ class BlockDetail {
   Number? number;
   String? name;
   double? width;
-  int? length;
+  double? length;
   double? wide;
-  int? price;
+  double? price;
   String? picture;
   String? createdAt;
   String? updatedAt;
@@ -19,10 +19,10 @@ class BlockDetail {
     this.code,
     this.number,
     this.name,
-    this.width,
-    this.length,
-    this.wide,
-    this.price,
+    this.width = 0,
+    this.length = 0,
+    this.wide = 0,
+    this.price = 0,
     this.picture,
     this.createdAt,
     this.updatedAt,
@@ -34,10 +34,10 @@ class BlockDetail {
     code = json['code'];
     number = json['number'] != null ? Number.fromJson(json['number']) : null;
     name = json['name'];
-    width = json['width'];
-    length = json['length'];
-    wide = json['wide'];
-    price = json['price'];
+    width = double.parse(json['width']);
+    length = double.parse(json['length']);
+    wide = double.parse(json['wide']);
+    price = double.parse(json['price']);
     picture = json['picture'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

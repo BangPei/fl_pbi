@@ -29,8 +29,8 @@ class OnSubmit extends BlockFormEvent {
 }
 
 class OnAddNumber extends BlockFormEvent {
-  final Number number;
-  const OnAddNumber(this.number);
+  final BlockDetail detail;
+  const OnAddNumber(this.detail);
   @override
   List<Object?> get props => [];
 }

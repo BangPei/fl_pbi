@@ -17,7 +17,7 @@ class DialogBlockNumber extends StatefulWidget {
   final BlockDetail detail;
   final Function(BlockDetail)? onPress;
   const DialogBlockNumber(
-      {super.key, this.blockName, required this.detail, this.onPress});
+      {super.key, this.blockName, this.onPress, required this.detail});
 
   @override
   State<DialogBlockNumber> createState() => _DialogBlockNumberState();
@@ -30,6 +30,7 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
   @override
   void initState() {
     detail = widget.detail;
+    detail.name = widget.blockName ?? "";
     super.initState();
   }
 
@@ -41,7 +42,7 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
         child: Column(
           children: [
             Text(
-              "Form Kios Blok ${widget.blockName} No ${widget.detail.number?.name}",
+              "Form Kios Blok ${detail.name} No ${detail.number?.name}",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -56,8 +57,17 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                   child: CustomFormField(
                     title: "Lebar Kios",
                     textForm: TextFormField(
+                      initialValue: (detail.width ?? 0).toString(),
                       validator: ValidForm.emptyValue,
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        double data = 0;
+                        if (val == "") {
+                          val = "0";
+                        }
+                        data = double.parse(val);
+                        detail.width = data;
+                        setState(() {});
+                      },
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
@@ -72,13 +82,22 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                   child: CustomFormField(
                     title: "Panjang Kios",
                     textForm: TextFormField(
+                      initialValue: (detail.width ?? 0).toString(),
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
                             RegExp(r'^\d+\.?\d{0,2}')),
                       ],
-                      onChanged: (val) {},
+                      onChanged: (val) {
+                        double data = 0;
+                        if (val == "") {
+                          val = "0";
+                        }
+                        data = double.parse(val);
+                        detail.length = data;
+                        setState(() {});
+                      },
                       validator: ValidForm.emptyValue,
                       decoration: TextFormDecoration.box(),
                     ),
@@ -89,12 +108,21 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
             CustomFormField(
               title: "Harga",
               textForm: TextFormField(
+                initialValue: (detail.width ?? 0).toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
-                onChanged: (val) {},
+                onChanged: (val) {
+                  double data = 0;
+                  if (val == "") {
+                    val = "0";
+                  }
+                  data = double.parse(val);
+                  detail.price = data;
+                  setState(() {});
+                },
                 validator: ValidForm.emptyValue,
                 decoration: TextFormDecoration.box(),
               ),
@@ -110,13 +138,13 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                         fit: BoxFit.fill,
                       ),
                     )
-                  : widget.detail.picture != null
-                      ? (widget.detail.isBase64 == true)
+                  : detail.picture != null
+                      ? (detail.isBase64 == true)
                           ? ClipPicture(
                               height: 40,
                               onTap: () => pickPicture(),
                               child: Image.memory(
-                                base64Decode(widget.detail.picture!),
+                                base64Decode(detail.picture!),
                                 fit: BoxFit.fill,
                               ),
                             )
@@ -124,7 +152,7 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
                               height: 40,
                               onTap: () => pickPicture(),
                               child: Image.network(
-                                widget.detail.picture!,
+                                detail.picture!,
                                 fit: BoxFit.cover,
                               ),
                             )
@@ -134,22 +162,10 @@ class _DialogBlockNumberState extends State<DialogBlockNumber> {
               title: const Text("Simpan"),
               icon: const Icon(Icons.save_outlined),
               onPressed: () {
-                // double width, length, price;
-                // width = double.parse(
-                //     widthController.text == "" ? "0" : widthController.text);
-                // length = double.parse(
-                //     lengthController.text == "" ? "0" : lengthController.text);
-                // price = double.parse(
-                //     priceController.text == "" ? "0" : priceController.text);
-                // number.data = {
-                //   "width": width,
-                //   "length": length,
-                //   "price": price,
-                //   "wide": width * length,
-                //   "picture": kiosPicture ?? widget.detail.picture,
-                //   "isBase64": isBase64,
-                //   "name": "Blok ${widget.blockName} No ${number.name}"
-                // };
+                detail.wide = (detail.length ?? 0) * (detail.width ?? 0);
+                detail.name =
+                    "Block ${widget.blockName} No. ${detail.number?.name}";
+                detail.picture = kiosPicture;
                 widget.onPress == null ? null : widget.onPress!(detail);
               },
             )
