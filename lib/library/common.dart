@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fl_pbi/models/hak_guna.dart';
 import 'package:fl_pbi/models/pic.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:fl_pbi/widget.dart/button_transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pdf/pdf.dart';
@@ -253,10 +256,11 @@ class Common {
     return confirmed;
   }
 
-  static yearPicker(
-      {required BuildContext context,
-      required Function(DateTime) onTap,
-      int? selecteYear}) {
+  static yearPicker({
+    required BuildContext context,
+    required Function(DateTime) onTap,
+    int? selecteYear,
+  }) {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
@@ -279,6 +283,30 @@ class Common {
       },
     );
   }
+
+  static pickPicture(SOURCE source) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(
+      source:
+          source == SOURCE.camera ? ImageSource.camera : ImageSource.gallery,
+    );
+    if (photo != null) {
+      String path = photo.path;
+      var result = await FlutterImageCompress.compressWithFile(
+        File(path).absolute.path,
+        minWidth: 1000,
+        minHeight: 500,
+        quality: 94,
+        // rotate: 90,
+      );
+      return base64Encode(result as List<int>);
+    } else {
+      // ignore: avoid_print
+      print("err");
+    }
+  }
 }
 
 enum MODE { success, error }
+
+enum SOURCE { camera, galery }

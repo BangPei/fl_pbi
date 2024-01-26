@@ -39,7 +39,7 @@ class CardBanner extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 19,
+                    fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                   ),

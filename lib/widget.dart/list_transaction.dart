@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 
 class ListTransaction extends StatelessWidget {
   final List<Trans> trans;
+  final int type;
   const ListTransaction({
     super.key,
     required this.trans,
+    required this.type,
   });
 
   @override
@@ -24,14 +26,16 @@ class ListTransaction extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: AppTheme.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
+              color: const Color.fromARGB(255, 252, 253, 253),
+              borderRadius: BorderRadius.circular(6),
+              boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 216, 216, 216),
+                  color: type == 1
+                      ? const Color.fromARGB(255, 114, 100, 240)
+                      : const Color.fromARGB(255, 241, 106, 96),
                   spreadRadius: 0.2,
                   blurRadius: 2,
-                  offset: Offset(0, 1),
+                  offset: const Offset(0, 1),
                 )
               ],
             ),
