@@ -1,4 +1,5 @@
-import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/models/user.dart';
+import 'package:fl_pbi/pages/block/data/block_details.dart';
 
 class IPL {
   int? id;
@@ -8,27 +9,40 @@ class IPL {
   int? type;
   String? note;
   String? picture;
-  Number? number;
+  String? createdAt;
+  String? updatedAt;
+  User? createdBy;
+  BlockDetail? blockDetail;
 
-  IPL(
-      {this.id,
-      this.code,
-      this.amount,
-      this.date,
-      this.type,
-      this.note,
-      this.picture,
-      this.number});
+  IPL({
+    this.id,
+    this.code,
+    this.amount,
+    this.date,
+    this.type,
+    this.note,
+    this.picture,
+    this.createdAt,
+    this.updatedAt,
+    this.createdBy,
+    this.blockDetail,
+  });
 
   IPL.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['code'];
-    amount = json['amount'];
+    amount = double.parse(json['amount']);
     date = json['date'];
     type = json['type'];
     note = json['note'];
     picture = json['picture'];
-    number = json['number'] != null ? Number.fromJson(json['number']) : null;
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    createdBy =
+        json['created_by'] != null ? User.fromJson(json['created_by']) : null;
+    blockDetail = json['block_detail'] != null
+        ? BlockDetail.fromJson(json['block_detail'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,8 +54,13 @@ class IPL {
     data['type'] = type;
     data['note'] = note;
     data['picture'] = picture;
-    if (number != null) {
-      data['number'] = number!.toJson();
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (createdBy != null) {
+      data['created_by'] = createdBy!.toJson();
+    }
+    if (blockDetail != null) {
+      data['block_detail'] = blockDetail!.toJson();
     }
     return data;
   }

@@ -2,8 +2,10 @@ import 'package:fl_pbi/library/text_form_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class CustomDatePicker extends StatefulWidget {
+  final DISPLAY? display;
   final TextEditingController controller;
   final FocusNode focusNode;
   final DateTime? initialDate;
@@ -22,6 +24,7 @@ class CustomDatePicker extends StatefulWidget {
     this.dateFormat,
     required this.controller,
     this.validator,
+    this.display,
   });
 
   @override
@@ -50,12 +53,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           onTap: () async {
             widget.focusNode.unfocus();
             if (dateTime == null) {
-              final DateTime? picked = await showDate(
-                context,
-                initialDate: widget.initialDate,
-                firstDate: widget.firstDate,
-                lastDate: widget.lastDate,
-              );
+              final DateTime? picked = await getDate();
               if (picked != null) {
                 setState(() {
                   dateTime = picked;
@@ -71,7 +69,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             widget.controller.text = dateTime == null
                 ? ""
                 : Jiffy.parseFromDateTime(dateTime!).format(
-                    pattern: "dd MMMM yyyy",
+                    pattern: format(),
                   );
             setState(() {});
           },
@@ -87,18 +85,13 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         ),
       ),
       onTap: () async {
-        final DateTime? picked = await showDate(
-          context,
-          initialDate: widget.initialDate,
-          firstDate: widget.firstDate,
-          lastDate: widget.lastDate,
-        );
+        final DateTime? picked = await getDate();
         if (picked != null) {
           dateTime = picked;
           widget.controller.text = dateTime == null
               ? ""
               : Jiffy.parseFromDateTime(dateTime!).format(
-                  pattern: "dd MMMM yyyy",
+                  pattern: format(),
                 );
           widget.onCloseDatepicker(picked);
           setState(() {});
@@ -116,4 +109,47 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       lastDate: lastDate ?? DateTime(3000),
     );
   }
+
+  Future<DateTime?> showMonth(context,
+      {DateTime? initialDate, DateTime? firstDate, DateTime? lastDate}) async {
+    return await showMonthPicker(
+      context: context,
+      initialDate: initialDate ?? dateTime ?? DateTime.now(),
+      firstDate: firstDate ?? DateTime(1900),
+      lastDate: lastDate ?? DateTime(3000),
+      locale: const Locale("id", "ID"),
+    );
+  }
+
+  getDate() async {
+    final DateTime? picked;
+    if (widget.display == DISPLAY.month) {
+      picked = await showMonth(
+        context,
+        initialDate: widget.initialDate,
+        firstDate: widget.firstDate,
+        lastDate: widget.lastDate,
+      );
+    } else {
+      picked = await showDate(
+        context,
+        initialDate: widget.initialDate,
+        firstDate: widget.firstDate,
+        lastDate: widget.lastDate,
+      );
+    }
+    return picked;
+  }
+
+  String format() {
+    String format;
+    if (widget.display == DISPLAY.month) {
+      format = "MMMM yyyy";
+    } else {
+      format = "dd MMMM yyyy";
+    }
+    return format;
+  }
 }
+
+enum DISPLAY { date, month }

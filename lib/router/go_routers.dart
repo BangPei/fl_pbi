@@ -128,8 +128,9 @@ class RouteNavigation {
                     path: 'form',
                     name: "ipl-form",
                     pageBuilder: (context, state) {
-                      return const NoTransitionPage(
-                        child: IPLFormScreen(),
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: IPLFormScreen(type: extra['type']),
                       );
                     },
                   ),
@@ -138,9 +139,10 @@ class RouteNavigation {
                     path: 'form/:id',
                     name: "ipl-form-crud",
                     pageBuilder: (context, state) {
-                      // var extra = state.extra as Map<String, dynamic>;
+                      var extra = state.extra as Map<String, dynamic>;
                       return NoTransitionPage(
                         child: IPLFormScreen(
+                          type: extra['type'],
                           id: int.parse(state.pathParameters['id']!),
                         ),
                       );

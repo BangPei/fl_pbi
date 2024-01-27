@@ -3,7 +3,7 @@ class Trans {
   String? month;
   int? no;
   int? data;
-  int? amount;
+  double? amount;
 
   Trans({this.year, this.month, this.no, this.data, this.amount});
 
@@ -12,7 +12,11 @@ class Trans {
     month = json['month'];
     no = json['no'];
     data = json['data'];
-    amount = json['amount'];
+    if (json['amount'].runtimeType == int) {
+      amount = json['amount'].toDouble();
+    } else {
+      amount = double.parse(json['amount']);
+    }
   }
 
   Map<String, dynamic> toJson() {

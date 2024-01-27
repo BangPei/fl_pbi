@@ -3,6 +3,7 @@ import 'package:fl_pbi/models/number.dart';
 import 'package:fl_pbi/models/serverside.dart';
 import 'package:fl_pbi/models/trans.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
+import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
@@ -56,6 +57,12 @@ abstract class RestClient {
 
   @GET("number")
   Future<List<Number>> getNumbers();
+
+  @GET("block-detail")
+  Future<List<BlockDetail>> getBlockDetails();
+
+  @GET("block-detail/{id}")
+  Future<BlockDetail> getBlockDetailById(@Path() int id);
 
   @GET("block")
   Future<List<Block>> getBlocks();

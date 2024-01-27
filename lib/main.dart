@@ -1,5 +1,6 @@
 import 'package:fl_pbi/pages/block/bloc/block_bloc.dart';
 import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
+import 'package:fl_pbi/pages/ipl/bloc/form_ipl_bloc.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_form_bloc.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<SuratLunasBloc>(create: (__) => SuratLunasBloc()),
         BlocProvider<SewaLahanBloc>(create: (__) => SewaLahanBloc()),
         BlocProvider<IplBloc>(create: (__) => IplBloc()),
+        BlocProvider<FormIplBloc>(create: (__) => FormIplBloc()),
         BlocProvider<ParkingBloc>(create: (__) => ParkingBloc()),
         BlocProvider<ParkFormBloc>(create: (__) => ParkFormBloc()),
         BlocProvider<NumberBloc>(create: (__) => NumberBloc()),
