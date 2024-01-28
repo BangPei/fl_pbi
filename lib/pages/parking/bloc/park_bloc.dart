@@ -74,7 +74,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
   void _onGetSummary(OnGetSummary event, Emitter<ParkingState> emit) async {
     emit(state.copyWith(listLoading: true));
     try {
-      ServerSide serverSide = await ParkingApi.get();
+      ServerSide serverSide = await ParkingApi.get(params: event.map);
       List<Parking> parks = [];
       for (var v in (serverSide.data ?? [])) {
         parks.add(Parking.fromJson(v));

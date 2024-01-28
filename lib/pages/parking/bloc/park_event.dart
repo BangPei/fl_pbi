@@ -10,6 +10,8 @@ class OnGetTotal extends ParkingEvent {
 }
 
 class OnGetSummary extends ParkingEvent {
+  final Map<String, dynamic>? map;
+  const OnGetSummary({this.map});
   @override
   List<Object?> get props => [];
 }

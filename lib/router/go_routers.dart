@@ -101,12 +101,27 @@ class RouteNavigation {
                   GoRoute(
                     parentNavigatorKey: _nav.navKey,
                     path: 'form',
-                    name: "keuangan-form",
+                    name: "parking-form",
                     pageBuilder: (context, state) {
                       var extra = state.extra as Map<String, dynamic>;
                       return NoTransitionPage(
                         child: ParkingFormScreen(
                             type: extra['type'], id: extra['id']),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: _nav.navKey,
+                    path: 'detail',
+                    name: "parking-detail",
+                    pageBuilder: (context, state) {
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: ParkingDetailScreen(
+                          type: extra['type'],
+                          month: extra['month'],
+                          year: extra['year'],
+                        ),
                       );
                     },
                   ),

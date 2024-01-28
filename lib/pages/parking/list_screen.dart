@@ -18,12 +18,6 @@ class ListSummaryScreen extends StatefulWidget {
 
 class _ListSummaryScreenState extends State<ListSummaryScreen> {
   @override
-  void initState() {
-    context.read<ParkingBloc>().add(OnGetSummary());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ParkingBloc, ParkingState>(
       builder: (context, state) {
@@ -153,7 +147,7 @@ class _ListSummaryScreenState extends State<ListSummaryScreen> {
                           leading:
                               Icon(FontAwesomeIcons.dollarSign, color: color),
                           trailing: Icon(icon, color: color),
-                          onTap: () => context.goNamed("keuangan-form",
+                          onTap: () => context.goNamed("parking-form",
                               extra: {"type": park.type, "id": park.id}),
                         ),
                       ],

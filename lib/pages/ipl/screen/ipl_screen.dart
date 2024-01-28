@@ -34,12 +34,20 @@ class _ParkingScreenState extends State<IPLScreen> {
         ),
         actions: IconButton(
           visualDensity: const VisualDensity(vertical: -4),
-          onPressed: () {},
-          icon: const FaIcon(FontAwesomeIcons.clockRotateLeft),
+          onPressed: () {
+            Common.dialogInOutCome(
+              context,
+              onTapIn: () {
+                context.goNamed("ipl-form", extra: {"type": 1});
+              },
+              onTapOut: () {
+                context.goNamed("ipl-form", extra: {"type": 2});
+              },
+            );
+          },
+          icon: const FaIcon(FontAwesomeIcons.plus),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: const FloatingButton(),
       body: RefreshIndicator(
         onRefresh: () async {
           context.read<IplBloc>().add(OnGetTotal());
@@ -66,8 +74,11 @@ class _ParkingScreenState extends State<IPLScreen> {
                   title: "Total IPL PerBulan Tahun",
                   type: type,
                   year: year,
-                  onTapDate: () =>
-                      context.read<IplBloc>().add(OnGetTrans(year, type)),
+                  onTapDate: (yr) {
+                    year = yr;
+                    context.read<IplBloc>().add(OnGetTrans(yr, type));
+                    setState(() {});
+                  },
                 ),
                 ButtonInOut(
                   onTap: (idx) {
@@ -86,6 +97,7 @@ class _ParkingScreenState extends State<IPLScreen> {
                       child: ListTransaction(
                         trans: state.trans ?? [],
                         type: int.parse(type),
+                        onTap: (tran) {},
                       ),
                     );
                   },
@@ -93,64 +105,6 @@ class _ParkingScreenState extends State<IPLScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class FloatingButton extends StatelessWidget {
-  const FloatingButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Common.dialogInOutCome(
-          context,
-          onTapIn: () {
-            context.goNamed("ipl-form", extra: {"type": 1});
-          },
-          onTapOut: () {
-            context.goNamed("ipl-form", extra: {"type": 2});
-          },
-        );
-      },
-      child: Container(
-        width: 110,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppTheme.blue,
-          borderRadius: BorderRadius.circular(6),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromARGB(255, 105, 105, 105),
-              spreadRadius: 0.2,
-              blurRadius: 5,
-              offset: Offset(0, 1),
-            )
-          ],
-        ),
-        padding: const EdgeInsets.symmetric(
-          vertical: 6,
-          horizontal: 10,
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(
-              FontAwesomeIcons.circlePlus,
-              size: 15,
-              color: Colors.white,
-            ),
-            SizedBox(width: 2),
-            Text(
-              "Input IPL",
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
         ),
       ),
     );

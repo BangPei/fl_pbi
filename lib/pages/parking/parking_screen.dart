@@ -38,10 +38,10 @@ class _ParkingScreenState extends State<ParkingScreen> {
             Common.dialogInOutCome(
               context,
               onTapIn: () {
-                context.goNamed("keuangan-form", extra: {"type": 1});
+                context.goNamed("parking-form", extra: {"type": 1});
               },
               onTapOut: () {
-                context.goNamed("keuangan-form", extra: {"type": 2});
+                context.goNamed("parking-form", extra: {"type": 2});
               },
             );
           },
@@ -74,11 +74,16 @@ class _ParkingScreenState extends State<ParkingScreen> {
                   title: "Total Parkir PerBulan Tahun",
                   type: type,
                   year: year,
-                  onTapDate: () {},
+                  onTapDate: (yr) {
+                    year = yr;
+                    context.read<ParkingBloc>().add(OnGetTrans(yr, type));
+                    setState(() {});
+                  },
                 ),
                 ButtonInOut(
                   onTap: (idx) {
                     type = idx >= 1 ? "2" : "1";
+                    context.read<ParkingBloc>().add(OnGetTrans(year, type));
                     setState(() {});
                   },
                 ),
@@ -92,6 +97,16 @@ class _ParkingScreenState extends State<ParkingScreen> {
                       child: ListTransaction(
                         trans: state.trans ?? [],
                         type: int.parse(type),
+                        onTap: (tran) {
+                          context.goNamed(
+                            'parking-detail',
+                            extra: {
+                              "type": int.parse(type),
+                              "month": tran.month,
+                              "year": tran.year
+                            },
+                          );
+                        },
                       ),
                     );
                   },

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/finance/data/finance_api.dart';
@@ -18,22 +17,10 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
       Finance finance = await FinanceApi.getTotal();
       emit(state.copyWith(finance: finance, isLoading: false));
     } catch (e) {
-      if (e.runtimeType == DioException) {
-        DioException err = e as DioException;
-        emit(state.copyWith(
-          isLoading: false,
-          finance: state.finance,
-          isError: true,
-          errorMessage: err.response?.data?["message"] ?? err.message,
-        ));
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          finance: state.finance,
-          isError: true,
-          errorMessage: e.toString(),
-        ));
-      }
+      emit(state.copyWith(
+        isLoading: false,
+        finance: state.finance,
+      ));
     }
   }
 }

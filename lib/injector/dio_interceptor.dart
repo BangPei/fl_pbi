@@ -26,7 +26,9 @@ class DioInterceptors extends InterceptorsWrapper {
           _nav.navKey.currentContext!,
           title: "Error",
           mode: MODE.error,
-          message: err.response?.data['message'] ?? "Gagal Mengakses Server",
+          message: err.response?.data['message'] ??
+              err.message ??
+              "Gagal Mengakses Server",
         );
       }
     } else {
@@ -34,7 +36,9 @@ class DioInterceptors extends InterceptorsWrapper {
         _nav.navKey.currentContext!,
         title: "Error",
         mode: MODE.error,
-        message: err.response?.data['message'] ?? "Gagal Mengakses Server",
+        message: err.response?.data['message'] ??
+            err.message ??
+            "Gagal Mengakses Server",
       );
     }
     super.onError(err, handler);

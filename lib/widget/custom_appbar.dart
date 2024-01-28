@@ -8,10 +8,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSize {
     this.actions,
     this.leading,
     this.backgroundColor,
+    this.subTitle,
   });
   final String title;
   final Widget? actions;
   final Widget? leading;
+  final Widget? subTitle;
   final Color? backgroundColor;
 
   @override
@@ -46,15 +48,21 @@ class CustomAppbar extends StatelessWidget implements PreferredSize {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5.0),
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15 + 6 - 6 * topBarOpacity,
-                          color: AppTheme.dismissibleBackground,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontFamily: AppTheme.fontName,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15 + 6 - 6 * topBarOpacity,
+                              color: AppTheme.dismissibleBackground,
+                            ),
+                          ),
+                          subTitle ?? const SizedBox.shrink()
+                        ],
                       ),
                     ),
                   ),

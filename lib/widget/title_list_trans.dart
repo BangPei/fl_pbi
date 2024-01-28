@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TitleList extends StatefulWidget {
   final String year, type, title;
-  final Function() onTapDate;
+  final Function(String) onTapDate;
   const TitleList(
       {super.key,
       required this.year,
@@ -43,7 +43,7 @@ class _TitleListState extends State<TitleList> {
               context: context,
               onTap: (dt) {
                 year = dt.year.toString();
-                widget.onTapDate();
+                widget.onTapDate(year);
                 setState(() {});
               },
             );

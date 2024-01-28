@@ -67,7 +67,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Rp. ${_visible ? Common.oCcy.format(widget.data.rest) : "*********"}",
+                    "Rp. ${_visible ? Common.oCcy.format(widget.data.rest ?? 0) : "*********"}",
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                 children: [
                   MoneyWidget(
                     data:
-                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalPark) : "*********"}",
+                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalPark ?? 0) : "*********"}",
                     title: "Saldo Parkir",
                     icon: Image.asset(
                       Common.imageEaten,
@@ -105,7 +105,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                   ),
                   MoneyWidget(
                     data:
-                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalIpl) : "*********"}",
+                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalIpl ?? 0) : "*********"}",
                     title: "Saldo IPL",
                     icon: Image.asset(
                       Common.imageBurned,

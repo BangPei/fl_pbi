@@ -3,12 +3,14 @@ import 'package:fl_pbi/models/models.dart';
 import 'package:flutter/material.dart';
 
 class ListTransaction extends StatelessWidget {
+  final Function(Trans) onTap;
   final List<Trans> trans;
   final int type;
   const ListTransaction({
     super.key,
     required this.trans,
     required this.type,
+    required this.onTap,
   });
 
   @override
@@ -55,6 +57,7 @@ class ListTransaction extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              onTap: () => onTap(tran),
             ),
           ),
         );

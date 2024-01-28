@@ -30,26 +30,12 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
       IPL newIpl = await IplApi.post(ipl);
       emit(state.copyWith(ipl: newIpl, isLoading: false, isSuccess: true));
     } catch (e) {
-      if (e.runtimeType == DioException) {
-        DioException err = e as DioException;
-        emit(state.copyWith(
-          isLoading: false,
-          ipl: state.ipl,
-          isSuccess: false,
-          blockDetails: state.blockDetails,
-          isError: true,
-          errorMessage: err.response?.data?["message"] ?? err.message,
-        ));
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          ipl: state.ipl,
-          isSuccess: false,
-          blockDetails: state.blockDetails,
-          isError: true,
-          errorMessage: e.toString(),
-        ));
-      }
+      emit(state.copyWith(
+        isLoading: false,
+        ipl: state.ipl,
+        isSuccess: false,
+        blockDetails: state.blockDetails,
+      ));
     }
   }
 
