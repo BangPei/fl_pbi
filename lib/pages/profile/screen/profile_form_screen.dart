@@ -1,20 +1,9 @@
 // ignore_for_file: avoid_print
-
-import 'dart:convert';
-import 'dart:io';
-import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/profile/bloc/profile_form_bloc.dart';
-import 'package:fl_pbi/widget.dart/clip_picture.dart';
-import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
-import 'package:fl_pbi/widget.dart/custom_formfield.dart';
-import 'package:fl_pbi/widget.dart/empty_image.dart';
-import 'package:fl_pbi/widget.dart/loading_screen.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ProfileForm extends StatefulWidget {
@@ -84,28 +73,11 @@ class _ProfileFormState extends State<ProfileForm> {
                         padding: const EdgeInsets.all(6.0),
                         child: SizedBox(
                           width: 100,
-                          child: imageBase64 != null
-                              ? ClipPicture(
-                                  onTap: () => pickPicture(),
-                                  child: Image.memory(
-                                    base64Decode(imageBase64!),
-                                    fit: BoxFit.fill,
-                                  ),
-                                )
-                              : state.profile!.picture != null
-                                  ? ClipPicture(
-                                      onTap: () => pickPicture(),
-                                      child: Image.network(
-                                        state.profile!.picture!,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    )
-                                  : EmptyImageScreen(
-                                      height: 140,
-                                      title: "profile",
-                                      iconData: Icons.person,
-                                      onTap: () => pickPicture(),
-                                    ),
+                          child: ImageCamera(
+                            base64: imageBase64,
+                            data: state.profile!.picture,
+                            onTap: (str) => imageBase64 = str,
+                          ),
                         ),
                       ),
                       Expanded(
@@ -333,68 +305,15 @@ class _ProfileFormState extends State<ProfileForm> {
                       horizontal: 5.0,
                       vertical: 5,
                     ),
-                    child: identityBase64 != null
-                        ? ClipPicture(
-                            height: 40,
-                            onTap: () => pickIdentityPicture(),
-                            child: Image.memory(
-                              base64Decode(identityBase64!),
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        : state.profile!.identity?.picture != null
-                            ? ClipPicture(
-                                height: 40,
-                                onTap: () => pickIdentityPicture(),
-                                child: Image.network(
-                                  state.profile!.identity!.picture!,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : EmptyImageScreen(
-                                onTap: () => pickIdentityPicture()),
+                    child: ImageCamera(
+                      base64: identityBase64,
+                      data: state.profile!.identity?.picture,
+                      onTap: (str) => identityBase64 = str,
+                    ),
                   ),
                 ],
               );
       }),
     );
-  }
-
-  pickPicture() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      String path = photo.path;
-      var result = await FlutterImageCompress.compressWithFile(
-        File(path).absolute.path,
-        minWidth: 1000,
-        minHeight: 500,
-        quality: 94,
-        // rotate: 90,
-      );
-      imageBase64 = base64Encode(result as List<int>);
-      setState(() {});
-    } else {
-      print("err");
-    }
-  }
-
-  pickIdentityPicture() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      String path = photo.path;
-      var result = await FlutterImageCompress.compressWithFile(
-        File(path).absolute.path,
-        minWidth: 1000,
-        minHeight: 500,
-        quality: 94,
-        // rotate: 90,
-      );
-      identityBase64 = base64Encode(result as List<int>);
-      setState(() {});
-    } else {
-      print("err");
-    }
   }
 }

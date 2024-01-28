@@ -1,8 +1,6 @@
-import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/official_letter_form/formulir_pendaftaran/bloc/formulir_pendaftaran_bloc.dart';
-import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custom_formfield.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

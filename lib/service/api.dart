@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:fl_pbi/injector/dio_interceptor.dart';
-import 'package:fl_pbi/library/session_manager.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/service/restclient.dart';
 
 class Api {

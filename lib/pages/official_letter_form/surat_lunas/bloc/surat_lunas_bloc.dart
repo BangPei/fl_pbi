@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:fl_pbi/injector/injector.dart';
-import 'package:fl_pbi/injector/navigation_service.dart';
-import 'package:fl_pbi/library/session_manager.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
 import 'package:fl_pbi/pages/official_letter_form/surat_lunas/lunas.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
+
+import '../../../../library/library_file.dart';
 
 part 'surat_lunas_event.dart';
 part 'surat_lunas_state.dart';

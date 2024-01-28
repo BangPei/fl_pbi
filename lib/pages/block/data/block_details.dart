@@ -1,4 +1,4 @@
-import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/models/models.dart';
 
 class BlockDetail {
   int? id;

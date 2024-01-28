@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:fl_pbi/models/hak_guna.dart';
 import 'package:fl_pbi/models/pic.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
-import 'package:fl_pbi/widget.dart/button_transaction.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

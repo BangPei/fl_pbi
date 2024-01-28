@@ -1,12 +1,10 @@
 import 'dart:typed_data';
-import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:fl_pbi/models/customer.dart';
-import 'package:fl_pbi/models/kios.dart';
-import 'package:fl_pbi/models/pic.dart';
+import 'package:fl_pbi/models/models.dart';
 
 class HakGuna {
   String? no;

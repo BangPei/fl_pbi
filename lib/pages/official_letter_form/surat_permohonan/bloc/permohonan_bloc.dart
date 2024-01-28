@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fl_pbi/injector/injector.dart';
-import 'package:fl_pbi/injector/navigation_service.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
 import 'package:fl_pbi/pages/official_letter_form/surat_permohonan/permohonan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

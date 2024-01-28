@@ -1,16 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:fl_pbi/injector/injector.dart';
-import 'package:fl_pbi/injector/navigation_service.dart';
-import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/library/session_manager.dart';
-import 'package:fl_pbi/models/customer.dart';
-import 'package:fl_pbi/models/hak_guna.dart';
-import 'package:fl_pbi/models/kios.dart';
-import 'package:fl_pbi/models/pic.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
+import 'package:fl_pbi/models/models.dart';
+
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
+
+import '../../../../library/library_file.dart';
 
 part 'tanda_hak_guna_event.dart';
 part 'tanda_hak_guna_state.dart';

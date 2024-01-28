@@ -1,7 +1,6 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
-import 'package:fl_pbi/library/app_theme.dart';
-import 'package:fl_pbi/library/common.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';

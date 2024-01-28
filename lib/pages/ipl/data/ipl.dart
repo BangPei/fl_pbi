@@ -1,4 +1,4 @@
-import 'package:fl_pbi/models/user.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 
 class IPL {

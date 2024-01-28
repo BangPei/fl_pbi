@@ -1,19 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_form_bloc.dart';
-import 'package:fl_pbi/widget.dart/clip_picture.dart';
-import 'package:fl_pbi/widget.dart/custom_appbar.dart';
-import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custom_formfield.dart';
-import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
-import 'package:fl_pbi/widget.dart/empty_image.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ParkingFormScreen extends StatefulWidget {
@@ -132,52 +122,15 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
                   },
                 ),
               ),
-              CustomFormField(
-                title: "Lampiran",
-                textForm: evidentBase64 != null
-                    ? ClipPicture(
-                        height: 40,
-                        onTap: () => pickPicture(),
-                        child: Image.memory(
-                          base64Decode(evidentBase64!),
-                          fit: BoxFit.fill,
-                        ),
-                      )
-                    : state.park?.picture != null
-                        ? ClipPicture(
-                            height: 40,
-                            onTap: () => pickPicture(),
-                            child: Image.network(
-                              state.park!.picture!,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : EmptyImageScreen(onTap: () => pickPicture()),
-              ),
+              ImageCamera(
+                base64: evidentBase64,
+                data: state.park?.picture,
+                onTap: (str) => evidentBase64 = str,
+              )
             ],
           );
         },
       ),
     );
-  }
-
-  pickPicture() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      String path = photo.path;
-      var result = await FlutterImageCompress.compressWithFile(
-        File(path).absolute.path,
-        minWidth: 1000,
-        minHeight: 500,
-        quality: 94,
-        // rotate: 90,
-      );
-      evidentBase64 = base64Encode(result as List<int>);
-      setState(() {});
-    } else {
-      // ignore: avoid_print
-      print("err");
-    }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:fl_pbi/models/number.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/service/api.dart';

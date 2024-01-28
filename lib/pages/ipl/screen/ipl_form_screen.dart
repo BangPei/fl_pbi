@@ -1,16 +1,8 @@
-import 'dart:convert';
-
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:fl_pbi/library/common.dart';
-import 'package:fl_pbi/library/text_form_decoration.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/bloc/form_ipl_bloc.dart';
-import 'package:fl_pbi/widget.dart/clip_picture.dart';
-import 'package:fl_pbi/widget.dart/custom_appbar.dart';
-import 'package:fl_pbi/widget.dart/custom_form.dart';
-import 'package:fl_pbi/widget.dart/custom_formfield.dart';
-import 'package:fl_pbi/widget.dart/custome_datepicker.dart';
-import 'package:fl_pbi/widget.dart/empty_image.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -112,40 +104,10 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
                 },
               ),
             ),
-            CustomFormField(
-              title: "Lampiran",
-              textForm: evidentBase64 != null
-                  ? ClipPicture(
-                      height: 40,
-                      onTap: () async {
-                        evidentBase64 = await Common.pickPicture(SOURCE.camera);
-                        setState(() {});
-                      },
-                      child: Image.memory(
-                        base64Decode(evidentBase64!),
-                        fit: BoxFit.fill,
-                      ),
-                    )
-                  : state.ipl?.picture != null
-                      ? ClipPicture(
-                          height: 40,
-                          onTap: () async {
-                            evidentBase64 =
-                                await Common.pickPicture(SOURCE.camera);
-                            setState(() {});
-                          },
-                          child: Image.network(
-                            state.ipl!.picture!,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : EmptyImageScreen(
-                          onTap: () async {
-                            evidentBase64 =
-                                await Common.pickPicture(SOURCE.camera);
-                            setState(() {});
-                          },
-                        ),
+            ImageCamera(
+              base64: evidentBase64,
+              data: state.ipl?.picture,
+              onTap: (str) => evidentBase64 = str,
             ),
           ],
         );

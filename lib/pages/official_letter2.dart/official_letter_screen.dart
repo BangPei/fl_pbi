@@ -1,7 +1,5 @@
-import 'package:fl_pbi/models/offcial_letter.dart';
-import 'package:fl_pbi/widget.dart/card_banner.dart';
-import 'package:fl_pbi/widget.dart/custom_appbar.dart';
-import 'package:fl_pbi/widget.dart/custom_badge.dart';
+import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

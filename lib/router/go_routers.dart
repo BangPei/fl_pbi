@@ -1,6 +1,5 @@
-import 'package:fl_pbi/injector/injector.dart';
-import 'package:fl_pbi/injector/navigation_service.dart';
-import 'package:fl_pbi/library/session_manager.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/main_layout/bottom_navigator.dart';
 import 'package:fl_pbi/pages/pages_screen.dart';
 import 'package:flutter/material.dart';

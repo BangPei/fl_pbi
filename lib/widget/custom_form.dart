@@ -1,5 +1,4 @@
-import 'package:fl_pbi/widget.dart/custom_Botton.dart';
-import 'package:fl_pbi/widget.dart/custom_appbar.dart';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
