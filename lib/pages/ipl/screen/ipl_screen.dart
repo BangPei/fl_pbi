@@ -62,38 +62,12 @@ class _ParkingScreenState extends State<IPLScreen> {
                     );
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const FormTitle(
-                      title: "Total IPL PerBulan Tahun ",
-                      fontSize: 15,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 20,
-                      ),
-                    ),
-                    InkWell(
-                      child: Text(
-                        year,
-                        style: const TextStyle(
-                          color: AppTheme.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                      onTap: () {
-                        Common.yearPicker(
-                          selecteYear: int.parse(year),
-                          context: context,
-                          onTap: (dt) {
-                            year = dt.year.toString();
-                            context.read<IplBloc>().add(OnGetTrans(year, type));
-                            setState(() {});
-                          },
-                        );
-                      },
-                    )
-                  ],
+                TitleList(
+                  title: "Total IPL PerBulan Tahun",
+                  type: type,
+                  year: year,
+                  onTapDate: () =>
+                      context.read<IplBloc>().add(OnGetTrans(year, type)),
                 ),
                 ButtonInOut(
                   onTap: (idx) {

@@ -1,8 +1,10 @@
 part of 'finanace_bloc.dart';
 
-sealed class FinanaceEvent extends Equatable {
-  const FinanaceEvent();
+abstract class FinanceEvent extends Equatable {
+  const FinanceEvent();
+}
 
+class OnGetTotal extends FinanceEvent {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }

@@ -14,6 +14,36 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
     on<OnGetSummary>(_onGetSummary);
     on<OnLoadMore>(_onLoadMore);
     on<OnRemovePark>(_onRemovePark);
+    on<OnGetTrans>(_onGetTrans);
+  }
+
+  void _onGetTrans(OnGetTrans event, Emitter<ParkingState> emit) async {
+    try {
+      emit(state.copyWith(listLoading: true));
+      List<Trans> trans = await ParkingApi.getyearly(event.year, event.type);
+      emit(state.copyWith(listLoading: false, trans: trans));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          cardLoaing: false,
+          listLoading: false,
+          cashFlow: state.cashFlow,
+          trans: state.trans,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          cardLoaing: false,
+          listLoading: false,
+          cashFlow: state.cashFlow,
+          trans: state.trans,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
   }
 
   void _onGetTotal(OnGetTotal event, Emitter<ParkingState> emit) async {

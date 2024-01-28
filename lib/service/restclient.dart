@@ -86,14 +86,18 @@ abstract class RestClient {
   Future<CashFlow> getIplTotal();
 
   @POST("ipl")
-  Future<IPL> postIPL(@Body() Parking park);
+  Future<IPL> postIPL(@Body() IPL park);
 
   @PUT("ipl/{id}")
-  Future<IPL> putIPL(@Path() int id, @Body() Parking park);
+  Future<IPL> putIPL(@Path() int id, @Body() IPL park);
 
   @GET("finance/total")
   Future<Finance> getFinanceTotal();
 
   @GET("ipl/yearly/{year}/type/{type}")
   Future<List<Trans>> getIplYearly(@Path() String year, @Path() String type);
+
+  @GET("transaction/yearly/{year}/type/{type}")
+  Future<List<Trans>> getParkingYearly(
+      @Path() String year, @Path() String type);
 }

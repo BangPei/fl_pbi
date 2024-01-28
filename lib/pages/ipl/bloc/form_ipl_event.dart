@@ -5,6 +5,8 @@ abstract class FormIplEvent extends Equatable {
 }
 
 class OnInit extends FormIplEvent {
+  final int type;
+  const OnInit(this.type);
   @override
   List<Object?> get props => [];
 }
@@ -38,9 +40,8 @@ class OnChangedNote extends FormIplEvent {
 }
 
 class OnSubmit extends FormIplEvent {
-  final int type;
   final String? image;
-  const OnSubmit({required this.type, this.image});
+  const OnSubmit(this.image);
   @override
   List<Object?> get props => [];
 }

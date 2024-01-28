@@ -1,11 +1,9 @@
 import 'dart:typed_data';
-import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:jiffy/jiffy.dart';
 import 'package:printing/printing.dart';
-
-import '../../../library/library_file.dart';
+import 'package:fl_pbi/library/library_file.dart';
 
 class SuratSewaLahan {
   String? name;
@@ -102,7 +100,6 @@ class SuratSewaLahan {
     final font1 = await PdfGoogleFonts.tinosRegular();
     final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
-    final oCcy = NumberFormat("#,###", "en_US");
     String day = (date == null)
         ? '............'
         : Jiffy.parse(date!, pattern: "yyyy-MM-DD").format(pattern: 'EEEE');
@@ -243,7 +240,7 @@ class SuratSewaLahan {
                 ),
                 pw.TextSpan(
                   text:
-                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik $areaCompany',
+                      'dengan luas lahan (+-) ${(wide! < 1) ? "........." : Common.oCcy.format(wide)} m2 yang terletak di Perumahan Bumi Indah Area $areaName milik $areaCompany',
                 ),
               ],
             ),

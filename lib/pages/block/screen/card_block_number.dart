@@ -3,7 +3,6 @@ import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
 class CardBlockNumber extends StatelessWidget {
   final BlockDetail blockDetail;
@@ -16,7 +15,6 @@ class CardBlockNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,###", "en_US");
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -55,7 +53,7 @@ class CardBlockNumber extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Rp. ${oCcy.format(blockDetail.price)}",
+                        "Rp. ${Common.oCcy.format(blockDetail.price)}",
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,

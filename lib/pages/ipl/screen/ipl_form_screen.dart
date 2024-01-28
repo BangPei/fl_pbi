@@ -6,6 +6,7 @@ import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jiffy/jiffy.dart';
 
 class IPLFormScreen extends StatefulWidget {
   final int type;
@@ -18,15 +19,18 @@ class IPLFormScreen extends StatefulWidget {
 
 class _IPLFormScreenState extends State<IPLFormScreen> {
   late FocusNode dateFocusNode;
-  String? evidentBase64;
+  String? evidentBase64, title;
   TextEditingController dateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController remarkController = TextEditingController();
+  late bool isIn;
 
   @override
   void initState() {
+    isIn = widget.type == 1;
+    title = isIn ? 'Form Uang Masuk IPL' : 'Form Uang Keluar IPL';
     if (widget.id == null) {
-      context.read<FormIplBloc>().add(OnInit());
+      context.read<FormIplBloc>().add(OnInit(widget.type));
     }
     dateFocusNode = FocusNode();
     super.initState();
@@ -40,87 +44,118 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FormIplBloc, FormIplState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return Scaffold(
-            appBar: CustomAppbar(
-              title: "IPL Form",
-              leading: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(Icons.arrow_back),
-              ),
-            ),
-            body: const Center(child: CircularProgressIndicator()),
+    return BlocListener<FormIplBloc, FormIplState>(
+      listener: (context, state) {
+        if (state.isSuccess) {
+          Common.modalInfo(
+            context,
+            title: "Success",
+            message: "Berhasil Merubah Data",
+            mode: MODE.success,
           );
         }
-        return CustomForm(
-          title: "IPL Form",
-          onSubmit: () {
-            context
-                .read<FormIplBloc>()
-                .add(OnSubmit(type: 1, image: evidentBase64));
-          },
-          buttonTitle: "Simpan",
-          children: [
-            CustomFormField(
-              title: "Periode",
-              textForm: CustomDatePicker(
-                display: DISPLAY.month,
-                focusNode: dateFocusNode,
-                validator: ValidForm.emptyValue,
-                onCloseDatepicker: (val) {
-                  context.read<FormIplBloc>().add(OnChangedDate(val!));
-                },
-                controller: dateController,
-              ),
-            ),
-            CustomFormField(
-              title: "Blok",
-              textForm: DropdownWidget(state: state),
-            ),
-            CustomFormField(
-              title: "Jumlah Uang",
-              textForm: TextFormField(
-                controller: amountController,
-                validator: ValidForm.emptyValue,
-                keyboardType: TextInputType.number,
-                decoration: TextFormDecoration.box(),
-                onChanged: (val) {
-                  val = val == "" ? "0" : val;
-                  double data = double.parse(val);
-                  context.read<FormIplBloc>().add(OnChangedAmount(data));
-                },
-              ),
-            ),
-            CustomFormField(
-              title: "Keterangan",
-              textForm: TextFormField(
-                controller: remarkController,
-                validator: ValidForm.emptyValue,
-                decoration: TextFormDecoration.box(),
-                onChanged: (val) {
-                  context.read<FormIplBloc>().add(OnChangedNote(val));
-                },
-              ),
-            ),
-            ImageCamera(
-              base64: evidentBase64,
-              data: state.ipl?.picture,
-              onTap: (str) => evidentBase64 = str,
-            ),
-          ],
-        );
+        if (state.isError) {
+          Common.modalInfo(
+            context,
+            title: "Gagal",
+            message: state.errorMessage,
+            mode: MODE.error,
+          );
+        }
+        if (state.ipl?.date != null) {
+          dateController.text = Jiffy.parse(state.ipl!.date!)
+              .format(pattern: isIn ? "MMMM yyyy" : "dd MMMM yyyy");
+        } else {
+          dateController.text = "";
+        }
       },
+      child: BlocBuilder<FormIplBloc, FormIplState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return Scaffold(
+              appBar: CustomAppbar(
+                title: title!,
+                leading: IconButton(
+                  onPressed: () => context.pop(),
+                  icon: const Icon(Icons.arrow_back),
+                ),
+              ),
+              body: const Center(child: CircularProgressIndicator()),
+            );
+          }
+          return CustomForm(
+            title: title!,
+            onSubmit: () {
+              context.read<FormIplBloc>().add(OnSubmit(evidentBase64));
+            },
+            buttonTitle: "Simpan",
+            children: [
+              CustomFormField(
+                title: isIn ? "Periode" : "Tanggal Keluar",
+                textForm: CustomDatePicker(
+                  display: isIn ? DISPLAY.month : DISPLAY.date,
+                  focusNode: dateFocusNode,
+                  validator: ValidForm.emptyValue,
+                  onCloseDatepicker: (val) {
+                    context.read<FormIplBloc>().add(OnChangedDate(val!));
+                  },
+                  controller: dateController,
+                ),
+              ),
+              Visibility(
+                visible: isIn,
+                child: CustomFormField(
+                  title: "Blok",
+                  textForm: DropdownWidget(
+                    state: state,
+                    isVisible: isIn,
+                  ),
+                ),
+              ),
+              CustomFormField(
+                title: "Jumlah Uang",
+                textForm: TextFormField(
+                  controller: amountController,
+                  validator: widget.type == 1 ? ValidForm.emptyValue : null,
+                  keyboardType: TextInputType.number,
+                  decoration: TextFormDecoration.box(),
+                  onChanged: (val) {
+                    val = val == "" ? "0" : val;
+                    double data = double.parse(val);
+                    context.read<FormIplBloc>().add(OnChangedAmount(data));
+                  },
+                ),
+              ),
+              CustomFormField(
+                title: "Keterangan",
+                textForm: TextFormField(
+                  controller: remarkController,
+                  decoration: TextFormDecoration.box(),
+                  onChanged: (val) {
+                    context.read<FormIplBloc>().add(OnChangedNote(val));
+                  },
+                ),
+              ),
+              ImageCamera(
+                base64: evidentBase64,
+                data: state.ipl?.picture,
+                onTap: (str) => evidentBase64 = str,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
 
 class DropdownWidget extends StatelessWidget {
   final FormIplState state;
+  final bool isVisible;
   const DropdownWidget({
     super.key,
     required this.state,
+    required this.isVisible,
   });
 
   @override
@@ -165,7 +200,8 @@ class DropdownWidget extends StatelessWidget {
           ),
         ),
       ),
-      validator: (value) => ValidForm.emptyValue(value?.name),
+      validator:
+          isVisible ? (value) => ValidForm.emptyValue(value?.name) : null,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: TextFormDecoration.box(),
       ),

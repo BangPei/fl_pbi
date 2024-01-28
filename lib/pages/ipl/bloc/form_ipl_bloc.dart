@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -20,17 +21,42 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
   }
 
   void _onSubmit(OnSubmit event, Emitter<FormIplState> emit) async {
-    IPL ipl = state.ipl ?? IPL();
-    if (event.image != null) {
-      ipl.picture = event.image;
+    emit(state.copyWith(isLoading: true, isSuccess: false));
+    try {
+      IPL ipl = state.ipl ?? IPL();
+      if (event.image != null) {
+        ipl.picture = event.image;
+      }
+      IPL newIpl = await IplApi.post(ipl);
+      emit(state.copyWith(ipl: newIpl, isLoading: false, isSuccess: true));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          ipl: state.ipl,
+          isSuccess: false,
+          blockDetails: state.blockDetails,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          ipl: state.ipl,
+          isSuccess: false,
+          blockDetails: state.blockDetails,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
     }
-    ipl.type = event.type;
-    print(ipl);
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<FormIplState> emit) {
     IPL ipl = state.ipl ?? IPL();
-    ipl.date = Jiffy.parseFromDateTime(event.val).format(pattern: "01-MM-yyyy");
+    ipl.date = Jiffy.parseFromDateTime(event.val)
+        .format(pattern: ipl.type == 1 ? "yyyy-MM-01" : "yyyy-MM-dd");
     emit(state.copyWith(ipl: ipl));
   }
 
@@ -54,16 +80,11 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
   }
 
   void _onInit(OnInit event, Emitter<FormIplState> emit) async {
-    emit(state.copyWith(isLoading: true, isSuccess: false));
+    emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
     try {
       List<BlockDetail> details = await BlockApi.getBlockDetails();
-      IPL ipl = state.ipl ?? IPL();
-
-      if (details.isNotEmpty) {
-        ipl.blockDetail = details[0];
-      } else {
-        ipl.blockDetail = BlockDetail();
-      }
+      IPL ipl = IPL();
+      ipl.type = event.type;
       emit(state.copyWith(
         blockDetails: details,
         ipl: ipl,

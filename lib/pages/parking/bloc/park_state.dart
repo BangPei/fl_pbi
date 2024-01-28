@@ -8,6 +8,7 @@ final class ParkingState extends Equatable {
     this.listLoading = true,
     this.isError = false,
     this.errorMessage,
+    this.trans,
     this.parks,
     this.serverSide,
   });
@@ -18,6 +19,7 @@ final class ParkingState extends Equatable {
   final bool isError;
   final bool loadMore;
   final String? errorMessage;
+  final List<Trans>? trans;
   final List<Parking>? parks;
   final ServerSide? serverSide;
 
@@ -27,6 +29,7 @@ final class ParkingState extends Equatable {
     bool? loadMore,
     bool? listLoading,
     bool? isError,
+    List<Trans>? trans,
     String? errorMessage,
     ServerSide? serverSide,
     List<Parking>? parks,
@@ -40,6 +43,7 @@ final class ParkingState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       parks: parks ?? this.parks,
       serverSide: serverSide ?? this.serverSide,
+      trans: trans ?? this.trans,
     );
   }
 
@@ -53,5 +57,6 @@ final class ParkingState extends Equatable {
         serverSide,
         listLoading,
         loadMore,
+        trans,
       ];
 }

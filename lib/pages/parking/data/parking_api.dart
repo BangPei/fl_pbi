@@ -38,4 +38,10 @@ class ParkingApi {
     var data = client.putParking(parking.id, parking);
     return data;
   }
+
+  static Future<List<Trans>> getyearly(String year, String type) async {
+    final client = await Api.restClient();
+    var data = client.getParkingYearly(year, type);
+    return data;
+  }
 }

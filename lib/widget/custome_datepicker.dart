@@ -37,7 +37,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   void initState() {
     if (widget.controller.text.isNotEmpty) {
       dateTime =
-          Jiffy.parse(widget.controller.text, pattern: "dd MMMM yyyy").dateTime;
+          Jiffy.parse(widget.controller.text, pattern: format()).dateTime;
     }
     super.initState();
   }

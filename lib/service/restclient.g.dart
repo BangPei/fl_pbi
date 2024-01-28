@@ -659,7 +659,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<IPL> postIPL(Parking park) async {
+  Future<IPL> postIPL(IPL park) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -689,7 +689,7 @@ class _RestClient implements RestClient {
   @override
   Future<IPL> putIPL(
     int id,
-    Parking park,
+    IPL park,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -762,6 +762,38 @@ class _RestClient implements RestClient {
             .compose(
               _dio.options,
               'ipl/yearly/${year}/type/${type}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => Trans.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<List<Trans>> getParkingYearly(
+    String year,
+    String type,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<Trans>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'transaction/yearly/${year}/type/${type}',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -1,7 +1,5 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
-import 'package:fl_pbi/pages/parking/card_summary.dart';
-import 'package:fl_pbi/pages/parking/list_screen.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,14 +14,12 @@ class ParkingScreen extends StatefulWidget {
 }
 
 class _ParkingScreenState extends State<ParkingScreen> {
-  final ScrollController _controller = ScrollController();
+  String year = "2024";
+  String type = "1";
   @override
   void initState() {
-    _controller.addListener(() {
-      if (_controller.position.maxScrollExtent == _controller.offset) {
-        context.read<ParkingBloc>().add(OnLoadMore());
-      }
-    });
+    context.read<ParkingBloc>().add(OnGetTotal());
+    context.read<ParkingBloc>().add(OnGetTrans(year, type));
     super.initState();
   }
 
@@ -58,35 +54,48 @@ class _ParkingScreenState extends State<ParkingScreen> {
           context.read<ParkingBloc>().add(OnGetTotal());
         },
         child: SingleChildScrollView(
-          controller: _controller,
           physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CardSummary(),
-                const FormTitle(
-                  title: "Histori Uang Masuk dan Keluar",
-                  padding: EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 20,
-                  ),
-                ),
-                const ListSummaryScreen(),
                 BlocBuilder<ParkingBloc, ParkingState>(
                   builder: (context, state) {
-                    if (state.loadMore) {
-                      return const SizedBox(
-                        height: 70,
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
+                    if (state.cardLoaing) {
+                      return const LoadingScreen();
                     }
-                    return const SizedBox.shrink();
+                    return CardTotal(
+                      data: state.cashFlow?.rest,
+                    );
                   },
-                )
+                ),
+                TitleList(
+                  title: "Total Parkir PerBulan Tahun",
+                  type: type,
+                  year: year,
+                  onTapDate: () {},
+                ),
+                ButtonInOut(
+                  onTap: (idx) {
+                    type = idx >= 1 ? "2" : "1";
+                    setState(() {});
+                  },
+                ),
+                BlocBuilder<ParkingBloc, ParkingState>(
+                  builder: (context, state) {
+                    if (state.listLoading) {
+                      return const LoadingScreen();
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: ListTransaction(
+                        trans: state.trans ?? [],
+                        type: int.parse(type),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

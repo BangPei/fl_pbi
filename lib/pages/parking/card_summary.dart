@@ -3,7 +3,6 @@ import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 class CardSummary extends StatefulWidget {
@@ -18,7 +17,6 @@ class CardSummary extends StatefulWidget {
 class _CardSummaryState extends State<CardSummary> {
   bool _visible = false;
   IconData _iconData = Icons.visibility_off;
-  final oCcy = NumberFormat("#,###", "en_US");
 
   @override
   void initState() {
@@ -85,7 +83,7 @@ class _CardSummaryState extends State<CardSummary> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Rp. ${_visible ? oCcy.format(state.cashFlow?.rest ?? 0) : "*********"}",
+                          "Rp. ${_visible ? Common.oCcy.format(state.cashFlow?.rest ?? 0) : "*********"}",
                           style: const TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -113,7 +111,7 @@ class _CardSummaryState extends State<CardSummary> {
                       children: [
                         MoneyWidget(
                           data:
-                              "Rp. ${_visible ? oCcy.format(state.cashFlow?.inCome ?? 0) : "*********"}",
+                              "Rp. ${_visible ? Common.oCcy.format(state.cashFlow?.inCome ?? 0) : "*********"}",
                           title: "Uang Masuk",
                           icon: Image.asset(
                             Common.imageEaten,
@@ -123,7 +121,7 @@ class _CardSummaryState extends State<CardSummary> {
                         ),
                         MoneyWidget(
                           data:
-                              "Rp. ${_visible ? oCcy.format(state.cashFlow?.outCome ?? 0) : "*********"}",
+                              "Rp. ${_visible ? Common.oCcy.format(state.cashFlow?.outCome ?? 0) : "*********"}",
                           title: "Uang Keluar",
                           icon: Image.asset(
                             Common.imageBurned,

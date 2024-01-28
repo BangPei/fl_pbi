@@ -1,6 +1,5 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CardTotal extends StatefulWidget {
   final dynamic data;
@@ -13,7 +12,6 @@ class CardTotal extends StatefulWidget {
 class _CardTotalState extends State<CardTotal> {
   bool _visible = false;
   IconData _iconData = Icons.visibility_off;
-  final oCcy = NumberFormat("#,###", "en_US");
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +43,7 @@ class _CardTotalState extends State<CardTotal> {
                     ),
                   ),
                   Text(
-                    "Rp. ${_visible ? oCcy.format(widget.data) : "*********"}",
+                    "Rp. ${_visible ? Common.oCcy.format(widget.data) : "*********"}",
                     style: const TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,

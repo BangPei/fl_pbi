@@ -1,7 +1,6 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ListTransaction extends StatelessWidget {
   final List<Trans> trans;
@@ -14,7 +13,6 @@ class ListTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,###", "en_US");
     return ListView.builder(
       shrinkWrap: true,
       physics: const ScrollPhysics(),
@@ -45,7 +43,7 @@ class ListTransaction extends StatelessWidget {
               dense: true,
               visualDensity: const VisualDensity(vertical: -3),
               subtitle: Text(
-                "Rp. ${oCcy.format(tran.amount ?? 0)}",
+                "Rp. ${Common.oCcy.format(tran.amount ?? 0)}",
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   color: AppTheme.blue,

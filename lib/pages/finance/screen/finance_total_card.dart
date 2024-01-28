@@ -1,12 +1,13 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 class FinanceTotalCard extends StatefulWidget {
-  const FinanceTotalCard({super.key});
+  final Finance data;
+  const FinanceTotalCard({super.key, required this.data});
 
   @override
   State<FinanceTotalCard> createState() => _FinanceTotalCardState();
@@ -15,7 +16,6 @@ class FinanceTotalCard extends StatefulWidget {
 class _FinanceTotalCardState extends State<FinanceTotalCard> {
   bool _visible = false;
   IconData _iconData = Icons.visibility_off;
-  final oCcy = NumberFormat("#,###", "en_US");
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -67,7 +67,7 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Rp. ${_visible ? oCcy.format(0) : "*********"}",
+                    "Rp. ${_visible ? Common.oCcy.format(widget.data.rest) : "*********"}",
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -94,7 +94,8 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
               child: Row(
                 children: [
                   MoneyWidget(
-                    data: "Rp. ${_visible ? oCcy.format(0) : "*********"}",
+                    data:
+                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalPark) : "*********"}",
                     title: "Saldo Parkir",
                     icon: Image.asset(
                       Common.imageEaten,
@@ -103,7 +104,8 @@ class _FinanceTotalCardState extends State<FinanceTotalCard> {
                     onTap: () => context.goNamed('parking'),
                   ),
                   MoneyWidget(
-                    data: "Rp. ${_visible ? oCcy.format(0) : "*********"}",
+                    data:
+                        "Rp. ${_visible ? Common.oCcy.format(widget.data.totalIpl) : "*********"}",
                     title: "Saldo IPL",
                     icon: Image.asset(
                       Common.imageBurned,

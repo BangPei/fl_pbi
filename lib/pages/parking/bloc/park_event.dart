@@ -25,3 +25,10 @@ class OnRemovePark extends ParkingEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnGetTrans extends ParkingEvent {
+  final String year, type;
+  const OnGetTrans(this.year, this.type);
+  @override
+  List<Object?> get props => [];
+}

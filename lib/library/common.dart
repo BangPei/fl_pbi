@@ -29,7 +29,7 @@ class Common {
     filter: {"#": RegExp(r'[0-9]')},
     type: MaskAutoCompletionType.eager,
   );
-  static final oCcy = NumberFormat("#,###", "en_US");
+  static final oCcy = NumberFormat("#,###.##", "en_US");
 
   static const double inch = 72.0;
   static const double cm = inch / 2.54;

@@ -109,7 +109,6 @@ class HakGuna {
     final font1 = await PdfGoogleFonts.tinosRegular();
     final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
-    // final oCcy = NumberFormat("#,###", "en_US");
     double lineSpacing = 1.2 * PdfPageFormat.mm;
     String day = (createdAt == null)
         ? '............'

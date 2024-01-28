@@ -61,6 +61,8 @@ class IPL {
     }
     if (blockDetail != null) {
       data['block_detail'] = blockDetail!.toJson();
+    } else {
+      data['block_detail'] = null;
     }
     return data;
   }
