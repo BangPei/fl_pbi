@@ -11,6 +11,7 @@ final class IplState extends Equatable {
       this.trans,
       this.ipls,
       this.serverSide,
+      this.listOpen,
       this.blocks});
 
   final CashFlow? cashFlow;
@@ -22,6 +23,7 @@ final class IplState extends Equatable {
   final List<IPL>? ipls;
   final List<Block>? blocks;
   final List<Trans>? trans;
+  final List<bool>? listOpen;
   final ServerSide? serverSide;
 
   IplState copyWith({
@@ -34,6 +36,7 @@ final class IplState extends Equatable {
     ServerSide? serverSide,
     List<IPL>? ipls,
     List<Block>? blocks,
+    List<bool>? listOpen,
     List<Trans>? trans,
   }) {
     return IplState(
@@ -45,6 +48,7 @@ final class IplState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       ipls: ipls ?? this.ipls,
       trans: trans ?? this.trans,
+      listOpen: listOpen ?? this.listOpen,
       serverSide: serverSide ?? this.serverSide,
       blocks: blocks ?? this.blocks,
     );
@@ -62,5 +66,6 @@ final class IplState extends Equatable {
         listLoading,
         loadMore,
         blocks,
+        listOpen
       ];
 }

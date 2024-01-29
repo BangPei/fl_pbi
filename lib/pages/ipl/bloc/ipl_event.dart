@@ -22,3 +22,11 @@ class OnGetSummary extends IplEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnChangedPanelOpen extends IplEvent {
+  final bool expand;
+  final int index;
+  const OnChangedPanelOpen(this.index, this.expand);
+  @override
+  List<Object?> get props => [];
+}

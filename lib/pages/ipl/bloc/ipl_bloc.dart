@@ -15,13 +15,28 @@ class IplBloc extends Bloc<IplEvent, IplState> {
     on<OnGetTotal>(_onGetTotal);
     on<OnGetTrans>(_onGetTrans);
     on<OnGetSummary>(_onGetSummary);
+    on<OnChangedPanelOpen>(_onChangedPanelOpen);
+  }
+
+  void _onChangedPanelOpen(OnChangedPanelOpen event, Emitter<IplState> emit) {
+    List<bool> listOpen = state.listOpen ?? [];
+    listOpen[event.index] = event.expand;
+    emit(state.copyWith(listOpen: listOpen));
   }
 
   void _onGetSummary(OnGetSummary event, Emitter<IplState> emit) async {
     try {
       emit(state.copyWith(listLoading: true));
       List<Block> blocks = await BlockApi.getBlocks(params: event.map);
-      emit(state.copyWith(listLoading: false, blocks: blocks));
+      List<bool> listOpen = [];
+      for (var i = 0; i < blocks.length; i++) {
+        listOpen.add(false);
+      }
+      emit(state.copyWith(
+        listLoading: false,
+        blocks: blocks,
+        listOpen: listOpen,
+      ));
     } catch (e) {
       if (e.runtimeType == DioException) {
         DioException err = e as DioException;
