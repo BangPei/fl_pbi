@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/block/data/block.dart';
+import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,38 @@ class IplBloc extends Bloc<IplEvent, IplState> {
   IplBloc() : super(const IplState()) {
     on<OnGetTotal>(_onGetTotal);
     on<OnGetTrans>(_onGetTrans);
+    on<OnGetSummary>(_onGetSummary);
+  }
+
+  void _onGetSummary(OnGetSummary event, Emitter<IplState> emit) async {
+    try {
+      emit(state.copyWith(listLoading: true));
+      List<Block> blocks = await BlockApi.getBlocks(params: event.map);
+      emit(state.copyWith(listLoading: false, blocks: blocks));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          cardLoaing: false,
+          cashFlow: state.cashFlow,
+          ipls: state.ipls,
+          serverSide: state.serverSide,
+          trans: state.trans,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          cardLoaing: false,
+          cashFlow: state.cashFlow,
+          trans: state.trans,
+          isError: true,
+          ipls: state.ipls,
+          serverSide: state.serverSide,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
   }
 
   void _onGetTotal(OnGetTotal event, Emitter<IplState> emit) async {

@@ -162,6 +162,21 @@ class RouteNavigation {
                       );
                     },
                   ),
+                  GoRoute(
+                    parentNavigatorKey: _nav.navKey,
+                    path: 'detail',
+                    name: "ipl-detail",
+                    pageBuilder: (context, state) {
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: IPLDetailScreen(
+                          type: extra['type'],
+                          month: extra['month'],
+                          year: extra['year'],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               )
             ],

@@ -15,3 +15,10 @@ class OnGetTrans extends IplEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnGetSummary extends IplEvent {
+  final Map<String, dynamic>? map;
+  const OnGetSummary({this.map});
+  @override
+  List<Object?> get props => [];
+}

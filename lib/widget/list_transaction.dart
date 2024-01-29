@@ -57,6 +57,10 @@ class ListTransaction extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              trailing: const Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: AppTheme.grey,
+              ),
               onTap: () => onTap(tran),
             ),
           ),

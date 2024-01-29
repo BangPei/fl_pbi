@@ -1,17 +1,17 @@
 part of 'ipl_bloc.dart';
 
 final class IplState extends Equatable {
-  const IplState({
-    this.cashFlow,
-    this.cardLoaing = true,
-    this.loadMore = true,
-    this.listLoading = true,
-    this.isError = false,
-    this.errorMessage,
-    this.trans,
-    this.ipls,
-    this.serverSide,
-  });
+  const IplState(
+      {this.cashFlow,
+      this.cardLoaing = true,
+      this.loadMore = true,
+      this.listLoading = true,
+      this.isError = false,
+      this.errorMessage,
+      this.trans,
+      this.ipls,
+      this.serverSide,
+      this.blocks});
 
   final CashFlow? cashFlow;
   final bool cardLoaing;
@@ -20,6 +20,7 @@ final class IplState extends Equatable {
   final bool loadMore;
   final String? errorMessage;
   final List<IPL>? ipls;
+  final List<Block>? blocks;
   final List<Trans>? trans;
   final ServerSide? serverSide;
 
@@ -32,6 +33,7 @@ final class IplState extends Equatable {
     String? errorMessage,
     ServerSide? serverSide,
     List<IPL>? ipls,
+    List<Block>? blocks,
     List<Trans>? trans,
   }) {
     return IplState(
@@ -44,6 +46,7 @@ final class IplState extends Equatable {
       ipls: ipls ?? this.ipls,
       trans: trans ?? this.trans,
       serverSide: serverSide ?? this.serverSide,
+      blocks: blocks ?? this.blocks,
     );
   }
 
@@ -58,5 +61,6 @@ final class IplState extends Equatable {
         serverSide,
         listLoading,
         loadMore,
+        blocks,
       ];
 }

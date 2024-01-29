@@ -97,7 +97,16 @@ class _ParkingScreenState extends State<IPLScreen> {
                       child: ListTransaction(
                         trans: state.trans ?? [],
                         type: int.parse(type),
-                        onTap: (tran) {},
+                        onTap: (tran) {
+                          context.goNamed(
+                            'ipl-detail',
+                            extra: {
+                              "type": int.parse(type),
+                              "month": tran.month,
+                              "year": tran.year
+                            },
+                          );
+                        },
                       ),
                     );
                   },

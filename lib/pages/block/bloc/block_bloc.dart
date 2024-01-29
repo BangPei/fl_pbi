@@ -14,9 +14,9 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
 
   void _onGetBlocks(OnGetBlocks event, Emitter<BlockState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isError: false));
       List<Block> blocks = await BlockApi.getBlocks();
-      emit(state.copyWith(isLoading: false, blocks: blocks));
+      emit(state.copyWith(isLoading: false, blocks: blocks, isError: false));
     } catch (e) {
       if (e.runtimeType == DioException) {
         DioException err = e as DioException;

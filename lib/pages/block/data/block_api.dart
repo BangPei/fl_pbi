@@ -16,8 +16,8 @@ class BlockApi {
     return data;
   }
 
-  static Future<List<Block>> getBlocks() async {
-    final client = await Api.restClient();
+  static Future<List<Block>> getBlocks({Map<String, dynamic>? params}) async {
+    final client = await Api.restClient(params: params);
     var data = client.getBlocks();
     return data;
   }

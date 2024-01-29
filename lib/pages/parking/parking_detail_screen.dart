@@ -27,6 +27,7 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
       "type": widget.type,
       "month": widget.month,
       "year": widget.year,
+      "perpage": 50,
     };
     context.read<ParkingBloc>().add(OnGetSummary(map: map));
     super.initState();

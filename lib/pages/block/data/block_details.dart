@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 
 class BlockDetail {
   int? id;
@@ -13,21 +14,22 @@ class BlockDetail {
   String? createdAt;
   String? updatedAt;
   bool? isBase64;
+  List<IPL>? ipls;
 
-  BlockDetail({
-    this.id,
-    this.code,
-    this.number,
-    this.name,
-    this.width = 0,
-    this.length = 0,
-    this.wide = 0,
-    this.price = 0,
-    this.picture,
-    this.createdAt,
-    this.updatedAt,
-    this.isBase64,
-  });
+  BlockDetail(
+      {this.id,
+      this.code,
+      this.number,
+      this.name,
+      this.width = 0,
+      this.length = 0,
+      this.wide = 0,
+      this.price = 0,
+      this.picture,
+      this.createdAt,
+      this.updatedAt,
+      this.isBase64,
+      this.ipls});
 
   BlockDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,6 +43,12 @@ class BlockDetail {
     picture = json['picture'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    if (json['ipls'] != null) {
+      ipls = <IPL>[];
+      json['ipls'].forEach((v) {
+        ipls!.add(IPL.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {

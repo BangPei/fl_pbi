@@ -50,7 +50,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<ParkingBloc>().add(OnGetSummary());
+          context.read<ParkingBloc>().add(const OnGetSummary());
           context.read<ParkingBloc>().add(OnGetTotal());
         },
         child: SingleChildScrollView(
