@@ -144,7 +144,12 @@ class RouteNavigation {
                     pageBuilder: (context, state) {
                       var extra = state.extra as Map<String, dynamic>;
                       return NoTransitionPage(
-                        child: IPLFormScreen(type: extra['type']),
+                        child: IPLFormScreen(
+                          type: extra['type'],
+                          blockCode: extra['blockCode'],
+                          month: extra['month'],
+                          year: extra['year'],
+                        ),
                       );
                     },
                   ),

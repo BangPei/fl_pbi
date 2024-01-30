@@ -6,7 +6,10 @@ abstract class FormIplEvent extends Equatable {
 
 class OnInit extends FormIplEvent {
   final int type;
-  const OnInit(this.type);
+  final int? year;
+  final String? blockCode;
+  final String? month;
+  const OnInit({required this.type, this.blockCode, this.month, this.year});
   @override
   List<Object?> get props => [];
 }

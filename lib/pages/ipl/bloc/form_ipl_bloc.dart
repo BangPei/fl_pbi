@@ -71,6 +71,15 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
       List<BlockDetail> details = await BlockApi.getBlockDetails();
       IPL ipl = IPL();
       ipl.type = event.type;
+      if (event.blockCode != null) {
+        ipl.blockDetail = state.ipl?.blockDetail ?? BlockDetail();
+        ipl.blockDetail = details.where((s) => s.code == event.blockCode).first;
+      }
+      // if (event.month != null && event.year != null) {
+      //   ipl.date = Jiffy.parse("01-${event.month}-${event.year}",
+      //           pattern: "dd-MM-yyyy")
+      //       .format(pattern: "yyyy-MM-dd");
+      // }
       emit(state.copyWith(
         blockDetails: details,
         ipl: ipl,

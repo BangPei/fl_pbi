@@ -11,7 +11,16 @@ import 'package:jiffy/jiffy.dart';
 class IPLFormScreen extends StatefulWidget {
   final int type;
   final int? id;
-  const IPLFormScreen({super.key, this.id, required this.type});
+  final int? year;
+  final String? blockCode;
+  final String? month;
+  const IPLFormScreen(
+      {super.key,
+      this.id,
+      required this.type,
+      this.blockCode,
+      this.year,
+      this.month});
 
   @override
   State<IPLFormScreen> createState() => _IPLFormScreenState();
@@ -30,7 +39,12 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
     isIn = widget.type == 1;
     title = isIn ? 'Form Uang Masuk IPL' : 'Form Uang Keluar IPL';
     if (widget.id == null) {
-      context.read<FormIplBloc>().add(OnInit(widget.type));
+      context.read<FormIplBloc>().add(OnInit(
+            type: widget.type,
+            blockCode: widget.blockCode,
+            month: widget.month,
+            year: widget.year,
+          ));
     }
     dateFocusNode = FocusNode();
     super.initState();

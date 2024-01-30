@@ -131,7 +131,11 @@ class _ParkingDetailScreenState extends State<IPLDetailScreen> {
                               ),
                             );
                           },
-                          body: BodyDetail(details: e.details ?? []),
+                          body: BodyDetail(
+                            details: e.details ?? [],
+                            month: widget.month,
+                            year: widget.year,
+                          ),
                         ),
                       );
                     })
@@ -148,7 +152,13 @@ class _ParkingDetailScreenState extends State<IPLDetailScreen> {
 
 class BodyDetail extends StatelessWidget {
   final List<BlockDetail> details;
-  const BodyDetail({super.key, required this.details});
+  final int year;
+  final String month;
+  const BodyDetail(
+      {super.key,
+      required this.details,
+      required this.year,
+      required this.month});
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +172,7 @@ class BodyDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  rowHeader(detail),
+                  rowHeader(context, detail: detail, year: year, month: month),
                   rowBody(detail.ipls ?? [], picture: detail.picture),
                 ],
               ),
@@ -173,40 +183,60 @@ class BodyDetail extends StatelessWidget {
     );
   }
 
-  Widget rowHeader(BlockDetail detail) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              detail.name ?? "",
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
+  Widget rowHeader(
+    BuildContext context, {
+    required BlockDetail detail,
+    required String month,
+    required int year,
+  }) {
+    return InkWell(
+      onTap: (detail.ipls ?? []).isNotEmpty
+          ? null
+          : () {
+              context.goNamed("ipl-form", extra: {
+                "type": 1,
+                'blockCode': detail.code,
+                'month': month,
+                'year': year,
+              });
+            },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                detail.name ?? "",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
               ),
-            ),
-            const Text(
-              "Nama Usaha : ",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
+              const Text(
+                "Nama Usaha : ",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
               ),
-            ),
-          ],
-        ),
-        Badge(
-          backgroundColor: (detail.ipls ?? []).isEmpty
-              ? AppTheme.nearlyDarkRed.withOpacity(0.8)
-              : AppTheme.blue.withOpacity(0.8),
-          textColor: AppTheme.white,
-          label: Text(
-            (detail.ipls ?? []).isEmpty ? "Belum Bayar" : "Sudah Bayar",
-            style: const TextStyle(fontSize: 9, fontStyle: FontStyle.italic),
+            ],
           ),
-        ),
-      ],
+          Center(
+            child: Badge(
+              backgroundColor: (detail.ipls ?? []).isEmpty
+                  ? AppTheme.nearlyDarkRed.withOpacity(0.8)
+                  : AppTheme.blue.withOpacity(0.8),
+              textColor: AppTheme.white,
+              label: Text(
+                (detail.ipls ?? []).isEmpty ? "Belum Bayar" : "Sudah Bayar",
+                style:
+                    const TextStyle(fontSize: 9, fontStyle: FontStyle.italic),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
