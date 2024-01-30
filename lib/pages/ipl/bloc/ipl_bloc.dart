@@ -25,8 +25,8 @@ class IplBloc extends Bloc<IplEvent, IplState> {
   }
 
   void _onGetSummary(OnGetSummary event, Emitter<IplState> emit) async {
+    emit(state.copyWith(listLoading: true));
     try {
-      emit(state.copyWith(listLoading: true));
       List<Block> blocks = await BlockApi.getBlocks(params: event.map);
       List<bool> listOpen = [];
       for (var i = 0; i < blocks.length; i++) {
