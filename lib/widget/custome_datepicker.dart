@@ -12,6 +12,7 @@ class CustomDatePicker extends StatefulWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
   final String? dateFormat;
+  final bool? enable;
   final FormFieldValidator<String>? validator;
   final Function(DateTime?) onCloseDatepicker;
   const CustomDatePicker({
@@ -25,6 +26,7 @@ class CustomDatePicker extends StatefulWidget {
     required this.controller,
     this.validator,
     this.display,
+    this.enable,
   });
 
   @override
@@ -46,6 +48,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: true,
+      enabled: widget.enable,
       validator: widget.validator,
       controller: widget.controller,
       decoration: TextFormDecoration.box(

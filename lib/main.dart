@@ -3,6 +3,7 @@ import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
 import 'package:fl_pbi/pages/finance/bloc/finanace_bloc.dart';
 import 'package:fl_pbi/pages/ipl/bloc/form_ipl_bloc.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
+import 'package:fl_pbi/pages/official_letter_form/serah_terima_kunci/bloc/serah_terima_kunci_bloc.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_form_bloc.dart';
 import 'package:fl_pbi/pages/profile/bloc/number_bloc.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<BlockBloc>(create: (__) => BlockBloc()),
         BlocProvider<FinanceBloc>(create: (__) => FinanceBloc()),
         BlocProvider<BlockFormBloc>(create: (__) => BlockFormBloc()),
+        BlocProvider<SerahTerimaKunciBloc>(
+            create: (__) => SerahTerimaKunciBloc()),
         BlocProvider<TandaHakGunaBloc>(create: (__) => TandaHakGunaBloc()),
         BlocProvider<PerjanjianHakGunaBloc>(
             create: (__) => PerjanjianHakGunaBloc()),

@@ -1,26 +1,27 @@
 import 'package:fl_pbi/library/library_file.dart';
-import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
+import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class ParkingDetailScreen extends StatefulWidget {
-  final int type, year;
+class IPLOutDetailScreen extends StatefulWidget {
   final String month;
-  const ParkingDetailScreen({
+  final int year;
+  final int type;
+  const IPLOutDetailScreen({
     super.key,
-    required this.type,
-    required this.year,
     required this.month,
+    required this.year,
+    required this.type,
   });
 
   @override
-  State<ParkingDetailScreen> createState() => _ParkingDetailScreenState();
+  State<IPLOutDetailScreen> createState() => _IPLOutDetailScreenState();
 }
 
-class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
+class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
   @override
   void initState() {
     Map<String, dynamic> map = {
@@ -29,7 +30,7 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
       "year": widget.year,
       "perpage": 100,
     };
-    context.read<ParkingBloc>().add(OnGetSummary(map: map));
+    context.read<IplBloc>().add(OnGetOutDetail(map));
     super.initState();
   }
 
@@ -37,7 +38,7 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        title: "Detail Parkir ${widget.month} ${widget.year}",
+        title: "Detail IPL ${widget.month} ${widget.year}",
         subTitle: Badge(
           backgroundColor:
               widget.type == 1 ? AppTheme.blue : AppTheme.nearlyDarkRed,
@@ -49,7 +50,7 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: BlocBuilder<ParkingBloc, ParkingState>(
+      body: BlocBuilder<IplBloc, IplState>(
         builder: (context, state) {
           if (state.listLoading) {
             return const Center(
@@ -58,12 +59,11 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           } else if (state.isError) {
             return Center(child: Text(state.errorMessage ?? "Error"));
           }
-          return ListSummaryScreen<Parking>(
-            list: state.parks ?? [],
-            onTap: (id) => context.goNamed("parking-form",
-                extra: {"type": widget.type, "id": id}),
+          return ListSummaryScreen<IPL>(
+            list: state.ipls ?? [],
+            onTap: (id) {},
             onConfirm: (id) {
-              context.read<ParkingBloc>().add(OnRemovePark(id));
+              context.read<IplBloc>().add(OnRemoveIPL(id));
             },
           );
         },

@@ -30,3 +30,22 @@ class OnChangedPanelOpen extends IplEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnGetOutDetail extends IplEvent {
+  final Map<String, dynamic> map;
+  const OnGetOutDetail(this.map);
+  @override
+  List<Object?> get props => [];
+}
+
+class OnLoadMore extends IplEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class OnRemoveIPL extends IplEvent {
+  final int? id;
+  const OnRemoveIPL(this.id);
+  @override
+  List<Object?> get props => [];
+}

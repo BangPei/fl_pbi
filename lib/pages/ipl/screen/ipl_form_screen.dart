@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/bloc/form_ipl_bloc.dart';
@@ -107,6 +106,7 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
               CustomFormField(
                 title: isIn ? "Periode" : "Tanggal Keluar",
                 textForm: CustomDatePicker(
+                  enable: widget.month == null,
                   display: isIn ? DISPLAY.month : DISPLAY.date,
                   focusNode: dateFocusNode,
                   validator: ValidForm.emptyValue,
@@ -120,9 +120,25 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
                 visible: isIn,
                 child: CustomFormField(
                   title: "Blok",
-                  textForm: DropdownWidget(
-                    state: state,
+                  textForm: DropdownWidget<BlockDetail>(
+                    enable: widget.blockCode == null,
                     isVisible: isIn,
+                    items: state.blockDetails ?? [],
+                    itemAsString: (item) => item.name ?? "",
+                    selectedItem: state.ipl?.blockDetail ?? BlockDetail(),
+                    onChanged: (BlockDetail? data) => context
+                        .read<FormIplBloc>()
+                        .add(OnChangedBlockDetail(data!)),
+                    validator: isIn
+                        ? (value) => ValidForm.emptyValue(value?.name)
+                        : null,
+                    child: (item) {
+                      return ListTile(
+                        title: Text(
+                          item.name ?? "",
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -159,70 +175,6 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
           );
         },
       ),
-    );
-  }
-}
-
-class DropdownWidget extends StatelessWidget {
-  final FormIplState state;
-  final bool isVisible;
-  const DropdownWidget({
-    super.key,
-    required this.state,
-    required this.isVisible,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownSearch<BlockDetail>(
-      selectedItem: state.ipl?.blockDetail ?? BlockDetail(),
-      popupProps: PopupProps.modalBottomSheet(
-        showSearchBox: true,
-        searchDelay: const Duration(milliseconds: 500),
-        itemBuilder: (context, item, isSelected) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 4.0,
-              horizontal: 10,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 252, 253, 253),
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 114, 100, 240),
-                    spreadRadius: 0.2,
-                    blurRadius: 2,
-                    offset: Offset(0, 1),
-                  )
-                ],
-              ),
-              child: ListTile(
-                title: Text(
-                  item.name ?? "",
-                ),
-              ),
-            ),
-          );
-        },
-        searchFieldProps: const TextFieldProps(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
-        ),
-      ),
-      validator:
-          isVisible ? (value) => ValidForm.emptyValue(value?.name) : null,
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: TextFormDecoration.box(),
-      ),
-      onChanged: (BlockDetail? data) =>
-          context.read<FormIplBloc>().add(OnChangedBlockDetail(data!)),
-      items: state.blockDetails ?? [],
-      itemAsString: (item) => item.name ?? "",
     );
   }
 }

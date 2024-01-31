@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:fl_pbi/models/models.dart';
+import 'package:terbilang_id/terbilang_id.dart';
 
 class HakGuna {
   String? no;
@@ -100,6 +101,229 @@ class HakGuna {
         ],
       ),
     );
+  }
+
+  Future<Uint8List> serahTerimaPdf() async {
+    final pdf = pw.Document(
+      pageMode: PdfPageMode.outlines,
+    );
+    final font1 = await PdfGoogleFonts.tinosRegular();
+    final font2 = await PdfGoogleFonts.tinosBold();
+    final image = await imageFromAssetBundle('images/logo.png');
+    Jiffy.setLocale('id');
+    String day = (createdAt == null)
+        ? '.................'
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
+            .format(pattern: 'EEEE');
+
+    late String strDate;
+    late String strYear;
+    if (createdAt != null) {
+      String dateNum =
+          Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd").format(pattern: 'd');
+      strDate = Terbilang().terbilang(double.parse(dateNum));
+      String year = Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
+          .format(pattern: 'yyyy');
+      strYear = Terbilang().terbilang(double.parse(year));
+    } else {
+      strDate = '............................';
+      strYear = '.............................................';
+    }
+    String month = createdAt == null
+        ? '...............'
+        : Jiffy.parse(createdAt!, pattern: "yyyy-MM-dd")
+            .format(pattern: 'MMMM');
+
+    double lineSpacing = 1.2 * PdfPageFormat.mm;
+    pdf.addPage(pw.MultiPage(
+      pageFormat: Common.a4.copyWith(
+        marginBottom: 1.5 * PdfPageFormat.cm,
+        marginLeft: 35,
+        marginRight: 35,
+        marginTop: 35,
+      ),
+      theme: pw.ThemeData.withFont(
+        base: font1,
+        bold: font2,
+      ),
+      orientation: pw.PageOrientation.portrait,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      header: (pw.Context context) => Common.headers(image),
+      build: (context) => [
+        pw.SizedBox(height: 10),
+        pw.Center(
+          child: pw.Text(
+            "BERITA ACARA SERAH TERIMA KUNCI",
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
+        ),
+        pw.SizedBox(height: 30),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text:
+                '\t\t\t\t\t\t\t\t\t\t\t\tPada hari ini $day Tanggal $strDate Bulan $month Tahun $strYear, yang bertandatangan dibawah ini :',
+          ),
+        ),
+        pw.SizedBox(height: 10),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 50),
+          child: pw.Column(
+            children: [
+              rowIdentity("Nama", pic?.name ?? ""),
+              rowIdentity("No. KTP", pic?.nik ?? ""),
+              rowIdentity("No. Telp", pic?.phone ?? ""),
+              rowIdentity("Jabatan", pic?.job ?? ""),
+              rowIdentity("Alamat", pic?.address ?? ""),
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 10),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text: 'Yang selanjutnya disebut ',
+            children: [
+              pw.TextSpan(
+                text: 'PIHAK PERTAMA.',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 10),
+        pw.Padding(
+          padding: const pw.EdgeInsets.only(left: 50),
+          child: pw.Column(
+            children: [
+              rowIdentity("Nama", customer?.name ?? ""),
+              rowIdentity("No. KTP", customer?.nik ?? ""),
+              rowIdentity("No. Telp", customer?.phone ?? ""),
+              rowIdentity("Alamat", customer?.address ?? ""),
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 10),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text: 'Yang selanjutnya disebut ',
+            children: [
+              pw.TextSpan(
+                text: 'PIHAK KEDUA.',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 25),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text: '\t\t\t\t\t\t\t\t\t\t\t\tDengan ini menerangkan bahwa ',
+            children: [
+              pw.TextSpan(
+                text: 'PIHAK PERTAMA ',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              const pw.TextSpan(text: 'telah menyerahkan kunci kios kepada '),
+              pw.TextSpan(
+                text: 'PIHAK KEDUA ',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              pw.TextSpan(
+                  text:
+                      'yang beralamat di Jl Raya Bumi Indah kawasan Perniagaan Bumi Indah ${kios?.block ?? ''}.'),
+            ],
+          ),
+        ),
+        pw.SizedBox(height: 25),
+        pw.RichText(
+          textAlign: pw.TextAlign.justify,
+          text: pw.TextSpan(
+            style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
+            text:
+                '\t\t\t\t\t\t\t\t\t\t\t\tDemikian berita acara serah terima kunci ini dibuat sebagai bagian yang tidak terpisah dari Perjanjian Kontrak Hak Guna Pakai antara yang bersangkutan dengan pihak penanggung jawab pengelola Perniagaan Bumi Indah.',
+          ),
+        ),
+        pw.Spacer(),
+        rowIdentity("Ditandatangani di",
+            createdPlace ?? '............................................'),
+        rowIdentity(
+            "Tanggal",
+            createdAt == null
+                ? '............................................'
+                : Jiffy.parse(createdAt!).format(pattern: "dd MMMM yyyy")),
+        pw.SizedBox(height: 15),
+        pw.Row(
+          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+          children: [
+            pw.Container(
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Paragraph(
+                      text: "Pihak Pertama",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      margin: const pw.EdgeInsets.only(
+                          bottom: 3.0 * PdfPageFormat.mm)),
+                  pw.SizedBox(height: 90),
+                  pw.Paragraph(
+                    text: pic?.name == null
+                        ? '(............................................)'
+                        : "(${pic?.name})".toUpperCase(),
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                    margin: const pw.EdgeInsets.only(
+                        bottom: 3.0 * PdfPageFormat.mm),
+                  )
+                ],
+              ),
+            ),
+            pw.Container(
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.end,
+                children: [
+                  pw.Paragraph(
+                      text: "Pihak Kedua",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      margin: const pw.EdgeInsets.only(
+                          bottom: 3.0 * PdfPageFormat.mm)),
+                  pw.SizedBox(height: 90),
+                  pw.Paragraph(
+                    text: customer?.name == null
+                        ? '(............................................)'
+                        : "(${customer?.name})".toUpperCase(),
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                    margin: const pw.EdgeInsets.only(
+                        bottom: 3.0 * PdfPageFormat.mm),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    ));
+    return pdf.save();
   }
 
   Future<Uint8List> perjanjianPdf() async {

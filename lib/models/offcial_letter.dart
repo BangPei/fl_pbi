@@ -21,6 +21,10 @@ class OfficialLetter {
         title: "Surat Tanda Daftar Hak Guna",
         routeName: "tanda-hak-guna",
       ),
+      OfficialLetter(
+        title: "Berita Acara Serah Terima Kunci",
+        routeName: "serah-terima-kunci",
+      ),
     ];
   }
 }

@@ -98,14 +98,25 @@ class _ParkingScreenState extends State<IPLScreen> {
                         trans: state.trans ?? [],
                         type: int.parse(type),
                         onTap: (tran) {
-                          context.goNamed(
-                            'ipl-detail',
-                            extra: {
-                              "type": int.parse(type),
-                              "month": tran.month,
-                              "year": tran.year
-                            },
-                          );
+                          if (type == "1") {
+                            context.goNamed(
+                              'ipl-detail-in',
+                              extra: {
+                                "type": int.parse(type),
+                                "month": tran.month,
+                                "year": tran.year
+                              },
+                            );
+                          } else {
+                            context.goNamed(
+                              'ipl-detail-out',
+                              extra: {
+                                "type": int.parse(type),
+                                "month": tran.month,
+                                "year": tran.year
+                              },
+                            );
+                          }
                         },
                       ),
                     );

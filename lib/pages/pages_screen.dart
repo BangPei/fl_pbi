@@ -15,4 +15,5 @@ export 'package:fl_pbi/pages/finance/screen/finance_screen.dart';
 export 'package:fl_pbi/pages/ipl/screen/ipl_screen.dart';
 export 'package:fl_pbi/pages/ipl/screen/ipl_form_screen.dart';
 export 'package:fl_pbi/pages/ipl/screen/ipl_detail_screen.dart';
+export 'package:fl_pbi/pages/ipl/screen/ipl_out_detail_screen.dart';
 export 'package:fl_pbi/pages/profile/screen/dialog_body.dart';

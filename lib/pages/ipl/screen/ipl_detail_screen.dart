@@ -4,6 +4,7 @@ import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -273,11 +274,30 @@ class BodyDetail extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        f.code ?? "",
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w700),
+                      Row(
+                        children: [
+                          Text(
+                            f.code ?? "",
+                            textAlign: TextAlign.justify,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w700),
+                          ),
+                          Visibility(
+                            visible: f.code != null,
+                            replacement: const SizedBox.shrink(),
+                            child: GestureDetector(
+                              onTap: () async {
+                                await Clipboard.setData(
+                                    ClipboardData(text: f.code!));
+                              },
+                              child: const Icon(
+                                Icons.copy_all_rounded,
+                                color: AppTheme.blue,
+                                size: 18,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       rowDetail(
                           "Nominal IPL", "Rp. ${Common.oCcy.format(f.amount)}"),

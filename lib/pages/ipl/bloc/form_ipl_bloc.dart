@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
@@ -75,11 +76,14 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
         ipl.blockDetail = state.ipl?.blockDetail ?? BlockDetail();
         ipl.blockDetail = details.where((s) => s.code == event.blockCode).first;
       }
-      // if (event.month != null && event.year != null) {
-      //   ipl.date = Jiffy.parse("01-${event.month}-${event.year}",
-      //           pattern: "dd-MM-yyyy")
-      //       .format(pattern: "yyyy-MM-dd");
-      // }
+      if (event.month != null && event.year != null) {
+        String monthNo = months
+            .where((e) => e['name'] == event.month?.toLowerCase())
+            .first['no'];
+        ipl.date =
+            Jiffy.parse("01-$monthNo-${event.year}", pattern: "dd-MM-yyyy")
+                .format(pattern: "yyyy-MM-dd");
+      }
       emit(state.copyWith(
         blockDetails: details,
         ipl: ipl,

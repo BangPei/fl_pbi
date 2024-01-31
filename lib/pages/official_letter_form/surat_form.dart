@@ -4,3 +4,4 @@ export 'package:fl_pbi/pages/official_letter_form/surat_lunas/surat_lunas_screen
 export 'package:fl_pbi/pages/official_letter_form/surat_permohonan/surat_permohonan_screen.dart';
 export 'package:fl_pbi/pages/official_letter_form/surat_sewa_lahan/surat_sewa_lahan_screen.dart';
 export 'package:fl_pbi/pages/official_letter_form/tanda_hak_guna/tanda_hak_guna_screen.dart';
+export 'package:fl_pbi/pages/official_letter_form/serah_terima_kunci/serah_terima_screen.dart';

@@ -170,11 +170,26 @@ class RouteNavigation {
                   GoRoute(
                     parentNavigatorKey: _nav.navKey,
                     path: 'detail',
-                    name: "ipl-detail",
+                    name: "ipl-detail-in",
                     pageBuilder: (context, state) {
                       var extra = state.extra as Map<String, dynamic>;
                       return NoTransitionPage(
                         child: IPLDetailScreen(
+                          type: extra['type'],
+                          month: extra['month'],
+                          year: extra['year'],
+                        ),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: _nav.navKey,
+                    path: 'detail-out',
+                    name: "ipl-detail-out",
+                    pageBuilder: (context, state) {
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: IPLOutDetailScreen(
                           type: extra['type'],
                           month: extra['month'],
                           year: extra['year'],
@@ -308,6 +323,16 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
                     child: TandaHakGunaScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'serah-terima-kunci',
+                name: "serah-terima-kunci",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: SerahTerimaScreen(),
                   );
                 },
               ),

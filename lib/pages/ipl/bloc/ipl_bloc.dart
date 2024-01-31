@@ -12,10 +12,98 @@ part 'ipl_state.dart';
 
 class IplBloc extends Bloc<IplEvent, IplState> {
   IplBloc() : super(const IplState()) {
+    on<OnGetOutDetail>(_onGetOutDetail);
     on<OnGetTotal>(_onGetTotal);
     on<OnGetTrans>(_onGetTrans);
     on<OnGetSummary>(_onGetSummary);
+    on<OnLoadMore>(_onLoadMore);
+    on<OnRemoveIPL>(_onRemoveIPL);
     on<OnChangedPanelOpen>(_onChangedPanelOpen);
+  }
+
+  void _onRemoveIPL(OnRemoveIPL event, Emitter<IplState> emit) async {
+    emit(state.copyWith(listLoading: true));
+    try {
+      await IplApi.delete(event.id!);
+      CashFlow cashFlow = await IplApi.getTotal();
+      List<IPL> ipls = state.ipls ?? [];
+      ipls.removeWhere((e) => e.id == event.id);
+      emit(state.copyWith(
+        listLoading: false,
+        cashFlow: cashFlow,
+        ipls: ipls,
+      ));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          cashFlow: state.cashFlow,
+          ipls: state.ipls,
+          isError: true,
+          loadMore: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          ipls: state.ipls,
+          cashFlow: state.cashFlow,
+          isError: true,
+          loadMore: false,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
+  void _onLoadMore(OnLoadMore event, Emitter<IplState> emit) async {
+    try {
+      if (state.serverSide?.nextPageUrl != null) {
+        emit(state.copyWith(loadMore: true));
+        Map<String, dynamic> params = {};
+        var url = Uri.parse(state.serverSide!.nextPageUrl!);
+        List<String> listParam = url.query.split("&");
+        for (var v in listParam) {
+          params[v.split("=")[0]] = v.split("=")[1];
+        }
+        ServerSide serverSide = await IplApi.get(params: params);
+        List<IPL> ipls = state.ipls ?? [];
+        for (var v in (serverSide.data ?? [])) {
+          ipls.add(IPL.fromJson(v));
+        }
+        emit(state.copyWith(
+          serverSide: serverSide,
+          ipls: ipls,
+          loadMore: false,
+        ));
+      } else {
+        emit(state.copyWith(loadMore: false));
+      }
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          ipls: state.ipls,
+          isError: true,
+          loadMore: false,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          listLoading: false,
+          serverSide: state.serverSide,
+          ipls: state.ipls,
+          isError: true,
+          loadMore: false,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
   }
 
   void _onChangedPanelOpen(OnChangedPanelOpen event, Emitter<IplState> emit) {
@@ -94,7 +182,47 @@ class IplBloc extends Bloc<IplEvent, IplState> {
     try {
       emit(state.copyWith(listLoading: true));
       List<Trans> trans = await IplApi.getyearly(event.year, event.type);
+      if (trans.isNotEmpty) {
+        trans.sort((a, b) => a.no!.compareTo(b.no!));
+      }
       emit(state.copyWith(listLoading: false, trans: trans));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          cardLoaing: false,
+          listLoading: false,
+          cashFlow: state.cashFlow,
+          trans: state.trans,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          cardLoaing: false,
+          listLoading: false,
+          cashFlow: state.cashFlow,
+          trans: state.trans,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
+  void _onGetOutDetail(OnGetOutDetail event, Emitter<IplState> emit) async {
+    try {
+      emit(state.copyWith(listLoading: true));
+      ServerSide serverside = await IplApi.get(params: event.map);
+      List<IPL> ipls = [];
+      for (var v in (serverside.data ?? [])) {
+        ipls.add(IPL.fromJson(v));
+      }
+      emit(state.copyWith(
+        listLoading: false,
+        serverSide: serverside,
+        ipls: ipls,
+      ));
     } catch (e) {
       if (e.runtimeType == DioException) {
         DioException err = e as DioException;
