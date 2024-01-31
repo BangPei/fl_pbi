@@ -153,7 +153,7 @@ class HakGuna {
         pw.SizedBox(height: 10),
         pw.Center(
           child: pw.Text(
-            "BERITA ACARA SERAH TERIMA KUNCI",
+            "BERITA ACARA SERAH TERIMA UNIT",
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 13,
@@ -233,7 +233,7 @@ class HakGuna {
                 text: 'PIHAK PERTAMA ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
-              const pw.TextSpan(text: 'telah menyerahkan kunci kios kepada '),
+              const pw.TextSpan(text: 'telah menyerahkan unit kepada '),
               pw.TextSpan(
                 text: 'PIHAK KEDUA ',
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
@@ -250,7 +250,7 @@ class HakGuna {
           text: pw.TextSpan(
             style: pw.TextStyle(lineSpacing: lineSpacing, fontSize: 10),
             text:
-                '\t\t\t\t\t\t\t\t\t\t\t\tDemikian berita acara serah terima kunci ini dibuat sebagai bagian yang tidak terpisah dari Perjanjian Kontrak Hak Guna Pakai antara yang bersangkutan dengan pihak penanggung jawab pengelola Perniagaan Bumi Indah.',
+                '\t\t\t\t\t\t\t\t\t\t\t\tDemikian berita acara serah terima unit ini dibuat sebagai bagian yang tidak terpisah dari Perjanjian Kontrak Hak Guna Pakai antara yang bersangkutan dengan pihak penanggung jawab pengelola Perniagaan Bumi Indah.',
           ),
         ),
         pw.Spacer(),
@@ -544,7 +544,7 @@ class HakGuna {
           padding: const pw.EdgeInsets.only(left: 18.0 * PdfPageFormat.mm),
           child: rowIdentity(
             "f.\t\t\t\t\tMulai Waktu Hak Guna",
-            kios?.startDate ?? 'Saat Serah Terima Kunci',
+            kios?.startDate ?? 'Saat Serah Terima Kunci atau Unit',
             titleWidh: 230,
           ),
         ),
