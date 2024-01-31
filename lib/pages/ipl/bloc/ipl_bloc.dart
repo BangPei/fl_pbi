@@ -25,14 +25,19 @@ class IplBloc extends Bloc<IplEvent, IplState> {
     emit(state.copyWith(listLoading: true));
     try {
       await IplApi.delete(event.id!);
-      CashFlow cashFlow = await IplApi.getTotal();
-      List<IPL> ipls = state.ipls ?? [];
-      ipls.removeWhere((e) => e.id == event.id);
-      emit(state.copyWith(
-        listLoading: false,
-        cashFlow: cashFlow,
-        ipls: ipls,
-      ));
+      if (event.map['type'] == 1) {
+        List<Block> blocks = await BlockApi.getBlocks(params: event.map);
+        List<bool> listOpen = [];
+        for (var i = 0; i < blocks.length; i++) {
+          listOpen.add(false);
+        }
+        emit(state.copyWith(blocks: blocks, listOpen: listOpen));
+      } else {
+        List<IPL> ipls = state.ipls ?? [];
+        ipls.removeWhere((e) => e.id == event.id);
+        emit(state.copyWith(ipls: ipls));
+      }
+      emit(state.copyWith(listLoading: false));
     } catch (e) {
       if (e.runtimeType == DioException) {
         DioException err = e as DioException;

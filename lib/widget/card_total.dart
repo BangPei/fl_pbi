@@ -11,6 +11,7 @@ class CardTotal extends StatefulWidget {
 
 class _CardTotalState extends State<CardTotal> {
   bool _visible = false;
+  // ignore: unused_field
   IconData _iconData = Icons.visibility_off;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,8 @@ class _CardTotalState extends State<CardTotal> {
                     ),
                   ),
                   Text(
-                    "Rp. ${_visible ? Common.oCcy.format(widget.data) : "*********"}",
+                    "Rp. ${Common.oCcy.format(widget.data)}",
+                    // "Rp. ${_visible ? Common.oCcy.format(widget.data) : "*********"}",
                     style: const TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
@@ -61,8 +63,9 @@ class _CardTotalState extends State<CardTotal> {
                       _visible ? Icons.visibility : Icons.visibility_off;
                 });
               },
-              icon: Icon(
-                _iconData,
+              icon: const Icon(
+                Icons.visibility,
+                // _iconData,
                 color: AppTheme.white,
               ),
             ),

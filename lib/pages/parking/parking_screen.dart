@@ -50,7 +50,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<ParkingBloc>().add(const OnGetSummary());
+          context.read<ParkingBloc>().add(OnGetTrans(year, type));
           context.read<ParkingBloc>().add(OnGetTotal());
         },
         child: SingleChildScrollView(
@@ -98,14 +98,16 @@ class _ParkingScreenState extends State<ParkingScreen> {
                         trans: state.trans ?? [],
                         type: int.parse(type),
                         onTap: (tran) {
-                          context.goNamed(
-                            'parking-detail',
-                            extra: {
-                              "type": int.parse(type),
-                              "month": tran.month,
-                              "year": tran.year
-                            },
-                          );
+                          if ((tran.amount ?? 0) > 0) {
+                            context.goNamed(
+                              'parking-detail',
+                              extra: {
+                                "type": int.parse(type),
+                                "month": tran.month,
+                                "year": tran.year
+                              },
+                            );
+                          }
                         },
                       ),
                     );

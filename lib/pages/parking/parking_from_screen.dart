@@ -65,7 +65,8 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
           if (state.listLoading) {
             return Scaffold(
               appBar: CustomAppbar(
-                title: "Form Uang ${widget.type == 1 ? 'Masuk' : 'Keluar'}",
+                title:
+                    "Form Uang ${widget.type == 1 ? 'Masuk' : 'Keluar'} Parkir",
                 leading: IconButton(
                   onPressed: () => context.pop(),
                   icon: const Icon(Icons.arrow_back),

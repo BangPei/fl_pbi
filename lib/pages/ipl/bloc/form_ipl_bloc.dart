@@ -19,6 +19,7 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
     on<OnChangedAmount>(_onChangedAmount);
     on<OnChangedDate>(_onChangedDate);
     on<OnSubmit>(_onSubmit);
+    on<GetIplById>(_onGetIplById);
   }
 
   void _onSubmit(OnSubmit event, Emitter<FormIplState> emit) async {
@@ -84,6 +85,42 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
             Jiffy.parse("01-$monthNo-${event.year}", pattern: "dd-MM-yyyy")
                 .format(pattern: "yyyy-MM-dd");
       }
+      emit(state.copyWith(
+        blockDetails: details,
+        ipl: ipl,
+        isLoading: false,
+        isSuccess: false,
+      ));
+    } catch (e) {
+      if (e.runtimeType == DioException) {
+        DioException err = e as DioException;
+        emit(state.copyWith(
+          isLoading: false,
+          ipl: state.ipl,
+          isSuccess: false,
+          blockDetails: state.blockDetails,
+          isError: true,
+          errorMessage: err.response?.data?["message"] ?? err.message,
+        ));
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          ipl: state.ipl,
+          isSuccess: false,
+          blockDetails: state.blockDetails,
+          isError: true,
+          errorMessage: e.toString(),
+        ));
+      }
+    }
+  }
+
+  void _onGetIplById(GetIplById event, Emitter<FormIplState> emit) async {
+    emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
+    try {
+      List<BlockDetail> details = await BlockApi.getBlockDetails();
+      IPL ipl = await IplApi.getId(event.id!);
+
       emit(state.copyWith(
         blockDetails: details,
         ipl: ipl,

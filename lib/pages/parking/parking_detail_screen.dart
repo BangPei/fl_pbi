@@ -21,15 +21,22 @@ class ParkingDetailScreen extends StatefulWidget {
 }
 
 class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
+  Map<String, dynamic> map = {};
+  final ScrollController _controller = ScrollController();
   @override
   void initState() {
-    Map<String, dynamic> map = {
+    map = {
       "type": widget.type,
       "month": widget.month,
       "year": widget.year,
-      "perpage": 100,
+      "perpage": 50,
     };
     context.read<ParkingBloc>().add(OnGetSummary(map: map));
+    _controller.addListener(() {
+      if (_controller.position.maxScrollExtent == _controller.offset) {
+        context.read<ParkingBloc>().add(OnLoadMore());
+      }
+    });
     super.initState();
   }
 
@@ -58,13 +65,22 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
           } else if (state.isError) {
             return Center(child: Text(state.errorMessage ?? "Error"));
           }
-          return ListSummaryScreen<Parking>(
-            list: state.parks ?? [],
-            onTap: (id) => context.goNamed("parking-form",
-                extra: {"type": widget.type, "id": id}),
-            onConfirm: (id) {
-              context.read<ParkingBloc>().add(OnRemovePark(id));
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<ParkingBloc>().add(OnGetSummary(map: map));
             },
+            child: SingleChildScrollView(
+              controller: _controller,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: ListSummaryScreen<Parking>(
+                list: state.parks ?? [],
+                onTap: (id) => context.goNamed("parking-form",
+                    extra: {"type": widget.type, "id": id}),
+                onConfirm: (id) {
+                  context.read<ParkingBloc>().add(OnRemovePark(id));
+                },
+              ),
+            ),
           );
         },
       ),

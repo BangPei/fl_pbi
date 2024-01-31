@@ -22,9 +22,10 @@ class IPLOutDetailScreen extends StatefulWidget {
 }
 
 class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
+  Map<String, dynamic> map = {};
   @override
   void initState() {
-    Map<String, dynamic> map = {
+    map = {
       "type": widget.type,
       "month": widget.month,
       "year": widget.year,
@@ -63,7 +64,7 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
             list: state.ipls ?? [],
             onTap: (id) {},
             onConfirm: (id) {
-              context.read<IplBloc>().add(OnRemoveIPL(id));
+              context.read<IplBloc>().add(OnRemoveIPL(id, map));
             },
           );
         },

@@ -6,6 +6,7 @@ import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
@@ -136,6 +137,7 @@ class _ParkingDetailScreenState extends State<IPLDetailScreen> {
                             details: e.details ?? [],
                             month: widget.month,
                             year: widget.year,
+                            map: map,
                           ),
                         ),
                       );
@@ -155,11 +157,13 @@ class BodyDetail extends StatelessWidget {
   final List<BlockDetail> details;
   final int year;
   final String month;
+  final Map<String, dynamic> map;
   const BodyDetail(
       {super.key,
       required this.details,
       required this.year,
-      required this.month});
+      required this.month,
+      required this.map});
 
   @override
   Widget build(BuildContext context) {
@@ -167,15 +171,38 @@ class BodyDetail extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
       child: Column(
         children: details.map((detail) {
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  rowHeader(context, detail: detail, year: year, month: month),
-                  rowBody(detail.ipls ?? [], picture: detail.picture),
-                ],
+          return InkWell(
+            onTap: () {
+              context.goNamed("ipl-form", extra: {
+                "type": 1,
+                'blockCode': detail.code,
+                'month': month,
+                'year': year,
+                'id': (detail.ipls ?? []).isNotEmpty
+                    ? (detail.ipls ?? [])[0].id
+                    : null
+              });
+            },
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    rowHeader(
+                      context,
+                      detail: detail,
+                      year: year,
+                      month: month,
+                    ),
+                    rowBody(
+                      context,
+                      ipls: detail.ipls ?? [],
+                      picture: detail.picture,
+                      map: map,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -190,130 +217,144 @@ class BodyDetail extends StatelessWidget {
     required String month,
     required int year,
   }) {
-    return InkWell(
-      onTap: (detail.ipls ?? []).isNotEmpty
-          ? null
-          : () {
-              context.goNamed("ipl-form", extra: {
-                "type": 1,
-                'blockCode': detail.code,
-                'month': month,
-                'year': year,
-              });
-            },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                detail.name ?? "",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                ),
-              ),
-              const Text(
-                "Nama Usaha : ",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          Center(
-            child: Badge(
-              backgroundColor: (detail.ipls ?? []).isEmpty
-                  ? AppTheme.nearlyDarkRed.withOpacity(0.8)
-                  : AppTheme.blue.withOpacity(0.8),
-              textColor: AppTheme.white,
-              label: Text(
-                (detail.ipls ?? []).isEmpty ? "Belum Bayar" : "Sudah Bayar",
-                style:
-                    const TextStyle(fontSize: 9, fontStyle: FontStyle.italic),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              detail.name ?? "",
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
               ),
             ),
+            const Text(
+              "Nama Usaha : ",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+        Center(
+          child: Badge(
+            backgroundColor: (detail.ipls ?? []).isEmpty
+                ? AppTheme.nearlyDarkRed.withOpacity(0.8)
+                : AppTheme.blue.withOpacity(0.8),
+            textColor: AppTheme.white,
+            label: Text(
+              (detail.ipls ?? []).isEmpty ? "Belum Bayar" : "Sudah Bayar",
+              style: const TextStyle(fontSize: 9, fontStyle: FontStyle.italic),
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget rowBody(List<IPL> ipls, {String? picture}) {
+  Widget rowBody(BuildContext context,
+      {required List<IPL> ipls,
+      String? picture,
+      required Map<String, dynamic> map}) {
     return Visibility(
       visible: ipls.isNotEmpty,
-      child: Column(
-        children: [
-          const Divider(),
-          Row(
-            children: [
-              picture != null
-                  ? FadeInImage(
-                      image: NetworkImage(picture, scale: 1),
-                      placeholder: AssetImage(Common.imageBuilding),
-                      imageErrorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          FontAwesomeIcons.building,
-                          color: AppTheme.blue,
-                          size: 45,
-                        );
-                      },
-                      width: 40,
-                      fit: BoxFit.fitWidth,
-                    )
-                  : const Icon(
-                      FontAwesomeIcons.building,
-                      color: AppTheme.blue,
-                      size: 45,
-                    ),
-              const SizedBox(width: 8),
-              Column(
-                children: ipls.map((f) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            f.code ?? "",
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700),
-                          ),
-                          Visibility(
-                            visible: f.code != null,
-                            replacement: const SizedBox.shrink(),
-                            child: GestureDetector(
-                              onTap: () async {
-                                await Clipboard.setData(
-                                    ClipboardData(text: f.code!));
-                              },
-                              child: const Icon(
-                                Icons.copy_all_rounded,
-                                color: AppTheme.blue,
-                                size: 18,
-                              ),
-                            ),
-                          )
-                        ],
+      child: Slidable(
+        key: ipls.isNotEmpty ? ValueKey(ipls[0].id) : null,
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            SlidableAction(
+              flex: 6,
+              onPressed: (ctx) async {
+                await Common.modalConfirm(
+                  ctx,
+                  onConfirm: () {
+                    context.read<IplBloc>().add(OnRemoveIPL(ipls[0].id, map));
+                  },
+                );
+              },
+              borderRadius: BorderRadius.circular(16),
+              backgroundColor: AppTheme.nearlyDarkRed,
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: 'Hapus',
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            const Divider(),
+            Row(
+              children: [
+                picture != null
+                    ? FadeInImage(
+                        image: NetworkImage(picture, scale: 1),
+                        placeholder: AssetImage(Common.imageBuilding),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            FontAwesomeIcons.building,
+                            color: AppTheme.blue,
+                            size: 45,
+                          );
+                        },
+                        width: 40,
+                        fit: BoxFit.fitWidth,
+                      )
+                    : const Icon(
+                        FontAwesomeIcons.building,
+                        color: AppTheme.blue,
+                        size: 45,
                       ),
-                      rowDetail(
-                          "Nominal IPL", "Rp. ${Common.oCcy.format(f.amount)}"),
-                      rowDetail("Periode IPL",
-                          Jiffy.parse(f.date!).format(pattern: "MMMM yyyy")),
-                      rowDetail(
-                          "Tgl Input",
-                          Jiffy.parse(f.createdAt!)
-                              .format(pattern: "dd MMMM yyyy")),
-                    ],
-                  );
-                }).toList(),
-              )
-            ],
-          ),
-        ],
+                const SizedBox(width: 8),
+                Column(
+                  children: ipls.map((f) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              f.code ?? "",
+                              textAlign: TextAlign.justify,
+                              style: const TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w700),
+                            ),
+                            Visibility(
+                              visible: f.code != null,
+                              replacement: const SizedBox.shrink(),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  await Clipboard.setData(
+                                      ClipboardData(text: f.code!));
+                                },
+                                child: const Icon(
+                                  Icons.copy_all_rounded,
+                                  color: AppTheme.blue,
+                                  size: 18,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        rowDetail("Nominal IPL",
+                            "Rp. ${Common.oCcy.format(f.amount)}"),
+                        rowDetail("Periode IPL",
+                            Jiffy.parse(f.date!).format(pattern: "MMMM yyyy")),
+                        rowDetail(
+                            "Tgl Input",
+                            Jiffy.parse(f.createdAt!)
+                                .format(pattern: "dd MMMM yyyy")),
+                      ],
+                    );
+                  }).toList(),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

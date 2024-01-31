@@ -241,7 +241,8 @@ class SuratLunas {
         ),
         pw.SizedBox(height: 40),
         pw.Paragraph(
-            text: "Tangerang, ${date ?? ''}",
+            text:
+                "Tangerang, ${date == '' ? '' : Jiffy.parse(date!).format(pattern: "dd MMMM yyyy")}",
             style: pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 12,

@@ -48,3 +48,10 @@ class OnSubmit extends FormIplEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetIplById extends FormIplEvent {
+  final int? id;
+  const GetIplById(this.id);
+  @override
+  List<Object?> get props => [];
+}

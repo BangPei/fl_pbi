@@ -44,6 +44,8 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
             month: widget.month,
             year: widget.year,
           ));
+    } else {
+      context.read<FormIplBloc>().add(GetIplById(widget.id));
     }
     dateFocusNode = FocusNode();
     super.initState();
@@ -106,7 +108,11 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
               CustomFormField(
                 title: isIn ? "Periode" : "Tanggal Keluar",
                 textForm: CustomDatePicker(
-                  enable: widget.month == null,
+                  enable: widget.id != null
+                      ? true
+                      : widget.month == null
+                          ? true
+                          : false,
                   display: isIn ? DISPLAY.month : DISPLAY.date,
                   focusNode: dateFocusNode,
                   validator: ValidForm.emptyValue,
@@ -121,7 +127,11 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
                 child: CustomFormField(
                   title: "Blok",
                   textForm: DropdownWidget<BlockDetail>(
-                    enable: widget.blockCode == null,
+                    enable: widget.id != null
+                        ? true
+                        : widget.blockCode == null
+                            ? true
+                            : false,
                     isVisible: isIn,
                     items: state.blockDetails ?? [],
                     itemAsString: (item) => item.name ?? "",

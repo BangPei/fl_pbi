@@ -53,49 +53,49 @@ class _FinanceScreenState extends State<FinanceScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FinanceTotalCard(data: state.finance ?? Finance()),
-                      const FormTitle(
-                        title: "Transaksi Terakhir Parkir",
-                        fontSize: 14,
-                        padding: EdgeInsets.only(
-                          top: 20,
-                          left: 20,
-                          right: 20,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 189, 188, 188),
-                                spreadRadius: 0.2,
-                                blurRadius: 2,
-                                offset: Offset(0, 1),
-                              )
-                            ],
-                          ),
-                          child: const Column(
-                            children: [
-                              ListTile(
-                                minVerticalPadding: 0,
-                                title: Text("Rp. 270,000"),
-                                subtitle: Text("1 Januari 2024"),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Divider(),
-                              ),
-                              ListTile(
-                                title: Text("Rp. 50,000"),
-                                subtitle: Text("1 Januari 2024"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
+                      // const FormTitle(
+                      //   title: "Transaksi Terakhir Parkir",
+                      //   fontSize: 14,
+                      //   padding: EdgeInsets.only(
+                      //     top: 20,
+                      //     left: 20,
+                      //     right: 20,
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(16.0),
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       color: AppTheme.white,
+                      //       borderRadius: BorderRadius.circular(8),
+                      //       boxShadow: const [
+                      //         BoxShadow(
+                      //           color: Color.fromARGB(255, 189, 188, 188),
+                      //           spreadRadius: 0.2,
+                      //           blurRadius: 2,
+                      //           offset: Offset(0, 1),
+                      //         )
+                      //       ],
+                      //     ),
+                      //     child: const Column(
+                      //       children: [
+                      //         ListTile(
+                      //           minVerticalPadding: 0,
+                      //           title: Text("Rp. 270,000"),
+                      //           subtitle: Text("1 Januari 2024"),
+                      //         ),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      //           child: Divider(),
+                      //         ),
+                      //         ListTile(
+                      //           title: Text("Rp. 50,000"),
+                      //           subtitle: Text("1 Januari 2024"),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

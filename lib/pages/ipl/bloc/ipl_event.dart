@@ -45,7 +45,8 @@ class OnLoadMore extends IplEvent {
 
 class OnRemoveIPL extends IplEvent {
   final int? id;
-  const OnRemoveIPL(this.id);
+  final Map<String, dynamic> map;
+  const OnRemoveIPL(this.id, this.map);
   @override
   List<Object?> get props => [];
 }
