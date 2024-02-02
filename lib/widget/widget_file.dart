@@ -23,3 +23,4 @@ export 'package:fl_pbi/widget/money_widget.dart';
 export 'package:fl_pbi/widget/title_list_trans.dart';
 export 'package:fl_pbi/widget/dropdown_search_widget.dart';
 export 'package:fl_pbi/widget/list_summary.dart';
+export 'package:fl_pbi/widget/report_box.dart';

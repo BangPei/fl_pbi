@@ -8,3 +8,4 @@ export 'package:fl_pbi/models/pic.dart';
 export 'package:fl_pbi/models/serverside.dart';
 export 'package:fl_pbi/models/trans.dart';
 export 'package:fl_pbi/models/user.dart';
+export 'package:fl_pbi/models/report_menu.dart';

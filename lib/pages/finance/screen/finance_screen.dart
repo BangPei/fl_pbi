@@ -1,4 +1,5 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/finance/bloc/finanace_bloc.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/finance/screen/finance_total_card.dart';
@@ -53,49 +54,41 @@ class _FinanceScreenState extends State<FinanceScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FinanceTotalCard(data: state.finance ?? Finance()),
-                      // const FormTitle(
-                      //   title: "Transaksi Terakhir Parkir",
-                      //   fontSize: 14,
-                      //   padding: EdgeInsets.only(
-                      //     top: 20,
-                      //     left: 20,
-                      //     right: 20,
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(16.0),
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       color: AppTheme.white,
-                      //       borderRadius: BorderRadius.circular(8),
-                      //       boxShadow: const [
-                      //         BoxShadow(
-                      //           color: Color.fromARGB(255, 189, 188, 188),
-                      //           spreadRadius: 0.2,
-                      //           blurRadius: 2,
-                      //           offset: Offset(0, 1),
-                      //         )
-                      //       ],
-                      //     ),
-                      //     child: const Column(
-                      //       children: [
-                      //         ListTile(
-                      //           minVerticalPadding: 0,
-                      //           title: Text("Rp. 270,000"),
-                      //           subtitle: Text("1 Januari 2024"),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      //           child: Divider(),
-                      //         ),
-                      //         ListTile(
-                      //           title: Text("Rp. 50,000"),
-                      //           subtitle: Text("1 Januari 2024"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          "Laporan Transaksi",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 114, 113, 113)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 100,
+                            childAspectRatio: 1,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: Report().data().length,
+                          itemBuilder: (BuildContext ctx, i) {
+                            Report report = Report().data()[i];
+                            return ReportBox(
+                              label: report.label!,
+                              icon: report.icon,
+                              onTap: () {},
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/pages/login/data/login_api.dart';
-import 'package:fl_pbi/pages/profile/screen/dialog_body.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -119,62 +118,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 13, top: 10),
-                    child: Text(
-                      "Data Master",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 114, 113, 113)),
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          dense: true,
-                          visualDensity: const VisualDensity(vertical: -2),
-                          leading: const Icon(
-                            Icons.numbers,
-                            color: AppTheme.blue,
-                          ),
-                          title: const Text("Nomor Kios"),
-                          trailing: const Icon(Icons.arrow_right),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const Dialog(
-                                  child: DialogBody(),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        const ListTile(
-                          dense: true,
-                          visualDensity: VisualDensity(vertical: -2),
-                          leading: Icon(
-                            Icons.block,
-                            color: AppTheme.nearlyDarkRed,
-                          ),
-                          title: Text("Blok Kios"),
-                          trailing: Icon(Icons.arrow_right),
-                        ),
-                        const ListTile(
-                          dense: true,
-                          visualDensity: VisualDensity(vertical: -2),
-                          leading: Icon(
-                            Icons.person_3_outlined,
-                            color: Colors.purple,
-                          ),
-                          title: Text("Customer"),
-                          trailing: Icon(Icons.arrow_right),
-                        ),
-                      ],
                     ),
                   ),
                   const Padding(
