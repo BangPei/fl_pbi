@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/parking/data/parking_report.dart';
 import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/service/api.dart';
 
@@ -42,6 +43,12 @@ class ParkingApi {
   static Future<List<Trans>> getyearly(String year, String type) async {
     final client = await Api.restClient();
     var data = client.getParkingYearly(year, type);
+    return data;
+  }
+
+  static Future<ParkingReport> getByDate(Map<String, dynamic> map) async {
+    final client = await Api.restClient(params: map);
+    var data = client.getParkingByDate();
     return data;
   }
 }

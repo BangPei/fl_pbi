@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl_report.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/service/api.dart';
 
@@ -42,6 +43,12 @@ class IplApi {
   static Future<IPL> put(IPL ipl) async {
     final client = await Api.restClient();
     var data = client.putIPL(ipl.id, ipl);
+    return data;
+  }
+
+  static Future<IPLReport> getByDate(Map<String, dynamic> map) async {
+    final client = await Api.restClient(params: map);
+    var data = client.getIPLByDate();
     return data;
   }
 }

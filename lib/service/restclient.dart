@@ -3,6 +3,8 @@ import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
+import 'package:fl_pbi/pages/ipl/data/ipl_report.dart';
+import 'package:fl_pbi/pages/parking/data/parking_report.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
 import 'package:fl_pbi/pages/parking/data/parking.dart';
@@ -100,4 +102,9 @@ abstract class RestClient {
   @GET("transaction/yearly/{year}/type/{type}")
   Future<List<Trans>> getParkingYearly(
       @Path() String year, @Path() String type);
+
+  @GET("transaction/date")
+  Future<ParkingReport> getParkingByDate();
+  @GET("ipl/date")
+  Future<IPLReport> getIPLByDate();
 }
