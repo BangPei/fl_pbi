@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
@@ -25,11 +25,11 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
   void _onSubmit(OnSubmit event, Emitter<FormIplState> emit) async {
     emit(state.copyWith(isLoading: true, isSuccess: false));
     try {
-      IPL ipl = state.ipl ?? IPL();
+      Transaction ipl = state.ipl ?? Transaction();
       if (event.image != null) {
         ipl.picture = event.image;
       }
-      IPL newIpl = await IplApi.post(ipl);
+      Transaction newIpl = await IplApi.post(ipl);
       emit(state.copyWith(ipl: newIpl, isLoading: false, isSuccess: true));
     } catch (e) {
       emit(state.copyWith(
@@ -42,7 +42,7 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<FormIplState> emit) {
-    IPL ipl = state.ipl ?? IPL();
+    Transaction ipl = state.ipl ?? Transaction();
     ipl.date = Jiffy.parseFromDateTime(event.val)
         .format(pattern: ipl.type == 1 ? "yyyy-MM-01" : "yyyy-MM-dd");
     emit(state.copyWith(ipl: ipl));
@@ -50,19 +50,19 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
 
   void _onChangedBlockDetail(
       OnChangedBlockDetail event, Emitter<FormIplState> emit) {
-    IPL ipl = state.ipl ?? IPL();
+    Transaction ipl = state.ipl ?? Transaction();
     ipl.blockDetail = event.detail;
     emit(state.copyWith(ipl: ipl));
   }
 
   void _onChangedNote(OnChangedNote event, Emitter<FormIplState> emit) {
-    IPL ipl = state.ipl ?? IPL();
+    Transaction ipl = state.ipl ?? Transaction();
     ipl.note = event.val;
     emit(state.copyWith(ipl: ipl));
   }
 
   void _onChangedAmount(OnChangedAmount event, Emitter<FormIplState> emit) {
-    IPL ipl = state.ipl ?? IPL();
+    Transaction ipl = state.ipl ?? Transaction();
     ipl.amount = event.val;
     emit(state.copyWith(ipl: ipl));
   }
@@ -71,7 +71,7 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
     emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
     try {
       List<BlockDetail> details = await BlockApi.getBlockDetails();
-      IPL ipl = IPL();
+      Transaction ipl = Transaction();
       ipl.type = event.type;
       if (event.blockCode != null) {
         ipl.blockDetail = state.ipl?.blockDetail ?? BlockDetail();
@@ -119,7 +119,7 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
     emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
     try {
       List<BlockDetail> details = await BlockApi.getBlockDetails();
-      IPL ipl = await IplApi.getId(event.id!);
+      Transaction ipl = await IplApi.getId(event.id!);
 
       emit(state.copyWith(
         blockDetails: details,

@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/injector/inject_file.dart';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jiffy/jiffy.dart';
-
-import '../../../../library/library_file.dart';
 
 part 'tanda_hak_guna_event.dart';
 part 'tanda_hak_guna_state.dart';

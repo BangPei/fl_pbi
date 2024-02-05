@@ -1,6 +1,4 @@
 import 'package:fl_pbi/models/models.dart';
-import 'package:fl_pbi/pages/parking/data/parking_report.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/service/api.dart';
 
 class ParkingApi {
@@ -16,7 +14,7 @@ class ParkingApi {
     return data;
   }
 
-  static Future<Parking> post(Parking park) async {
+  static Future<Transaction> post(Transaction park) async {
     final client = await Api.restClient();
     var data = client.postParking(park);
     return data;
@@ -28,13 +26,13 @@ class ParkingApi {
     return data;
   }
 
-  static Future<Parking> getId(int id) async {
+  static Future<Transaction> getId(int id) async {
     final client = await Api.restClient();
     var data = client.getParkingById(id);
     return data;
   }
 
-  static Future<Parking> put(Parking parking) async {
+  static Future<Transaction> put(Transaction parking) async {
     final client = await Api.restClient();
     var data = client.putParking(parking.id, parking);
     return data;
@@ -46,7 +44,7 @@ class ParkingApi {
     return data;
   }
 
-  static Future<ParkingReport> getByDate(Map<String, dynamic> map) async {
+  static Future<TransactionReport> getByDate(Map<String, dynamic> map) async {
     final client = await Api.restClient(params: map);
     var data = client.getParkingByDate();
     return data;

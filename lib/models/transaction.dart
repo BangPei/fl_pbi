@@ -1,20 +1,21 @@
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 
-class IPL {
+class Transaction {
   int? id;
   String? code;
   double? amount;
   String? date;
   int? type;
   String? note;
+  String? remark;
   String? picture;
   String? createdAt;
   String? updatedAt;
   User? createdBy;
   BlockDetail? blockDetail;
 
-  IPL({
+  Transaction({
     this.id,
     this.code,
     this.amount,
@@ -25,16 +26,18 @@ class IPL {
     this.createdAt,
     this.updatedAt,
     this.createdBy,
+    this.remark,
     this.blockDetail,
   });
 
-  IPL.fromJson(Map<String, dynamic> json) {
+  Transaction.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['code'];
     amount = double.parse(json['amount']);
     date = json['date'];
     type = json['type'];
     note = json['note'];
+    remark = json['remark'];
     picture = json['picture'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -53,6 +56,7 @@ class IPL {
     data['date'] = date;
     data['type'] = type;
     data['note'] = note;
+    data['remark'] = remark;
     data['picture'] = picture;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;

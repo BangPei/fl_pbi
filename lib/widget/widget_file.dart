@@ -1,4 +1,4 @@
-export 'package:fl_pbi/widget/button_in_out.dart';
+export 'package:fl_pbi/widget/button_2_level.dart';
 export 'package:fl_pbi/widget/button_transaction.dart';
 export 'package:fl_pbi/widget/card_banner.dart';
 export 'package:fl_pbi/widget/custom_appbar.dart';

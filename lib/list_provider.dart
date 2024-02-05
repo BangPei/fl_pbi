@@ -15,6 +15,7 @@ import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_form_bloc.dart';
 import 'package:fl_pbi/pages/profile/bloc/number_bloc.dart';
 import 'package:fl_pbi/pages/profile/bloc/profile_form_bloc.dart';
+import 'package:fl_pbi/pages/report/bloc/report_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProviderBloc {
@@ -36,6 +37,7 @@ class ProviderBloc {
       BlocProvider<BlockBloc>(create: (__) => BlockBloc()),
       BlocProvider<FinanceBloc>(create: (__) => FinanceBloc()),
       BlocProvider<BlockFormBloc>(create: (__) => BlockFormBloc()),
+      BlocProvider<ReportBloc>(create: (__) => ReportBloc()),
       BlocProvider<SerahTerimaKunciBloc>(
           create: (__) => SerahTerimaKunciBloc()),
       BlocProvider<TandaHakGunaBloc>(create: (__) => TandaHakGunaBloc()),

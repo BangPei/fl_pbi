@@ -15,7 +15,7 @@ final class FormIplState extends Equatable {
   final bool isError;
   final String? errorMessage;
   final List<BlockDetail>? blockDetails;
-  final IPL? ipl;
+  final Transaction? ipl;
 
   FormIplState copyWith({
     bool? isLoading,
@@ -23,7 +23,7 @@ final class FormIplState extends Equatable {
     bool? isSuccess,
     String? errorMessage,
     List<BlockDetail>? blockDetails,
-    IPL? ipl,
+    Transaction? ipl,
   }) {
     return FormIplState(
       isLoading: isLoading ?? this.isLoading,

@@ -121,6 +121,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       firstDate: firstDate ?? DateTime(1900),
       lastDate: lastDate ?? DateTime(3000),
       locale: const Locale("id", "ID"),
+      headerColor: AppTheme.blue,
+      selectedMonthBackgroundColor: AppTheme.nearlyBlue,
     );
   }
 

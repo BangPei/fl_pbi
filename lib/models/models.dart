@@ -9,3 +9,5 @@ export 'package:fl_pbi/models/serverside.dart';
 export 'package:fl_pbi/models/trans.dart';
 export 'package:fl_pbi/models/user.dart';
 export 'package:fl_pbi/models/report_menu.dart';
+export 'package:fl_pbi/models/transaction.dart';
+export 'package:fl_pbi/models/report.dart';

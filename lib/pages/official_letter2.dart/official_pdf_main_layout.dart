@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
 
@@ -39,9 +40,10 @@ class _PDFMainLayoutState extends State<PDFMainLayout> {
         canChangePageFormat: false,
         useActions: false,
         pdfFileName:
-            "Surat Permohonan ${DateTime.now().millisecond.toString()}",
+            "${widget.fileName} ${DateTime.now().millisecond.toString()}",
         // onPrinted: _showPrintedToast,
         // onShared: _showSharedToast,
+        loadingWidget: const LoadingScreen(),
       ),
     );
   }

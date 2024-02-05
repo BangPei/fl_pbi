@@ -80,7 +80,9 @@ class _ParkingScreenState extends State<IPLScreen> {
                     setState(() {});
                   },
                 ),
-                ButtonInOut(
+                Button2Level(
+                  label1: "Uang Masuk",
+                  label2: "Uang Keluar",
                   onTap: (idx) {
                     type = idx >= 1 ? "2" : "1";
                     setState(() {});

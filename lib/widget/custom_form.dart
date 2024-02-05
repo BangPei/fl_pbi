@@ -85,19 +85,14 @@ class BodyForm extends StatelessWidget {
             physics: const ScrollPhysics(),
             children: children,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomButton(
-                title: Text(buttonTitle ?? 'Print'),
-                icon: const FaIcon(
-                  FontAwesomeIcons.solidFloppyDisk,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                onPressed: onPressed,
-              ),
-            ],
+          CustomButton(
+            title: Text(buttonTitle ?? 'Print'),
+            icon: const FaIcon(
+              FontAwesomeIcons.solidFloppyDisk,
+              color: Colors.white,
+              size: 20,
+            ),
+            onPressed: onPressed,
           )
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +60,7 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
           } else if (state.isError) {
             return Center(child: Text(state.errorMessage ?? "Error"));
           }
-          return ListSummaryScreen<IPL>(
+          return ListSummaryScreen<Transaction>(
             list: state.ipls ?? [],
             onTap: (id) {},
             onConfirm: (id) {

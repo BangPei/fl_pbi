@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 
-class ButtonInOut extends StatefulWidget {
+class Button2Level extends StatefulWidget {
+  final int? initIndex;
+  final String label1;
+  final String label2;
   final Function(int) onTap;
-  const ButtonInOut({super.key, required this.onTap});
+  const Button2Level({
+    super.key,
+    required this.onTap,
+    required this.label1,
+    required this.label2,
+    this.initIndex,
+  });
 
   @override
-  State<ButtonInOut> createState() => _ButtonInOutState();
+  State<Button2Level> createState() => _Button2LevelState();
 }
 
-class _ButtonInOutState extends State<ButtonInOut> {
+class _Button2LevelState extends State<Button2Level> {
   Color color = Colors.white;
   int index = 0;
+  @override
+  void initState() {
+    if (widget.initIndex != null) {
+      index = widget.initIndex!;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +62,7 @@ class _ButtonInOutState extends State<ButtonInOut> {
                 ),
                 child: Center(
                   child: Text(
-                    "Uang Masuk",
+                    widget.label1,
                     style: TextStyle(
                       color: index == 0 ? Colors.white : null,
                       fontWeight: FontWeight.bold,
@@ -81,7 +98,7 @@ class _ButtonInOutState extends State<ButtonInOut> {
                 ),
                 child: Center(
                   child: Text(
-                    "Uang Keluar",
+                    widget.label2,
                     style: TextStyle(
                       color: index == 1 ? Colors.white : null,
                       fontWeight: FontWeight.bold,

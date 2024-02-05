@@ -1,7 +1,7 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -256,7 +256,7 @@ class BodyDetail extends StatelessWidget {
   }
 
   Widget rowBody(BuildContext context,
-      {required List<IPL> ipls,
+      {required List<Transaction> ipls,
       String? picture,
       required Map<String, dynamic> map}) {
     return Visibility(

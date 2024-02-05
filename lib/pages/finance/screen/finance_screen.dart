@@ -78,13 +78,13 @@ class _FinanceScreenState extends State<FinanceScreen> {
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                           ),
-                          itemCount: Report().data().length,
+                          itemCount: Report().data(context).length,
                           itemBuilder: (BuildContext ctx, i) {
-                            Report report = Report().data()[i];
+                            Report report = Report().data(context)[i];
                             return ReportBox(
                               label: report.label!,
                               icon: report.icon,
-                              onTap: () {},
+                              onTap: report.onTap,
                             );
                           },
                         ),

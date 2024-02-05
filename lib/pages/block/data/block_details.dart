@@ -1,5 +1,4 @@
 import 'package:fl_pbi/models/models.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 
 class BlockDetail {
   int? id;
@@ -14,7 +13,7 @@ class BlockDetail {
   String? createdAt;
   String? updatedAt;
   bool? isBase64;
-  List<IPL>? ipls;
+  List<Transaction>? ipls;
 
   BlockDetail(
       {this.id,
@@ -44,9 +43,9 @@ class BlockDetail {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['ipls'] != null) {
-      ipls = <IPL>[];
+      ipls = <Transaction>[];
       json['ipls'].forEach((v) {
-        ipls!.add(IPL.fromJson(v));
+        ipls!.add(Transaction.fromJson(v));
       });
     }
   }

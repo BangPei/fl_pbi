@@ -105,7 +105,7 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
                   decoration: TextFormDecoration.box(),
                   onChanged: (val) {
                     if (val != "" || val.isNotEmpty) {
-                      int value = int.parse(val);
+                      double value = double.parse(val);
                       context.read<ParkFormBloc>().add(OnChangedAmount(value));
                     }
                   },

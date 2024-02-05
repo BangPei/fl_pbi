@@ -186,13 +186,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Parking> getParkingById(int id) async {
+  Future<Transaction> getParkingById(int id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Parking>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -208,7 +208,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Parking.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
@@ -266,14 +266,14 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Parking> postParking(Parking park) async {
+  Future<Transaction> postParking(Transaction park) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(park.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Parking>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -289,22 +289,22 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Parking.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<Parking> putParking(
+  Future<Transaction> putParking(
     int id,
-    Parking park,
+    Transaction park,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(park.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Parking>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -320,7 +320,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Parking.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
@@ -579,13 +579,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<IPL> getIPLById(int id) async {
+  Future<Transaction> getIPLById(int id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<IPL>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -601,7 +601,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IPL.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
@@ -659,14 +659,14 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<IPL> postIPL(IPL park) async {
+  Future<Transaction> postIPL(Transaction park) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(park.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<IPL>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -682,22 +682,22 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IPL.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<IPL> putIPL(
+  Future<Transaction> putIPL(
     int id,
-    IPL park,
+    Transaction park,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(park.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<IPL>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<Transaction>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
@@ -713,7 +713,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IPL.fromJson(_result.data!);
+    final value = Transaction.fromJson(_result.data!);
     return value;
   }
 
@@ -809,13 +809,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ParkingReport> getParkingByDate() async {
+  Future<TransactionReport> getParkingByDate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ParkingReport>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<TransactionReport>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -831,18 +831,18 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ParkingReport.fromJson(_result.data!);
+    final value = TransactionReport.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<IPLReport> getIPLByDate() async {
+  Future<TransactionReport> getIPLByDate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<IPLReport>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<TransactionReport>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -858,7 +858,7 @@ class _RestClient implements RestClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = IPLReport.fromJson(_result.data!);
+    final value = TransactionReport.fromJson(_result.data!);
     return value;
   }
 

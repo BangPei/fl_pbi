@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/models/models.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/pages/parking/data/parking_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,9 +74,9 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
     emit(state.copyWith(listLoading: true));
     try {
       ServerSide serverSide = await ParkingApi.get(params: event.map);
-      List<Parking> parks = [];
+      List<Transaction> parks = [];
       for (var v in (serverSide.data ?? [])) {
-        parks.add(Parking.fromJson(v));
+        parks.add(Transaction.fromJson(v));
       }
       emit(state.copyWith(
         listLoading: false,
@@ -120,9 +119,9 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
           params[v.split("=")[0]] = v.split("=")[1];
         }
         ServerSide serverSide = await ParkingApi.get(params: params);
-        List<Parking> parks = state.parks ?? [];
+        List<Transaction> parks = state.parks ?? [];
         for (var v in (serverSide.data ?? [])) {
-          parks.add(Parking.fromJson(v));
+          parks.add(Transaction.fromJson(v));
         }
         emit(state.copyWith(
           serverSide: serverSide,
@@ -161,7 +160,7 @@ class ParkingBloc extends Bloc<ParkingEvent, ParkingState> {
     try {
       await ParkingApi.delete(event.id!);
       CashFlow cashFlow = await ParkingApi.getTotal();
-      List<Parking> parks = state.parks ?? [];
+      List<Transaction> parks = state.parks ?? [];
       parks.removeWhere((e) => e.id == event.id);
       emit(state.copyWith(
         listLoading: false,

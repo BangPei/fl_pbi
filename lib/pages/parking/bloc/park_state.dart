@@ -20,7 +20,7 @@ final class ParkingState extends Equatable {
   final bool loadMore;
   final String? errorMessage;
   final List<Trans>? trans;
-  final List<Parking>? parks;
+  final List<Transaction>? parks;
   final ServerSide? serverSide;
 
   ParkingState copyWith({
@@ -32,7 +32,7 @@ final class ParkingState extends Equatable {
     List<Trans>? trans,
     String? errorMessage,
     ServerSide? serverSide,
-    List<Parking>? parks,
+    List<Transaction>? parks,
   }) {
     return ParkingState(
       cashFlow: cashFlow ?? this.cashFlow,

@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/block/data/block_api.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/ipl/data/ipl_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +32,7 @@ class IplBloc extends Bloc<IplEvent, IplState> {
         }
         emit(state.copyWith(blocks: blocks, listOpen: listOpen));
       } else {
-        List<IPL> ipls = state.ipls ?? [];
+        List<Transaction> ipls = state.ipls ?? [];
         ipls.removeWhere((e) => e.id == event.id);
         emit(state.copyWith(ipls: ipls));
       }
@@ -75,9 +74,9 @@ class IplBloc extends Bloc<IplEvent, IplState> {
           params[v.split("=")[0]] = v.split("=")[1];
         }
         ServerSide serverSide = await IplApi.get(params: params);
-        List<IPL> ipls = state.ipls ?? [];
+        List<Transaction> ipls = state.ipls ?? [];
         for (var v in (serverSide.data ?? [])) {
-          ipls.add(IPL.fromJson(v));
+          ipls.add(Transaction.fromJson(v));
         }
         emit(state.copyWith(
           serverSide: serverSide,
@@ -219,9 +218,9 @@ class IplBloc extends Bloc<IplEvent, IplState> {
     try {
       emit(state.copyWith(listLoading: true));
       ServerSide serverside = await IplApi.get(params: event.map);
-      List<IPL> ipls = [];
+      List<Transaction> ipls = [];
       for (var v in (serverside.data ?? [])) {
-        ipls.add(IPL.fromJson(v));
+        ipls.add(Transaction.fromJson(v));
       }
       emit(state.copyWith(
         listLoading: false,

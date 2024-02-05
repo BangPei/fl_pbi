@@ -13,14 +13,14 @@ final class ParkFormState extends Equatable {
   final bool isError;
   final bool isSuccess;
   final String? errorMessage;
-  final Parking? park;
+  final Transaction? park;
 
   ParkFormState copyWith({
     bool? listLoading,
     bool? isError,
     bool? isSuccess,
     String? errorMessage,
-    Parking? park,
+    Transaction? park,
   }) {
     return ParkFormState(
       isError: isError ?? this.isError,

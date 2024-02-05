@@ -73,7 +73,8 @@ class RouteNavigation {
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
                     child: BlockFormScreen(
-                        id: int.parse(state.pathParameters['id']!)),
+                      id: int.parse(state.pathParameters['id']!),
+                    ),
                   );
                 },
               ),
@@ -88,6 +89,33 @@ class RouteNavigation {
               );
             },
             routes: [
+              GoRoute(
+                parentNavigatorKey: _dashboardNavigatorKey,
+                path: 'report/:reportType',
+                name: "report",
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: ReportForm(
+                      reportType: state.pathParameters['reportType']!,
+                    ),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    parentNavigatorKey: _nav.navKey,
+                    path: 'form',
+                    name: "report-transaction",
+                    pageBuilder: (context, state) {
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: ReportPDFScreen(
+                          reportType: extra['reportType'],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
               GoRoute(
                 parentNavigatorKey: _nav.navKey,
                 path: 'parking',

@@ -12,7 +12,7 @@ class OnChangedDate extends ParkFormEvent {
 }
 
 class OnChangedAmount extends ParkFormEvent {
-  final int val;
+  final double val;
   const OnChangedAmount(this.val);
   @override
   List<Object?> get props => [];

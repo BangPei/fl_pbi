@@ -1,6 +1,4 @@
 import 'package:fl_pbi/models/models.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl_report.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/service/api.dart';
 
 class IplApi {
@@ -22,7 +20,7 @@ class IplApi {
     return data;
   }
 
-  static Future<IPL> post(IPL ipl) async {
+  static Future<Transaction> post(Transaction ipl) async {
     final client = await Api.restClient();
     var data = client.postIPL(ipl);
     return data;
@@ -34,19 +32,19 @@ class IplApi {
     return data;
   }
 
-  static Future<IPL> getId(int id) async {
+  static Future<Transaction> getId(int id) async {
     final client = await Api.restClient();
     var data = client.getIPLById(id);
     return data;
   }
 
-  static Future<IPL> put(IPL ipl) async {
+  static Future<Transaction> put(Transaction ipl) async {
     final client = await Api.restClient();
     var data = client.putIPL(ipl.id, ipl);
     return data;
   }
 
-  static Future<IPLReport> getByDate(Map<String, dynamic> map) async {
+  static Future<TransactionReport> getByDate(Map<String, dynamic> map) async {
     final client = await Api.restClient(params: map);
     var data = client.getIPLByDate();
     return data;

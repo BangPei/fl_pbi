@@ -3,11 +3,7 @@ import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl_report.dart';
-import 'package:fl_pbi/pages/parking/data/parking_report.dart';
-import 'package:fl_pbi/pages/ipl/data/ipl.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
@@ -37,7 +33,7 @@ abstract class RestClient {
   Future<ServerSide> getParkingList();
 
   @GET("transaction/{id}")
-  Future<Parking> getParkingById(@Path() int id);
+  Future<Transaction> getParkingById(@Path() int id);
 
   @DELETE("transaction/{id}")
   Future<dynamic> removeParking(@Path() int id);
@@ -46,10 +42,10 @@ abstract class RestClient {
   Future<CashFlow> getTotal();
 
   @POST("transaction")
-  Future<Parking> postParking(@Body() Parking park);
+  Future<Transaction> postParking(@Body() Transaction park);
 
   @PUT("transaction/{id}")
-  Future<Parking> putParking(@Path() int id, @Body() Parking park);
+  Future<Transaction> putParking(@Path() int id, @Body() Transaction park);
 
   @POST("number")
   Future<dynamic> postNumber(@Body() Map<String, dynamic> body);
@@ -79,7 +75,7 @@ abstract class RestClient {
   Future<ServerSide> getIPLList();
 
   @GET("ipl/{id}")
-  Future<IPL> getIPLById(@Path() int id);
+  Future<Transaction> getIPLById(@Path() int id);
 
   @DELETE("ipl/{id}")
   Future<dynamic> removeIPL(@Path() int id);
@@ -88,10 +84,10 @@ abstract class RestClient {
   Future<CashFlow> getIplTotal();
 
   @POST("ipl")
-  Future<IPL> postIPL(@Body() IPL park);
+  Future<Transaction> postIPL(@Body() Transaction park);
 
   @PUT("ipl/{id}")
-  Future<IPL> putIPL(@Path() int id, @Body() IPL park);
+  Future<Transaction> putIPL(@Path() int id, @Body() Transaction park);
 
   @GET("finance/total")
   Future<Finance> getFinanceTotal();
@@ -104,7 +100,7 @@ abstract class RestClient {
       @Path() String year, @Path() String type);
 
   @GET("transaction/date")
-  Future<ParkingReport> getParkingByDate();
+  Future<TransactionReport> getParkingByDate();
   @GET("ipl/date")
-  Future<IPLReport> getIPLByDate();
+  Future<TransactionReport> getIPLByDate();
 }

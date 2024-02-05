@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/parking/data/parking_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
@@ -19,7 +19,7 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
   }
 
   void _onResetForm(OnResetForm event, Emitter<ParkFormState> emit) async {
-    Parking park = Parking();
+    Transaction park = Transaction();
     park.type = event.type;
     emit(state.copyWith(
       park: park,
@@ -30,7 +30,7 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<ParkFormState> emit) {
-    Parking park = state.park ?? Parking();
+    Transaction park = state.park ?? Transaction();
     if (event.val == null) {
       park.date = null;
     } else {
@@ -41,13 +41,13 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
   }
 
   void _onChangedAmount(OnChangedAmount event, Emitter<ParkFormState> emit) {
-    Parking park = state.park ?? Parking();
+    Transaction park = state.park ?? Transaction();
     park.amount = event.val;
     emit(state.copyWith(park: park));
   }
 
   void _onChangedRemark(OnChangedRemark event, Emitter<ParkFormState> emit) {
-    Parking? park = state.park ?? Parking();
+    Transaction? park = state.park ?? Transaction();
     park.remark = event.val;
     emit(state.copyWith(park: park));
   }
@@ -55,7 +55,7 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
   void _onGetPark(OnGetPark event, Emitter<ParkFormState> emit) async {
     try {
       emit(state.copyWith(listLoading: true, isSuccess: false));
-      Parking park = await ParkingApi.getId(event.id);
+      Transaction park = await ParkingApi.getId(event.id);
       emit(state.copyWith(
         listLoading: false,
         park: park,
@@ -85,7 +85,7 @@ class ParkFormBloc extends Bloc<ParkFormEvent, ParkFormState> {
   void _onSubmit(OnSubmit event, Emitter<ParkFormState> emit) async {
     try {
       emit(state.copyWith(listLoading: true));
-      Parking? park = state.park ?? Parking();
+      Transaction? park = state.park ?? Transaction();
       park.type = event.type;
       if (event.image != null) {
         park.picture = event.image;

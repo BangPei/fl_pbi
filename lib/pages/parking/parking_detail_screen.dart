@@ -1,6 +1,6 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
-import 'package:fl_pbi/pages/parking/data/parking.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,7 +72,7 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
             child: SingleChildScrollView(
               controller: _controller,
               physics: const AlwaysScrollableScrollPhysics(),
-              child: ListSummaryScreen<Parking>(
+              child: ListSummaryScreen<Transaction>(
                 list: state.parks ?? [],
                 onTap: (id) => context.goNamed("parking-form",
                     extra: {"type": widget.type, "id": id}),
