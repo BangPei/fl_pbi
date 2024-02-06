@@ -54,7 +54,16 @@ class TransactionReport {
     final font1 = await PdfGoogleFonts.tinosRegular();
     final font2 = await PdfGoogleFonts.tinosBold();
     final image = await imageFromAssetBundle('images/logo.png');
-
+    List<String> tableHeader = [
+      "NO",
+      "Kode Transaksi",
+      "Tanggal",
+      "Rupiah",
+      "Keterangan"
+    ];
+    if (reportType.toLowerCase() == "ipl") {
+      tableHeader.add("Block");
+    }
     pdf.addPage(transactionSection(
       font1: font1,
       font2: font2,
@@ -62,6 +71,7 @@ class TransactionReport {
       map: map,
       data: transIn ?? [],
       total: totalIn ?? 0,
+      tableHeader: tableHeader,
       title: "Laporan Pemasukan ${reportType.toUpperCase()}",
     ));
     pdf.addPage(transactionSection(
@@ -71,6 +81,7 @@ class TransactionReport {
       map: map,
       data: transOut ?? [],
       total: totalOut ?? 0,
+      tableHeader: tableHeader,
       title: "Laporan Pengeluaran ${reportType.toUpperCase()}",
     ));
     return pdf.save();
@@ -82,17 +93,10 @@ class TransactionReport {
     required pw.ImageProvider image,
     required String title,
     required double total,
+    required List<String> tableHeader,
     required List<Transaction> data,
     required Map<String, dynamic> map,
   }) {
-    List<String> tableHeader = [
-      "NO",
-      "Kode Transaksi",
-      "Tanggal",
-      "Rupiah",
-      "Keterangan"
-    ];
-
     bool isMonth = map.containsKey('month');
     String periode = 'Periode';
     if (isMonth) {

@@ -87,6 +87,8 @@ class Transaction {
         return Common.oCcy.format(amount ?? 0);
       case 4:
         return note ?? remark ?? "--";
+      case 5:
+        return blockDetail != null ? blockDetail?.name ?? "--" : "";
     }
     return '';
   }
