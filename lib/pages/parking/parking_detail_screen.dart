@@ -74,8 +74,12 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
               child: ListSummaryScreen<Transaction>(
                 list: state.parks ?? [],
-                onTap: (id) => context.goNamed("parking-form",
-                    extra: {"type": widget.type, "id": id}),
+                onTap: (id) => context.goNamed("parking-form-detail", extra: {
+                  "type": widget.type,
+                  "id": id,
+                  "month": widget.month,
+                  "year": widget.year
+                }),
                 onConfirm: (id) {
                   context.read<ParkingBloc>().add(OnRemovePark(id));
                 },

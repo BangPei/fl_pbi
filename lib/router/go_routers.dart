@@ -139,20 +139,33 @@ class RouteNavigation {
                     },
                   ),
                   GoRoute(
-                    parentNavigatorKey: _nav.navKey,
-                    path: 'detail',
-                    name: "parking-detail",
-                    pageBuilder: (context, state) {
-                      var extra = state.extra as Map<String, dynamic>;
-                      return NoTransitionPage(
-                        child: ParkingDetailScreen(
-                          type: extra['type'],
-                          month: extra['month'],
-                          year: extra['year'],
+                      parentNavigatorKey: _nav.navKey,
+                      path: 'detail',
+                      name: "parking-detail",
+                      pageBuilder: (context, state) {
+                        var extra = state.extra as Map<String, dynamic>;
+                        return NoTransitionPage(
+                          child: ParkingDetailScreen(
+                            type: extra['type'],
+                            month: extra['month'],
+                            year: extra['year'],
+                          ),
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          parentNavigatorKey: _nav.navKey,
+                          path: 'form',
+                          name: "parking-form-detail",
+                          pageBuilder: (context, state) {
+                            var extra = state.extra as Map<String, dynamic>;
+                            return NoTransitionPage(
+                              child: ParkingFormScreen(
+                                  type: extra['type'], id: extra['id']),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
+                      ]),
                 ],
               ),
               GoRoute(
@@ -209,6 +222,25 @@ class RouteNavigation {
                         ),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
+                        path: 'form',
+                        name: "ipl-form-detail",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: IPLFormScreen(
+                              type: extra['type'],
+                              blockCode: extra['blockCode'],
+                              month: extra['month'],
+                              year: extra['year'],
+                              id: extra['id'],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   GoRoute(
                     parentNavigatorKey: _nav.navKey,
@@ -224,6 +256,24 @@ class RouteNavigation {
                         ),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
+                        path: 'form',
+                        name: "ipl-form-detail-out",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: IPLFormScreen(
+                              type: extra['type'],
+                              month: extra['month'],
+                              year: extra['year'],
+                              id: extra['id'],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               )

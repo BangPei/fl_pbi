@@ -173,7 +173,7 @@ class BodyDetail extends StatelessWidget {
         children: details.map((detail) {
           return InkWell(
             onTap: () {
-              context.goNamed("ipl-form", extra: {
+              context.goNamed("ipl-form-detail", extra: {
                 "type": 1,
                 'blockCode': detail.code,
                 'month': month,

@@ -83,6 +83,8 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
         } else {
           dateController.text = "";
         }
+        amountController.text = Common.oCcy.format(state.ipl?.amount ?? 0);
+        remarkController.text = state.ipl?.note ?? '';
       },
       child: BlocBuilder<FormIplBloc, FormIplState>(
         builder: (context, state) {

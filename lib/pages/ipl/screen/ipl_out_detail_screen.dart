@@ -62,7 +62,14 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
           }
           return ListSummaryScreen<Transaction>(
             list: state.ipls ?? [],
-            onTap: (id) {},
+            onTap: (id) {
+              context.goNamed("ipl-form-detail-out", extra: {
+                "type": 2,
+                'month': widget.month,
+                'year': widget.year,
+                "id": id
+              });
+            },
             onConfirm: (id) {
               context.read<IplBloc>().add(OnRemoveIPL(id, map));
             },
