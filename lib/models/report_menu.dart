@@ -19,7 +19,7 @@ class Report {
           color: AppTheme.nearlyDarkRed.withOpacity(0.7),
         ),
         onTap: () {
-          context.goNamed('report',pathParameters: {'reportType':"parking"});
+          context.goNamed('report', pathParameters: {'reportType': "parkir"});
         },
       ),
       Report(
@@ -30,7 +30,7 @@ class Report {
           color: AppTheme.nearlyDarkRed.withOpacity(0.7),
         ),
         onTap: () {
-          context.goNamed('report',pathParameters: {'reportType':"ipl"});
+          context.goNamed('report', pathParameters: {'reportType': "ipl"});
         },
       ),
       Report(

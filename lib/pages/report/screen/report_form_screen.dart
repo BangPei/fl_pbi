@@ -58,6 +58,7 @@ class _ReportFormState extends State<ReportForm> {
             onSubmit: () {
               context.goNamed(
                 'report-transaction',
+                pathParameters: {'reportType': widget.reportType},
                 extra: {'reportType': widget.reportType},
               );
             },

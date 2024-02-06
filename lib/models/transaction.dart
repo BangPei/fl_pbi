@@ -1,5 +1,7 @@
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
+import 'package:jiffy/jiffy.dart';
 
 class Transaction {
   int? id;
@@ -69,5 +71,23 @@ class Transaction {
       data['block_detail'] = null;
     }
     return data;
+  }
+
+  String getIndex(int row, int index) {
+    switch (index) {
+      case 0:
+        return (row + 1).toString();
+      case 1:
+        return code ?? "--";
+      case 2:
+        return date == null
+            ? "--"
+            : Jiffy.parse(date!).format(pattern: "d MMM yyyy");
+      case 3:
+        return Common.oCcy.format(amount ?? 0);
+      case 4:
+        return note ?? remark ?? "--";
+    }
+    return '';
   }
 }

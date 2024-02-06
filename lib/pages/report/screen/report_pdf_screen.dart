@@ -35,18 +35,28 @@ class _ReportPDFScreenState extends State<ReportPDFScreen> {
           appBar: AppBar(
             actions: [
               IconButton(
-                  onPressed: () async {
-                    await Printing.layoutPdf(
-                        onLayout: (format) => state.report!.pdf(
-                            reportType: widget.reportType, map: state.map!));
-                  },
-                  icon: const Icon(Icons.print)),
+                onPressed: () async {
+                  await Printing.layoutPdf(
+                    onLayout: (format) {
+                      return state.report!.pdf(
+                        reportType: widget.reportType,
+                        map: state.map!,
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(Icons.print),
+              ),
             ],
           ),
           body: PdfPreview(
             maxPageWidth: 700,
-            build: (format) => state.report!
-                .pdf(reportType: widget.reportType, map: state.map!),
+            build: (format) {
+              return state.report!.pdf(
+                reportType: widget.reportType,
+                map: state.map!,
+              );
+            },
             canDebug: false,
             canChangeOrientation: false,
             allowSharing: false,
