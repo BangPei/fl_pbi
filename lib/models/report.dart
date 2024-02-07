@@ -182,6 +182,11 @@ class TransactionReport {
             3: pw.Alignment.centerRight,
             4: pw.Alignment.center,
           },
+          columnWidths: {
+            1: const pw.IntrinsicColumnWidth(flex: 1.2),
+            3: const pw.IntrinsicColumnWidth(flex: 1),
+            4: const pw.IntrinsicColumnWidth(flex: 1.5),
+          },
         )
       ],
     );

@@ -128,6 +128,11 @@ class ListSummaryScreen<T> extends StatelessWidget {
                       trailing: Icon(icon, color: color),
                       onTap: () => onTap!(data.id),
                     ),
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Text('Note : ${data.note ?? data.remark ?? ""}'),
+                    )
                   ],
                 ),
               ),

@@ -155,6 +155,19 @@ class RouteNavigation {
                       routes: [
                         GoRoute(
                           parentNavigatorKey: _nav.navKey,
+                          path: 'report',
+                          name: "report-parking",
+                          pageBuilder: (context, state) {
+                            var extra = state.extra as Map<String, dynamic>;
+                            return NoTransitionPage(
+                              child: ReportPDFScreen(
+                                reportType: extra['reportType'],
+                              ),
+                            );
+                          },
+                        ),
+                        GoRoute(
+                          parentNavigatorKey: _nav.navKey,
                           path: 'form',
                           name: "parking-form-detail",
                           pageBuilder: (context, state) {
@@ -225,6 +238,19 @@ class RouteNavigation {
                     routes: [
                       GoRoute(
                         parentNavigatorKey: _nav.navKey,
+                        path: 'report',
+                        name: "report-ipl-in",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: ReportPDFScreen(
+                              reportType: extra['reportType'],
+                            ),
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
                         path: 'form',
                         name: "ipl-form-detail",
                         pageBuilder: (context, state) {
@@ -257,6 +283,19 @@ class RouteNavigation {
                       );
                     },
                     routes: [
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
+                        path: 'report',
+                        name: "report-ipl",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: ReportPDFScreen(
+                              reportType: extra['reportType'],
+                            ),
+                          );
+                        },
+                      ),
                       GoRoute(
                         parentNavigatorKey: _nav.navKey,
                         path: 'form',

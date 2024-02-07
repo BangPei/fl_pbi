@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
+import 'package:fl_pbi/pages/report/bloc/report_bloc.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class IPLOutDetailScreen extends StatefulWidget {
 
 class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
   Map<String, dynamic> map = {};
+  final ScrollController _controller = ScrollController();
   @override
   void initState() {
     map = {
@@ -32,6 +34,11 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
       "perpage": 100,
     };
     context.read<IplBloc>().add(OnGetOutDetail(map));
+    _controller.addListener(() {
+      if (_controller.position.maxScrollExtent == _controller.offset) {
+        context.read<IplBloc>().add(OnLoadMore());
+      }
+    });
     super.initState();
   }
 
@@ -50,6 +57,28 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
+        actions: IconButton(
+          onPressed: () {
+            Map<String, dynamic> map = {
+              "month": widget.month.toLowerCase(),
+              "year": widget.year,
+            };
+            context.read<ReportBloc>().add(OnChangedPeriode(map));
+            context.goNamed(
+              'report-ipl',
+              extra: {
+                'reportType': "ipl",
+                "type": widget.type,
+                "month": widget.month,
+                "year": widget.year,
+              },
+            );
+          },
+          icon: const Icon(
+            Icons.print,
+            color: AppTheme.grey,
+          ),
+        ),
       ),
       body: BlocBuilder<IplBloc, IplState>(
         builder: (context, state) {
@@ -60,19 +89,28 @@ class _IPLOutDetailScreenState extends State<IPLOutDetailScreen> {
           } else if (state.isError) {
             return Center(child: Text(state.errorMessage ?? "Error"));
           }
-          return ListSummaryScreen<Transaction>(
-            list: state.ipls ?? [],
-            onTap: (id) {
-              context.goNamed("ipl-form-detail-out", extra: {
-                "type": 2,
-                'month': widget.month,
-                'year': widget.year,
-                "id": id
-              });
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<IplBloc>().add(OnGetOutDetail(map));
             },
-            onConfirm: (id) {
-              context.read<IplBloc>().add(OnRemoveIPL(id, map));
-            },
+            child: SingleChildScrollView(
+              controller: _controller,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: ListSummaryScreen<Transaction>(
+                list: state.ipls ?? [],
+                onTap: (id) {
+                  context.goNamed("ipl-form-detail-out", extra: {
+                    "type": 2,
+                    'month': widget.month,
+                    'year': widget.year,
+                    "id": id
+                  });
+                },
+                onConfirm: (id) {
+                  context.read<IplBloc>().add(OnRemoveIPL(id, map));
+                },
+              ),
+            ),
           );
         },
       ),

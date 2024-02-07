@@ -29,8 +29,12 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
       if (event.image != null) {
         ipl.picture = event.image;
       }
-      Transaction newIpl = await IplApi.post(ipl);
-      emit(state.copyWith(ipl: newIpl, isLoading: false, isSuccess: true));
+      if (ipl.id == null) {
+        ipl = await IplApi.post(ipl);
+      } else {
+        ipl = await IplApi.put(ipl);
+      }
+      emit(state.copyWith(ipl: ipl, isLoading: false, isSuccess: true));
     } catch (e) {
       emit(state.copyWith(
         isLoading: false,

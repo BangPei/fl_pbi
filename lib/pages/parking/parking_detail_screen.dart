@@ -1,6 +1,7 @@
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/parking/bloc/park_bloc.dart';
+import 'package:fl_pbi/pages/report/bloc/report_bloc.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,6 +55,28 @@ class _ParkingDetailScreenState extends State<ParkingDetailScreen> {
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
+        ),
+        actions: IconButton(
+          onPressed: () {
+            Map<String, dynamic> map = {
+              "month": widget.month.toLowerCase(),
+              "year": widget.year,
+            };
+            context.read<ReportBloc>().add(OnChangedPeriode(map));
+            context.goNamed(
+              'report-parking',
+              extra: {
+                'reportType': "parkir",
+                "type": widget.type,
+                "month": widget.month,
+                "year": widget.year,
+              },
+            );
+          },
+          icon: const Icon(
+            Icons.print,
+            color: AppTheme.grey,
+          ),
         ),
       ),
       body: BlocBuilder<ParkingBloc, ParkingState>(

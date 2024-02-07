@@ -2,6 +2,7 @@ import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
+import 'package:fl_pbi/pages/report/bloc/report_bloc.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +55,28 @@ class _ParkingDetailScreenState extends State<IPLDetailScreen> {
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
+        ),
+        actions: IconButton(
+          onPressed: () {
+            Map<String, dynamic> map = {
+              "month": widget.month.toLowerCase(),
+              "year": widget.year,
+            };
+            context.read<ReportBloc>().add(OnChangedPeriode(map));
+            context.goNamed(
+              'report-ipl-in',
+              extra: {
+                'reportType': "ipl",
+                "type": widget.type,
+                "month": widget.month,
+                "year": widget.year,
+              },
+            );
+          },
+          icon: const Icon(
+            Icons.print,
+            color: AppTheme.grey,
+          ),
         ),
       ),
       body: RefreshIndicator(

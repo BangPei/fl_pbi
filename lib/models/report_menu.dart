@@ -33,15 +33,15 @@ class Report {
           context.goNamed('report', pathParameters: {'reportType': "ipl"});
         },
       ),
-      Report(
-        label: "IPL Blok",
-        icon: Icon(
-          FontAwesomeIcons.buildingCircleArrowRight,
-          size: 35,
-          color: AppTheme.nearlyDarkRed.withOpacity(0.7),
-        ),
-        onTap: () {},
-      ),
+      // Report(
+      //   label: "IPL Blok",
+      //   icon: Icon(
+      //     FontAwesomeIcons.buildingCircleArrowRight,
+      //     size: 35,
+      //     color: AppTheme.nearlyDarkRed.withOpacity(0.7),
+      //   ),
+      //   onTap: () {},
+      // ),
     ];
   }
 }
