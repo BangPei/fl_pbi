@@ -36,6 +36,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             label: 'Keuangan',
           ),
+          const CurvedNavigationBarItem(
+            child: Icon(
+              FontAwesomeIcons.person,
+              color: AppTheme.nearlyDarkRed,
+            ),
+            label: 'Customer',
+          ),
           CurvedNavigationBarItem(
             child: Container(
               height: 35,
@@ -73,10 +80,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 0:
         context.go("/finance");
       case 1:
-        context.go("/surat-resmi");
+        context.go("/customer");
       case 2:
-        context.go("/block");
+        context.go("/surat-resmi");
       case 3:
+        context.go("/block");
+      case 4:
         context.go("/profile");
       default:
         context.go("/surat-resmi");

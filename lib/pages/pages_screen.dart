@@ -19,3 +19,4 @@ export 'package:fl_pbi/pages/ipl/screen/ipl_out_detail_screen.dart';
 export 'package:fl_pbi/pages/profile/screen/dialog_body.dart';
 export 'package:fl_pbi/pages/report/screen/report_form_screen.dart';
 export 'package:fl_pbi/pages/report/screen/report_pdf_screen.dart';
+export 'package:fl_pbi/pages/customer/screen/customer_screen.dart';

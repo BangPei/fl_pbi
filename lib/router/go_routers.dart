@@ -49,6 +49,15 @@ class RouteNavigation {
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/customer',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: CustomerScreen(),
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
             path: '/block',
             pageBuilder: (context, state) {
               return const NoTransitionPage(

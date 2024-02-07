@@ -101,6 +101,19 @@ abstract class RestClient {
 
   @GET("transaction/date")
   Future<TransactionReport> getParkingByDate();
+
   @GET("ipl/date")
   Future<TransactionReport> getIPLByDate();
+
+  @GET("customer")
+  Future<ServerSide> getCustomer();
+
+  @GET("customer/{id}")
+  Future<Profile> getCustomerById(@Path() int id);
+
+  @POST("customer}")
+  Future<Profile> postCustomer(@Body() Profile profile);
+
+  @PUT("customer}")
+  Future<Profile> putCustomer(@Path() int id, @Body() Profile profile);
 }

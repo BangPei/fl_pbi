@@ -1,5 +1,6 @@
 import 'package:fl_pbi/pages/block/bloc/block_bloc.dart';
 import 'package:fl_pbi/pages/block/bloc/block_form_bloc.dart';
+import 'package:fl_pbi/pages/customer/bloc/customer_bloc.dart';
 import 'package:fl_pbi/pages/finance/bloc/finanace_bloc.dart';
 import 'package:fl_pbi/pages/ipl/bloc/form_ipl_bloc.dart';
 import 'package:fl_pbi/pages/ipl/bloc/ipl_bloc.dart';
@@ -38,6 +39,7 @@ class ProviderBloc {
       BlocProvider<FinanceBloc>(create: (__) => FinanceBloc()),
       BlocProvider<BlockFormBloc>(create: (__) => BlockFormBloc()),
       BlocProvider<ReportBloc>(create: (__) => ReportBloc()),
+      BlocProvider<CustomerBloc>(create: (__) => CustomerBloc()),
       BlocProvider<SerahTerimaKunciBloc>(
           create: (__) => SerahTerimaKunciBloc()),
       BlocProvider<TandaHakGunaBloc>(create: (__) => TandaHakGunaBloc()),
