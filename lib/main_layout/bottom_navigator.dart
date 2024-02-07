@@ -35,6 +35,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: AppTheme.nearlyDarkRed,
             ),
             label: 'Keuangan',
+            labelStyle: TextStyle(fontSize: 11),
           ),
           const CurvedNavigationBarItem(
             child: Icon(
@@ -42,6 +43,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: AppTheme.nearlyDarkRed,
             ),
             label: 'Customer',
+            labelStyle: TextStyle(fontSize: 11),
           ),
           CurvedNavigationBarItem(
             child: Container(
@@ -55,6 +57,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
             ),
             label: 'Surat Resmi',
+            labelStyle: const TextStyle(fontSize: 11),
           ),
           const CurvedNavigationBarItem(
             child: Icon(
@@ -62,6 +65,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: AppTheme.nearlyDarkRed,
             ),
             label: 'Blok',
+            labelStyle: TextStyle(fontSize: 11),
           ),
           const CurvedNavigationBarItem(
             child: Icon(
@@ -69,6 +73,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: AppTheme.nearlyDarkRed,
             ),
             label: 'Profil',
+            labelStyle: TextStyle(fontSize: 11),
           ),
         ],
       ),
@@ -87,8 +92,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
         context.go("/block");
       case 4:
         context.go("/profile");
-      default:
-        context.go("/surat-resmi");
     }
   }
 

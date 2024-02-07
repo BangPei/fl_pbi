@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 
@@ -32,9 +33,10 @@ class _ImageCameraState extends State<ImageCamera> {
           ? ClipPicture(
               height: 40,
               onTap: () async {
-                base64 = await Common.pickPicture(SOURCE.camera);
-                widget.onTap(base64!);
-                setState(() {});
+                bottomDialog();
+                // base64 = await Common.pickPicture(SOURCE.camera);
+                // widget.onTap(base64!);
+                // setState(() {});
               },
               child: Image.memory(
                 base64Decode(base64!),
@@ -45,9 +47,10 @@ class _ImageCameraState extends State<ImageCamera> {
               ? ClipPicture(
                   height: 40,
                   onTap: () async {
-                    base64 = await Common.pickPicture(SOURCE.camera);
-                    widget.onTap(base64!);
-                    setState(() {});
+                    bottomDialog();
+                    // base64 = await Common.pickPicture(SOURCE.camera);
+                    // widget.onTap(base64!);
+                    // setState(() {});
                   },
                   child: Image.network(
                     dataImage!,
@@ -56,11 +59,97 @@ class _ImageCameraState extends State<ImageCamera> {
                 )
               : EmptyImageScreen(
                   onTap: () async {
-                    base64 = await Common.pickPicture(SOURCE.camera);
-                    widget.onTap(base64!);
-                    setState(() {});
+                    bottomDialog();
+                    // base64 = await Common.pickPicture(SOURCE.camera);
+                    // widget.onTap(base64!);
+                    // setState(() {});
                   },
                 ),
+    );
+  }
+
+  bottomDialog() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Pilih Sumber Gambar",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: AppTheme.deactivatedText,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  CamerButton(
+                    icon: Icons.photo,
+                    title: "Galeri",
+                    onTap: () {},
+                  ),
+                  const SizedBox(height: 20),
+                  CamerButton(
+                    icon: Icons.camera_alt_outlined,
+                    title: "Camera",
+                    onTap: () {},
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CamerButton extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final GestureTapCallback? onTap;
+  const CamerButton(
+      {super.key, required this.title, required this.icon, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color.fromARGB(255, 214, 206, 206),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 30,
+                color: const Color.fromARGB(255, 83, 83, 83),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 83, 83, 83),
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
