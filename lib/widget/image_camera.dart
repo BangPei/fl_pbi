@@ -3,8 +3,6 @@ import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 
-import '../library/common.dart';
-
 class ImageCamera extends StatefulWidget {
   final String? base64;
   final String? data;
@@ -32,12 +30,7 @@ class _ImageCameraState extends State<ImageCamera> {
       textForm: base64 != null
           ? ClipPicture(
               height: 40,
-              onTap: () async {
-                bottomDialog();
-                // base64 = await Common.pickPicture(SOURCE.camera);
-                // widget.onTap(base64!);
-                // setState(() {});
-              },
+              onTap: takePicture,
               child: Image.memory(
                 base64Decode(base64!),
                 fit: BoxFit.fill,
@@ -46,29 +39,29 @@ class _ImageCameraState extends State<ImageCamera> {
           : dataImage != null
               ? ClipPicture(
                   height: 40,
-                  onTap: () async {
-                    bottomDialog();
-                    // base64 = await Common.pickPicture(SOURCE.camera);
-                    // widget.onTap(base64!);
-                    // setState(() {});
-                  },
+                  onTap: takePicture,
                   child: Image.network(
                     dataImage!,
                     fit: BoxFit.cover,
                   ),
                 )
-              : EmptyImageScreen(
-                  onTap: () async {
-                    bottomDialog();
-                    // base64 = await Common.pickPicture(SOURCE.camera);
-                    // widget.onTap(base64!);
-                    // setState(() {});
-                  },
-                ),
+              : EmptyImageScreen(onTap: takePicture),
     );
   }
 
-  bottomDialog() async {
+  takePicture() {
+    bottomDialog(
+      onTap: (source) async {
+        base64 = await Common.pickPicture(source);
+        if (base64 != null) {
+          widget.onTap(base64!);
+          setState(() {});
+        }
+      },
+    );
+  }
+
+  bottomDialog({required Function(SOURCE) onTap}) async {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -92,13 +85,19 @@ class _ImageCameraState extends State<ImageCamera> {
                   CamerButton(
                     icon: Icons.photo,
                     title: "Galeri",
-                    onTap: () {},
+                    onTap: () {
+                      onTap(SOURCE.galery);
+                      Navigator.pop(context);
+                    },
                   ),
                   const SizedBox(height: 20),
                   CamerButton(
                     icon: Icons.camera_alt_outlined,
                     title: "Camera",
-                    onTap: () {},
+                    onTap: () {
+                      onTap(SOURCE.camera);
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ),
