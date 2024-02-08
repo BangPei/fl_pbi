@@ -293,14 +293,6 @@ class Common {
           source == SOURCE.camera ? ImageSource.camera : ImageSource.gallery,
     );
     if (photo != null) {
-      // String path = photo.path;
-      // var result = await FlutterImageCompress.compressWithFile(
-      //   File(path).absolute.path,
-      //   minWidth: 1000,
-      //   minHeight: 500,
-      //   quality: 94,
-      //   // rotate: 90,
-      // );
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: photo.path,
         compressFormat: ImageCompressFormat.jpg,

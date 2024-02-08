@@ -4,6 +4,7 @@ import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomerScreen extends StatefulWidget {
   const CustomerScreen({super.key});
@@ -29,7 +30,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
         title: "Customer",
         actions: IconButton(
           visualDensity: const VisualDensity(vertical: -4),
-          onPressed: () {},
+          onPressed: () => context.goNamed("customer-form"),
           icon: const FaIcon(FontAwesomeIcons.plus),
         ),
       ),

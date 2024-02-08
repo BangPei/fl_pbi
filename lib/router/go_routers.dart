@@ -55,6 +55,18 @@ class RouteNavigation {
                 child: CustomerScreen(),
               );
             },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form',
+                name: "customer-form",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: CustomerFormScreen(),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
@@ -148,46 +160,47 @@ class RouteNavigation {
                     },
                   ),
                   GoRoute(
-                      parentNavigatorKey: _nav.navKey,
-                      path: 'detail',
-                      name: "parking-detail",
-                      pageBuilder: (context, state) {
-                        var extra = state.extra as Map<String, dynamic>;
-                        return NoTransitionPage(
-                          child: ParkingDetailScreen(
-                            type: extra['type'],
-                            month: extra['month'],
-                            year: extra['year'],
-                          ),
-                        );
-                      },
-                      routes: [
-                        GoRoute(
-                          parentNavigatorKey: _nav.navKey,
-                          path: 'report',
-                          name: "report-parking",
-                          pageBuilder: (context, state) {
-                            var extra = state.extra as Map<String, dynamic>;
-                            return NoTransitionPage(
-                              child: ReportPDFScreen(
-                                reportType: extra['reportType'],
-                              ),
-                            );
-                          },
+                    parentNavigatorKey: _nav.navKey,
+                    path: 'detail',
+                    name: "parking-detail",
+                    pageBuilder: (context, state) {
+                      var extra = state.extra as Map<String, dynamic>;
+                      return NoTransitionPage(
+                        child: ParkingDetailScreen(
+                          type: extra['type'],
+                          month: extra['month'],
+                          year: extra['year'],
                         ),
-                        GoRoute(
-                          parentNavigatorKey: _nav.navKey,
-                          path: 'form',
-                          name: "parking-form-detail",
-                          pageBuilder: (context, state) {
-                            var extra = state.extra as Map<String, dynamic>;
-                            return NoTransitionPage(
-                              child: ParkingFormScreen(
-                                  type: extra['type'], id: extra['id']),
-                            );
-                          },
-                        ),
-                      ]),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
+                        path: 'report',
+                        name: "report-parking",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: ReportPDFScreen(
+                              reportType: extra['reportType'],
+                            ),
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _nav.navKey,
+                        path: 'form',
+                        name: "parking-form-detail",
+                        pageBuilder: (context, state) {
+                          var extra = state.extra as Map<String, dynamic>;
+                          return NoTransitionPage(
+                            child: ParkingFormScreen(
+                                type: extra['type'], id: extra['id']),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
               GoRoute(

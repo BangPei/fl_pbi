@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ImageCamera extends StatefulWidget {
+  final String? title;
   final String? base64;
   final String? data;
   final Function(String) onTap;
-  const ImageCamera({super.key, this.base64, this.data, required this.onTap});
+  const ImageCamera(
+      {super.key, this.base64, this.data, required this.onTap, this.title});
 
   @override
   State<ImageCamera> createState() => _ImageCameraState();
@@ -27,7 +29,7 @@ class _ImageCameraState extends State<ImageCamera> {
   @override
   Widget build(BuildContext context) {
     return CustomFormField(
-      title: "Lampiran",
+      title: widget.title ?? "Lampiran",
       textForm: base64 != null
           ? ClipPicture(
               height: 40,
@@ -51,16 +53,8 @@ class _ImageCameraState extends State<ImageCamera> {
                       );
                     },
                     fit: BoxFit.fitWidth,
-                  )
-
-                  //  Image.network(
-                  //   dataImage!,
-                  //   fit: BoxFit.cover,
-                  //   loadingBuilder: (context, child, loadingProgress) {
-                  //     return Center(child: child);
-                  //   },
-                  // ),
-                  )
+                  ),
+                )
               : EmptyImageScreen(onTap: takePicture),
     );
   }

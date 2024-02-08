@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EmptyImageScreen extends StatelessWidget {
   final GestureTapCallback? onTap;
@@ -27,11 +28,11 @@ class EmptyImageScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    iconData ?? Icons.picture_in_picture_sharp,
+                    iconData ?? FontAwesomeIcons.camera,
                     color: Colors.indigo,
                   ),
                   const SizedBox(height: 10),
-                  Text(title ?? "Select Picture",
+                  Text(title ?? "Tekan Untuk Mengambil Gambar",
                       style: const TextStyle(
                         color: Colors.indigo,
                       )),
