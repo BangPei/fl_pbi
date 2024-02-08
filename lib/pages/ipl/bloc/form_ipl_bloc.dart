@@ -120,7 +120,12 @@ class FormIplBloc extends Bloc<FormIplEvent, FormIplState> {
   }
 
   void _onGetIplById(GetIplById event, Emitter<FormIplState> emit) async {
-    emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
+    emit(state.copyWith(
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+      ipl: Transaction(),
+    ));
     try {
       List<BlockDetail> details = await BlockApi.getBlockDetails();
       Transaction ipl = await IplApi.getId(event.id!);

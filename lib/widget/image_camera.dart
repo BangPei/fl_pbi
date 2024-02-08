@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ImageCamera extends StatefulWidget {
   final String? base64;
@@ -38,13 +39,28 @@ class _ImageCameraState extends State<ImageCamera> {
             )
           : dataImage != null
               ? ClipPicture(
-                  height: 40,
                   onTap: takePicture,
-                  child: Image.network(
-                    dataImage!,
-                    fit: BoxFit.cover,
-                  ),
-                )
+                  child: FadeInImage(
+                    image: NetworkImage(dataImage!, scale: 1),
+                    placeholder: AssetImage(Common.imageLoading),
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        FontAwesomeIcons.idCard,
+                        color: AppTheme.blue,
+                        size: 45,
+                      );
+                    },
+                    fit: BoxFit.fitWidth,
+                  )
+
+                  //  Image.network(
+                  //   dataImage!,
+                  //   fit: BoxFit.cover,
+                  //   loadingBuilder: (context, child, loadingProgress) {
+                  //     return Center(child: child);
+                  //   },
+                  // ),
+                  )
               : EmptyImageScreen(onTap: takePicture),
     );
   }
@@ -52,7 +68,7 @@ class _ImageCameraState extends State<ImageCamera> {
   takePicture() {
     bottomDialog(
       onTap: (source) async {
-        base64 = await Common.pickPicture(source);
+        base64 = await Common.pickPicture(context, source);
         if (base64 != null) {
           widget.onTap(base64!);
           setState(() {});

@@ -17,6 +17,7 @@ class ParkingFormScreen extends StatefulWidget {
 
 class _ParkingFormScreenState extends State<ParkingFormScreen> {
   String? evidentBase64;
+  String? imageUrl;
   late FocusNode dateFocusNode;
   TextEditingController dateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -59,6 +60,7 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
         }
         amountController.text = (state.park?.amount ?? 0).toString();
         remarkController.text = state.park?.remark ?? "";
+        imageUrl = state.park?.picture;
       },
       child: BlocBuilder<ParkFormBloc, ParkFormState>(
         builder: (context, state) {
@@ -125,7 +127,7 @@ class _ParkingFormScreenState extends State<ParkingFormScreen> {
               ),
               ImageCamera(
                 base64: evidentBase64,
-                data: state.park?.picture,
+                data: imageUrl,
                 onTap: (str) => evidentBase64 = str,
               )
             ],

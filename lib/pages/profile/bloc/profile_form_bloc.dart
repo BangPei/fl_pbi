@@ -142,7 +142,12 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
 
   void _onGetCurrentUser(
       GetCurrentUserEvent event, Emitter<ProfileFormState> emit) async {
-    emit(state.copyWith(isLoading: true, isSuccess: false, isError: false));
+    emit(state.copyWith(
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+      profile: Profile(),
+    ));
     try {
       Profile? profile = await ProfileAPI.getCurrentProfile();
       emit(state.copyWith(isLoading: false, profile: profile));

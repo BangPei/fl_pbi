@@ -27,7 +27,7 @@ class IPLFormScreen extends StatefulWidget {
 
 class _IPLFormScreenState extends State<IPLFormScreen> {
   late FocusNode dateFocusNode;
-  String? evidentBase64, title;
+  String? evidentBase64, title, evidentImage;
   TextEditingController dateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController remarkController = TextEditingController();
@@ -85,6 +85,7 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
         }
         amountController.text = Common.oCcy.format(state.ipl?.amount ?? 0);
         remarkController.text = state.ipl?.note ?? '';
+        evidentImage = state.ipl?.picture;
       },
       child: BlocBuilder<FormIplBloc, FormIplState>(
         builder: (context, state) {
@@ -180,7 +181,7 @@ class _IPLFormScreenState extends State<IPLFormScreen> {
               ),
               ImageCamera(
                 base64: evidentBase64,
-                data: state.ipl?.picture,
+                data: evidentImage,
                 onTap: (str) => evidentBase64 = str,
               ),
             ],

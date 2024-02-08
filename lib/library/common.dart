@@ -8,6 +8,7 @@ import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -24,6 +25,7 @@ class Common {
   static String imageEaten = 'images/eaten.png';
   static String imageBurned = 'images/burned.png';
   static String imageBuilding = 'images/building.png';
+  static String imageLoading = 'images/loading.png';
   static MaskTextInputFormatter ktpFormat = MaskTextInputFormatter(
     mask: '##.####.######.####',
     filter: {"#": RegExp(r'[0-9]')},
@@ -284,22 +286,46 @@ class Common {
     );
   }
 
-  static pickPicture(SOURCE source) async {
+  static pickPicture(BuildContext context, SOURCE source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? photo = await picker.pickImage(
       source:
           source == SOURCE.camera ? ImageSource.camera : ImageSource.gallery,
     );
     if (photo != null) {
-      String path = photo.path;
-      var result = await FlutterImageCompress.compressWithFile(
-        File(path).absolute.path,
-        minWidth: 1000,
-        minHeight: 500,
-        quality: 94,
-        // rotate: 90,
+      // String path = photo.path;
+      // var result = await FlutterImageCompress.compressWithFile(
+      //   File(path).absolute.path,
+      //   minWidth: 1000,
+      //   minHeight: 500,
+      //   quality: 94,
+      //   // rotate: 90,
+      // );
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: photo.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(title: 'Cropper'),
+        ],
       );
-      return base64Encode(result as List<int>);
+      if (croppedFile != null) {
+        var result = await FlutterImageCompress.compressWithFile(
+          File(croppedFile.path).absolute.path,
+          minWidth: 1000,
+          minHeight: 500,
+          quality: 94,
+        );
+        return base64Encode(result as List<int>);
+      }
+      return;
     } else {
       // ignore: avoid_print
       print("err");

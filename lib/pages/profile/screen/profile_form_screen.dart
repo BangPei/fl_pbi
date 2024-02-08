@@ -16,7 +16,9 @@ class ProfileForm extends StatefulWidget {
 class _ProfileFormState extends State<ProfileForm> {
   late FocusNode _dateFocusNode;
   String? imageBase64;
+  String? imageProfile;
   String? identityBase64;
+  String? imageIdentity;
   TextEditingController dateController = TextEditingController();
   GlobalKey key = GlobalKey<State<StatefulWidget>>();
 
@@ -50,6 +52,8 @@ class _ProfileFormState extends State<ProfileForm> {
           dateController.text = Jiffy.parse(state.profile!.birthDate!)
               .format(pattern: "dd MMMM yyyy");
         }
+        imageIdentity = state.profile?.identity?.picture;
+        imageProfile = state.profile?.picture;
       },
       child: BlocBuilder<ProfileFormBloc, ProfileFormState>(
           builder: (context, state) {
@@ -75,7 +79,7 @@ class _ProfileFormState extends State<ProfileForm> {
                           width: 100,
                           child: ImageCamera(
                             base64: imageBase64,
-                            data: state.profile!.picture,
+                            data: imageProfile,
                             onTap: (str) => imageBase64 = str,
                           ),
                         ),
@@ -307,7 +311,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     ),
                     child: ImageCamera(
                       base64: identityBase64,
-                      data: state.profile!.identity?.picture,
+                      data: imageIdentity,
                       onTap: (str) => identityBase64 = str,
                     ),
                   ),
