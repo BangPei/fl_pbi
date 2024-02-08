@@ -88,10 +88,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: InkWell(
                               onTap: () {
                                 context.pushNamed("profile-form").then((val) {
-                                  Session.get("fullName").then((value) =>
-                                      setState(() => accountName = value));
-                                  Session.get("picture").then((value) =>
-                                      setState(() => imageurl = value));
+                                  Session.get("fullName")
+                                      .then((value) => accountName = value);
+                                  Session.get("picture")
+                                      .then((value) => imageurl = value);
+                                  setState(() {});
                                 });
                               },
                               child: const Row(

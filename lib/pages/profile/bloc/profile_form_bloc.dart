@@ -150,7 +150,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     ));
     try {
       Profile? profile = await ProfileAPI.getCurrentProfile();
-      emit(state.copyWith(isLoading: false, profile: profile));
+      emit(state.copyWith(profile: profile, isLoading: false));
     } catch (e) {
       if (e.runtimeType == DioException) {
         DioException err = e as DioException;
