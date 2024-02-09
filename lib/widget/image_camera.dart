@@ -3,14 +3,23 @@ import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class ImageCamera extends StatefulWidget {
   final String? title;
   final String? base64;
   final String? data;
+  final bool? isOcr;
+  final Function(RecognizedText)? ocr;
   final Function(String) onTap;
   const ImageCamera(
-      {super.key, this.base64, this.data, required this.onTap, this.title});
+      {super.key,
+      this.base64,
+      this.data,
+      required this.onTap,
+      this.title,
+      this.isOcr,
+      this.ocr});
 
   @override
   State<ImageCamera> createState() => _ImageCameraState();
@@ -33,7 +42,7 @@ class _ImageCameraState extends State<ImageCamera> {
       textForm: base64 != null
           ? ClipPicture(
               height: 40,
-              onTap: takePicture,
+              onTap: () => takePicture(isOcr: widget.isOcr, ocr: widget.ocr),
               child: Image.memory(
                 base64Decode(base64!),
                 fit: BoxFit.fill,
@@ -41,7 +50,8 @@ class _ImageCameraState extends State<ImageCamera> {
             )
           : dataImage != null
               ? ClipPicture(
-                  onTap: takePicture,
+                  onTap: () =>
+                      takePicture(isOcr: widget.isOcr, ocr: widget.ocr),
                   child: FadeInImage(
                     image: NetworkImage(dataImage!, scale: 1),
                     placeholder: AssetImage(Common.imageLoading),
@@ -55,14 +65,21 @@ class _ImageCameraState extends State<ImageCamera> {
                     fit: BoxFit.fitWidth,
                   ),
                 )
-              : EmptyImageScreen(onTap: takePicture),
+              : EmptyImageScreen(
+                  onTap: () =>
+                      takePicture(isOcr: widget.isOcr, ocr: widget.ocr)),
     );
   }
 
-  takePicture() {
+  takePicture({bool? isOcr, Function(RecognizedText)? ocr}) {
     bottomDialog(
       onTap: (source) async {
-        base64 = await Common.pickPicture(context, source);
+        base64 = await Common.pickPicture(
+          context,
+          source,
+          isOcr: isOcr,
+          onOcr: ocr,
+        );
         if (base64 != null) {
           widget.onTap(base64!);
           setState(() {});

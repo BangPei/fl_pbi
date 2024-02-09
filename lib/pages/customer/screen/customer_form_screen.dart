@@ -23,6 +23,8 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
           title: "KTP",
           onTap: (str) {},
           base64: ktpBase64,
+          isOcr: true,
+          ocr: (ocr) {},
         ),
         CustomFormField(
           title: "Nama Lengkap",
