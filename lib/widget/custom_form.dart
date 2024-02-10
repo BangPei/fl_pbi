@@ -9,16 +9,17 @@ class CustomForm extends StatefulWidget {
   final List<Widget> children;
   final Function onSubmit;
   final Widget? action;
+  final Widget? leading;
   final bool? showCard;
-  const CustomForm({
-    super.key,
-    required this.title,
-    required this.onSubmit,
-    required this.children,
-    this.buttonTitle,
-    this.action,
-    this.showCard = true,
-  });
+  const CustomForm(
+      {super.key,
+      required this.title,
+      required this.onSubmit,
+      required this.children,
+      this.buttonTitle,
+      this.action,
+      this.showCard = true,
+      this.leading});
 
   @override
   State<CustomForm> createState() => _CustomFormState();
@@ -31,10 +32,11 @@ class _CustomFormState extends State<CustomForm> {
     return Scaffold(
       appBar: CustomAppbar(
         title: widget.title,
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: const Icon(Icons.arrow_back),
-        ),
+        leading: widget.leading ??
+            IconButton(
+              onPressed: () => context.pop(),
+              icon: const Icon(Icons.arrow_back),
+            ),
         actions: widget.action,
       ),
       body: SingleChildScrollView(

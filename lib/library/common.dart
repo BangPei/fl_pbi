@@ -8,7 +8,6 @@ import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -287,12 +286,7 @@ class Common {
     );
   }
 
-  static pickPicture(
-    BuildContext context,
-    SOURCE source, {
-    bool? isOcr,
-    Function(RecognizedText)? onOcr,
-  }) async {
+  static pickPicture(BuildContext context, SOURCE source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? photo = await picker.pickImage(
       source:
@@ -321,17 +315,6 @@ class Common {
           minHeight: 500,
           quality: 94,
         );
-        if (isOcr ?? false) {
-          final textRecognizer =
-              TextRecognizer(script: TextRecognitionScript.latin);
-          InputImage data = InputImage.fromFilePath(croppedFile.path);
-          final RecognizedText recognizedText =
-              await textRecognizer.processImage(data);
-
-          onOcr!(recognizedText);
-        } else {
-          onOcr = null;
-        }
         return base64Encode(result as List<int>);
       }
       return;

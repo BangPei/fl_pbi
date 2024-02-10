@@ -70,6 +70,40 @@ class RouteNavigation {
           ),
           GoRoute(
             parentNavigatorKey: _dashboardNavigatorKey,
+            path: '/company',
+            name: "company",
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: SizedBox.shrink(),
+              );
+            },
+            routes: [
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form',
+                name: "company-form",
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: CompanyFormScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                parentNavigatorKey: _nav.navKey,
+                path: 'form/:id',
+                name: "company-crud",
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: CompanyFormScreen(
+                      id: int.parse(state.pathParameters['id']!),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            parentNavigatorKey: _dashboardNavigatorKey,
             path: '/block',
             pageBuilder: (context, state) {
               return const NoTransitionPage(

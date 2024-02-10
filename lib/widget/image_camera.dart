@@ -3,23 +3,19 @@ import 'package:fl_pbi/library/library_file.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class ImageCamera extends StatefulWidget {
   final String? title;
   final String? base64;
   final String? data;
-  final bool? isOcr;
-  final Function(RecognizedText)? ocr;
   final Function(String) onTap;
-  const ImageCamera(
-      {super.key,
-      this.base64,
-      this.data,
-      required this.onTap,
-      this.title,
-      this.isOcr,
-      this.ocr});
+  const ImageCamera({
+    super.key,
+    this.base64,
+    this.data,
+    required this.onTap,
+    this.title,
+  });
 
   @override
   State<ImageCamera> createState() => _ImageCameraState();
@@ -38,48 +34,39 @@ class _ImageCameraState extends State<ImageCamera> {
   @override
   Widget build(BuildContext context) {
     return CustomFormField(
-      title: widget.title ?? "Lampiran",
-      textForm: base64 != null
-          ? ClipPicture(
-              height: 40,
-              onTap: () => takePicture(isOcr: widget.isOcr, ocr: widget.ocr),
-              child: Image.memory(
-                base64Decode(base64!),
-                fit: BoxFit.fill,
-              ),
-            )
-          : dataImage != null
-              ? ClipPicture(
-                  onTap: () =>
-                      takePicture(isOcr: widget.isOcr, ocr: widget.ocr),
-                  child: FadeInImage(
-                    image: NetworkImage(dataImage!, scale: 1),
-                    placeholder: AssetImage(Common.imageLoading),
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return const Icon(
-                        FontAwesomeIcons.idCard,
-                        color: AppTheme.blue,
-                        size: 45,
-                      );
-                    },
-                    fit: BoxFit.fitWidth,
-                  ),
-                )
-              : EmptyImageScreen(
-                  onTap: () =>
-                      takePicture(isOcr: widget.isOcr, ocr: widget.ocr)),
-    );
+        title: widget.title ?? "Lampiran",
+        textForm: base64 != null
+            ? ClipPicture(
+                height: 40,
+                onTap: takePicture,
+                child: Image.memory(
+                  base64Decode(base64!),
+                  fit: BoxFit.fill,
+                ),
+              )
+            : dataImage != null
+                ? ClipPicture(
+                    onTap: takePicture,
+                    child: FadeInImage(
+                      image: NetworkImage(dataImage!, scale: 1),
+                      placeholder: AssetImage(Common.imageLoading),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          FontAwesomeIcons.idCard,
+                          color: AppTheme.blue,
+                          size: 45,
+                        );
+                      },
+                      fit: BoxFit.fitWidth,
+                    ),
+                  )
+                : EmptyImageScreen(onTap: takePicture));
   }
 
-  takePicture({bool? isOcr, Function(RecognizedText)? ocr}) {
+  takePicture() {
     bottomDialog(
       onTap: (source) async {
-        base64 = await Common.pickPicture(
-          context,
-          source,
-          isOcr: isOcr,
-          onOcr: ocr,
-        );
+        base64 = await Common.pickPicture(context, source);
         if (base64 != null) {
           widget.onTap(base64!);
           setState(() {});

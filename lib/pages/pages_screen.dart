@@ -21,3 +21,4 @@ export 'package:fl_pbi/pages/report/screen/report_form_screen.dart';
 export 'package:fl_pbi/pages/report/screen/report_pdf_screen.dart';
 export 'package:fl_pbi/pages/customer/screen/customer_screen.dart';
 export 'package:fl_pbi/pages/customer/screen/customer_form_screen.dart';
+export 'package:fl_pbi/pages/block/company/screen/company_form_screen.dart';

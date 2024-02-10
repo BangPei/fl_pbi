@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/block/company/data/company.dart';
 import 'package:fl_pbi/pages/block/data/block.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
+import 'package:fl_pbi/pages/category/data/category.dart';
 import 'package:fl_pbi/pages/finance/data/finance.dart';
 import 'package:fl_pbi/pages/login/data/login.dart';
 import 'package:fl_pbi/pages/profile/data/profile.dart';
@@ -116,4 +118,22 @@ abstract class RestClient {
 
   @PUT("customer}")
   Future<Profile> putCustomer(@Path() int id, @Body() Profile profile);
+
+  @GET("category")
+  Future<List<Category>> getCategory();
+
+  @GET("category/{id}")
+  Future<Category> getCategoryById(@Path() int id);
+
+  @POST("category}")
+  Future<Category> postCategory(@Body() Category category);
+
+  @PUT("category}")
+  Future<Profile> putCategory(@Path() int id, @Body() Category category);
+
+  @GET("company")
+  Future<List<Company>> getCompany();
+
+  @GET("company/{id}")
+  Future<Company> getCompanyById(@Path() int id);
 }

@@ -1,3 +1,4 @@
+import 'package:fl_pbi/pages/block/company/data/company.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/profile/data/identity_card.dart';
 
@@ -17,6 +18,7 @@ class Profile {
   String? gendre;
   String? religion;
   IdentityCard? identity;
+  List<Company>? companies;
 
   Profile({
     this.id,
@@ -34,6 +36,7 @@ class Profile {
     this.bloodGroup,
     this.gendre,
     this.religion,
+    this.companies,
   });
 
   Profile.fromJson(Map<String, dynamic> json) {
@@ -54,6 +57,13 @@ class Profile {
     identity = json['identity'] != null
         ? IdentityCard.fromJson(json['identity'])
         : null;
+
+    if (json['companies'] != null) {
+      companies = [];
+      json['details'].forEach((v) {
+        companies!.add(Company.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +86,9 @@ class Profile {
     }
     if (identity != null) {
       data['identity'] = identity!.toJson();
+    }
+    if (companies != null) {
+      data['companies'] = companies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
