@@ -1,4 +1,4 @@
-import 'package:fl_pbi/pages/block/company/data/company.dart';
+import 'package:fl_pbi/pages/company/data/company.dart';
 import 'package:fl_pbi/models/models.dart';
 import 'package:fl_pbi/pages/profile/data/identity_card.dart';
 

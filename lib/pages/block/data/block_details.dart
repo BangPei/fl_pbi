@@ -1,4 +1,5 @@
 import 'package:fl_pbi/models/models.dart';
+import 'package:fl_pbi/pages/company/data/company.dart';
 
 class BlockDetail {
   int? id;
@@ -13,22 +14,25 @@ class BlockDetail {
   String? createdAt;
   String? updatedAt;
   bool? isBase64;
+  Company? company;
   List<Transaction>? ipls;
 
-  BlockDetail(
-      {this.id,
-      this.code,
-      this.number,
-      this.name,
-      this.width = 0,
-      this.length = 0,
-      this.wide = 0,
-      this.price = 0,
-      this.picture,
-      this.createdAt,
-      this.updatedAt,
-      this.isBase64,
-      this.ipls});
+  BlockDetail({
+    this.id,
+    this.code,
+    this.number,
+    this.name,
+    this.width = 0,
+    this.length = 0,
+    this.wide = 0,
+    this.price = 0,
+    this.picture,
+    this.createdAt,
+    this.updatedAt,
+    this.isBase64,
+    this.ipls,
+    this.company,
+  });
 
   BlockDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,6 +46,8 @@ class BlockDetail {
     picture = json['picture'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    company =
+        json['company'] != null ? Company.fromJson(json['company']) : null;
     if (json['ipls'] != null) {
       ipls = <Transaction>[];
       json['ipls'].forEach((v) {
@@ -56,6 +62,9 @@ class BlockDetail {
     data['code'] = code;
     if (number != null) {
       data['number'] = number!.toJson();
+    }
+    if (company != null) {
+      data['company'] = company!.toJson();
     }
     data['name'] = name;
     data['width'] = width;

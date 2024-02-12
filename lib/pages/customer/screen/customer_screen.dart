@@ -45,20 +45,24 @@ class _CustomerScreenState extends State<CustomerScreen> {
             } else if (state.isError) {
               return Center(child: Text(state.errorMessage ?? "Error"));
             } else {
-              return SingleChildScrollView(
-                child: ListView.separated(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: (state.customers ?? []).length,
-                  itemBuilder: (context, i) {
-                    Profile customer = state.customers![i];
-                    return Text(customer.fullName ?? "--");
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                ),
-              );
+              if ((state.customers ?? []).isEmpty) {
+                return const EmptyCard();
+              } else {
+                return SingleChildScrollView(
+                  child: ListView.separated(
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: (state.customers ?? []).length,
+                    itemBuilder: (context, i) {
+                      Profile customer = state.customers![i];
+                      return Text(customer.fullName ?? "--");
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                  ),
+                );
+              }
             }
           },
         ),

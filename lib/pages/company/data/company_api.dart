@@ -1,4 +1,4 @@
-import 'package:fl_pbi/pages/block/company/data/company.dart';
+import 'package:fl_pbi/pages/company/data/company.dart';
 import 'package:fl_pbi/service/api.dart';
 
 class CompanyApi {

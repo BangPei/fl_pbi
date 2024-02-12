@@ -1,6 +1,9 @@
 import 'package:fl_pbi/library/library_file.dart';
+import 'package:fl_pbi/pages/company/data/company.dart';
+import 'package:fl_pbi/pages/customer/bloc/form_customer_bloc.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomerFormScreen extends StatefulWidget {
@@ -17,6 +20,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
 
   @override
   void initState() {
+    context.read<FormCustomerBloc>().add(const OnInit());
     _dateFocusNode = FocusNode();
     super.initState();
   }
@@ -41,14 +45,18 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             validator: ValidForm.emptyValue,
             keyboardType: TextInputType.number,
             decoration: TextFormDecoration.box(),
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedName(val));
+            },
           ),
         ),
         CustomFormField(
           title: "No. Tlp",
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedPhone(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
@@ -58,14 +66,18 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             validator: ValidForm.emptyValue,
             keyboardType: TextInputType.number,
             decoration: TextFormDecoration.box(),
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedEmail(val));
+            },
           ),
         ),
         CustomFormField(
           title: "NIK (Nomor Induk Kependudukan)",
           textForm: TextFormField(
             validator: ValidForm.emptyValue,
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedID(val));
+            },
             decoration: TextFormDecoration.box(),
           ),
         ),
@@ -76,7 +88,11 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                 title: "Tempat Lahir",
                 textForm: TextFormField(
                   validator: ValidForm.emptyValue,
-                  onChanged: (val) {},
+                  onChanged: (val) {
+                    context
+                        .read<FormCustomerBloc>()
+                        .add(OnChangedBirthPlace(val));
+                  },
                   decoration: TextFormDecoration.box(),
                 ),
               ),
@@ -88,7 +104,11 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                   validator: ValidForm.emptyValue,
                   controller: dateController,
                   focusNode: _dateFocusNode,
-                  onCloseDatepicker: (datetime) {},
+                  onCloseDatepicker: (datetime) {
+                    context
+                        .read<FormCustomerBloc>()
+                        .add(OnChangedDate(datetime!));
+                  },
                 ),
               ),
             ),
@@ -103,7 +123,9 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                   hint: const Text('Jenis Kelamin'),
                   validator: ValidForm.emptyValue,
                   decoration: TextFormDecoration.box(),
-                  onChanged: (val) {},
+                  onChanged: (val) {
+                    context.read<FormCustomerBloc>().add(OnChangedGender(val!));
+                  },
                   items: const [
                     DropdownMenuItem(value: "L", child: Text("Laki - Laki")),
                     DropdownMenuItem(value: "P", child: Text("Perempuan")),
@@ -118,7 +140,9 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                   hint: const Text('Gol. Darah'),
                   validator: ValidForm.emptyValue,
                   decoration: TextFormDecoration.box(),
-                  onChanged: (val) {},
+                  onChanged: (val) {
+                    context.read<FormCustomerBloc>().add(OnChangedBlood(val!));
+                  },
                   items: const [
                     DropdownMenuItem(value: "A", child: Text("A")),
                     DropdownMenuItem(value: "B", child: Text("B")),
@@ -136,7 +160,9 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             hint: const Text('Pilih Agama'),
             validator: ValidForm.emptyValue,
             decoration: TextFormDecoration.box(),
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedReligion(val!));
+            },
             items: const [
               DropdownMenuItem(value: "islam", child: Text("Islam")),
               DropdownMenuItem(value: "katholik", child: Text("Katholik")),
@@ -150,7 +176,9 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
           title: "Alamat Tinggal Sesuai KTP",
           textForm: TextFormField(
             controller: TextEditingController(),
-            onChanged: (val) {},
+            onChanged: (val) {
+              context.read<FormCustomerBloc>().add(OnChangedAddress(val));
+            },
             maxLines: 3,
             minLines: 3,
             decoration: TextFormDecoration.box(),
@@ -167,13 +195,17 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const FormTitle(
-                title: 'Detail Kios/Lahan',
+                title: 'Detail Usaha',
                 fontSize: 15,
               ),
               ElevatedButton.icon(
                 onPressed: () {
                   context.pushNamed("company-form").then((value) {
-                    print(value);
+                    if (value != null) {
+                      context
+                          .read<FormCustomerBloc>()
+                          .add(OnAddCompany(value as Company));
+                    }
                   });
                 },
                 icon: const Icon(Icons.add),
