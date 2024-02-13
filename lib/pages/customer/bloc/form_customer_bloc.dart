@@ -21,12 +21,21 @@ class FormCustomerBloc extends Bloc<FormCustomerEvent, FormCustomerState> {
     on<OnChangedBlood>(_onChangedBlood);
     on<OnChangedReligion>(_onChangedReligion);
     on<OnChangedAddress>(_onChangedAddress);
+    on<OnAddCompany>(_onAddCompany);
   }
 
   void _onChangedDate(OnChangedDate event, Emitter<FormCustomerState> emit) {
     Profile customer = state.customer ?? Profile();
     customer.birthDate =
         Jiffy.parseFromDateTime(event.val).format(pattern: "yyyy-MM-dd");
+    emit(state.copyWith(customer: customer));
+  }
+
+  void _onAddCompany(OnAddCompany event, Emitter<FormCustomerState> emit) {
+    Profile customer = state.customer ?? Profile();
+    List<Company> companies = customer.companies ?? [];
+    companies.add(event.val);
+    customer.companies = companies;
     emit(state.copyWith(customer: customer));
   }
 

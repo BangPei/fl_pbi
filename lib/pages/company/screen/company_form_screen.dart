@@ -7,6 +7,7 @@ import 'package:fl_pbi/pages/category/data/category.dart';
 import 'package:fl_pbi/widget/widget_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class CompanyFormScreen extends StatefulWidget {
@@ -77,7 +78,7 @@ class _CompanyFormScreenState extends State<CompanyFormScreen> {
                       fontSize: 15,
                     ),
                     ElevatedButton.icon(
-                      onPressed: () => modalBotom(state.blockDetails ?? []),
+                      onPressed: modalBotom,
                       icon: const Icon(Icons.add),
                       label: const Text("Tambah"),
                     )
@@ -104,7 +105,7 @@ class _CompanyFormScreenState extends State<CompanyFormScreen> {
     );
   }
 
-  modalBotom(List<BlockDetail> details) {
+  modalBotom() {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -123,42 +124,60 @@ class _CompanyFormScreenState extends State<CompanyFormScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    itemCount: details.length,
-                    itemBuilder: (context, i) {
-                      BlockDetail block = details[i];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 4),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 216, 216, 216),
-                                spreadRadius: 0.2,
-                                blurRadius: 2,
-                                offset: Offset(0, 1),
-                              )
-                            ],
-                          ),
-                          child: ListTile(
-                            onTap: () {
-                              context
-                                  .read<CompanyBloc>()
-                                  .add(OnAddBlock(block));
-                              setState(() {});
-                              Navigator.pop(context);
-                            },
-                            dense: true,
-                            title: Text(block.name ?? ""),
-                            subtitle:
-                                Text(block.company?.name ?? "Nama Usaha :"),
-                          ),
-                        ),
+                  BlocBuilder<CompanyBloc, CompanyState>(
+                    builder: (context, state) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: (state.blockDetails ?? []).length,
+                        itemBuilder: (context, i) {
+                          BlockDetail block = (state.blockDetails ?? [])[i];
+                          bool isExist = (state.company?.blockDetails ?? [])
+                              .any((e) => e.id == block.id);
+                          bool isVisible =
+                              (block.company == null) && (!isExist);
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: !isVisible
+                                    ? const Color.fromARGB(255, 230, 230, 230)
+                                    : AppTheme.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 216, 216, 216),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 2,
+                                    offset: Offset(0, 1),
+                                  )
+                                ],
+                              ),
+                              child: ListTile(
+                                onTap: !isVisible
+                                    ? null
+                                    : () {
+                                        context
+                                            .read<CompanyBloc>()
+                                            .add(OnAddBlock(block));
+                                        setState(() {});
+                                        Navigator.pop(context);
+                                      },
+                                dense: true,
+                                title: Text(block.name ?? ""),
+                                trailing: !isVisible
+                                    ? const Icon(
+                                        FontAwesomeIcons.circleCheck,
+                                        color: Colors.green,
+                                      )
+                                    : null,
+                                subtitle:
+                                    Text(block.company?.name ?? "Nama Usaha :"),
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

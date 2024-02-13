@@ -61,10 +61,12 @@ class CardBlockNumber extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Badge(
-                    backgroundColor: AppTheme.blue,
-                    label: Text("Sold Out"),
-                  ),
+                  blockDetail.company != null
+                      ? const Badge(
+                          backgroundColor: AppTheme.blue,
+                          label: Text("Sold Out"),
+                        )
+                      : const SizedBox.shrink(),
                 ],
               ),
               const Divider(),
@@ -95,18 +97,21 @@ class CardBlockNumber extends StatelessWidget {
                                   image: NetworkImage(blockDetail.picture!),
                                   fit: BoxFit.cover,
                                 ),
-                        )),
+                        ),
+                      ),
                 title: RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     text: "Pemilik : ",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: AppTheme.darkerText,
                     ),
                     children: [
                       TextSpan(
-                        text: "--",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        text: blockDetail.company == null
+                            ? "--"
+                            : blockDetail.company?.owner?.fullName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

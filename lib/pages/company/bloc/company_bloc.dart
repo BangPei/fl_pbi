@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fl_pbi/injector/inject_file.dart';
 import 'package:fl_pbi/pages/company/data/company.dart';
 import 'package:fl_pbi/pages/block/data/block_api.dart';
 import 'package:fl_pbi/pages/block/data/block_details.dart';
 import 'package:fl_pbi/pages/category/data/category.dart';
 import 'package:fl_pbi/pages/category/data/category_api.dart';
+import 'package:fl_pbi/pages/customer/bloc/form_customer_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'company_event.dart';
 part 'company_state.dart';
 
 class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
+  final NavigationService _nav = locator<NavigationService>();
   CompanyBloc() : super(const CompanyState()) {
     on<OnInit>(_onInit);
     on<OnChangedName>(_onChangedName);
@@ -47,6 +50,9 @@ class CompanyBloc extends Bloc<CompanyEvent, CompanyState> {
   void _onInit(OnInit event, Emitter<CompanyState> emit) async {
     emit(state.copyWith(isLoading: true, isError: false, company: Company()));
     try {
+      final customerState =
+          BlocProvider.of<FormCustomerBloc>(_nav.navKey.currentContext!).state;
+      List<Company> companies = customerState.customer?.companies ?? [];
       List<Category> categories = await CategoryApi.get();
       List<BlockDetail> blockDetails = await BlockApi.getBlockDetails();
       emit(state.copyWith(
